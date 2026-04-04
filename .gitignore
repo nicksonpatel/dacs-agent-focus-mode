@@ -1,0 +1,17 @@
+# secrets
+.env
+
+# generated results — do not commit
+results/*.jsonl
+results/summary.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# macOS
+.DS_Store
