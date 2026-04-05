@@ -13,5 +13,16 @@ __pycache__/
 dist/
 build/
 
+# LaTeX build artifacts
+paper/*.aux
+paper/*.blg
+paper/*.log
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Log files
+logs/*.log
+
 # macOS
 .DS_Store

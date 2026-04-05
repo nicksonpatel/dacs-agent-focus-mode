@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import csv
+import fcntl
 import os
 import uuid
 from datetime import datetime, timezone
@@ -154,6 +155,7 @@ async def run_experiment(
     modes: list[str],
     model: str,
     token_budget: int,
+    parallel_trials: int,
 ) -> None:
     Path("results").mkdir(exist_ok=True)
     summary_path = "results/summary.csv"
@@ -173,30 +175,50 @@ async def run_experiment(
         summary_file.flush()
 
     rows: list[dict] = []
-    for scenario_id in scenario_ids:
+    write_lock = asyncio.Lock()
+    trial_semaphore = asyncio.Semaphore(max(1, parallel_trials))
+
+    async def _run_and_record(scenario_id: str, mode_name: str, trial: int) -> None:
         scenario = SCENARIOS[scenario_id]
-        for mode_name in modes:
-            focus_mode = mode_name == "dacs"
-            for trial in range(1, n_trials + 1):
-                run_id = f"{scenario_id}_{mode_name}_t{trial:02d}_{uuid.uuid4().hex[:6]}"
-                try:
-                    metrics = await run_trial(scenario, focus_mode, model, token_budget, run_id)
-                except Exception as exc:
-                    from rich.console import Console as _Ce
-                    _Ce().print(f"[red]Trial {run_id} failed: {exc}[/red]")
-                    continue
-                row = {
-                    "run_id":    run_id,
-                    "scenario":  scenario_id,
-                    "condition": mode_name,
-                    "n_agents":  len(scenario.agents),
-                    "trial":     trial,
-                    **{k: metrics[k] for k in fieldnames[5:]},
-                }
-                rows.append(row)
-                # Write immediately so progress is preserved on crash
+        focus_mode = mode_name == "dacs"
+        run_id = f"{scenario_id}_{mode_name}_t{trial:02d}_{uuid.uuid4().hex[:6]}"
+
+        async with trial_semaphore:
+            try:
+                metrics = await run_trial(scenario, focus_mode, model, token_budget, run_id)
+            except Exception as exc:
+                from rich.console import Console as _Ce
+                _Ce().print(f"[red]Trial {run_id} failed: {exc}[/red]")
+                return
+
+        row = {
+            "run_id":    run_id,
+            "scenario":  scenario_id,
+            "condition": mode_name,
+            "n_agents":  len(scenario.agents),
+            "trial":     trial,
+            **{k: metrics[k] for k in fieldnames[5:]},
+        }
+
+        async with write_lock:
+            rows.append(row)
+            # Write immediately so progress is preserved on crash.
+            # Use fcntl advisory lock so parallel processes don't interleave rows.
+            fcntl.flock(summary_file, fcntl.LOCK_EX)
+            try:
                 writer.writerow(row)
                 summary_file.flush()
+            finally:
+                fcntl.flock(summary_file, fcntl.LOCK_UN)
+
+    tasks: list[asyncio.Task[None]] = []
+    for scenario_id in scenario_ids:
+        for mode_name in modes:
+            for trial in range(1, n_trials + 1):
+                tasks.append(asyncio.create_task(_run_and_record(scenario_id, mode_name, trial)))
+
+    if tasks:
+        await asyncio.gather(*tasks)
 
     summary_file.close()
 
@@ -208,7 +230,7 @@ async def run_experiment(
     for col in ["run_id", "condition", "n_agents", "trial",
                 "steering_accuracy", "contamination_rate", "avg_context_tokens"]:
         t.add_column(col, style="cyan" if "accuracy" in col or "contamination" in col else "")
-    for row in rows:
+    for row in sorted(rows, key=lambda r: (r["scenario"], r["condition"], r["trial"], r["run_id"])):
         t.add_row(
             row["run_id"], row["condition"], str(row["n_agents"]), str(row["trial"]),
             f"{row['steering_accuracy']:.2%}", f"{row['contamination_rate']:.2%}",
@@ -234,6 +256,12 @@ def main() -> None:
     )
     parser.add_argument("--model",  default=_DEFAULT_MODEL)
     parser.add_argument("--budget", type=int, default=_DEFAULT_T)
+    parser.add_argument(
+        "--parallel-trials",
+        type=int,
+        default=1,
+        help="Maximum number of trials to execute concurrently (default: 1)",
+    )
     args = parser.parse_args()
 
     modes = ["dacs", "baseline"] if args.mode == "both" else [args.mode]
@@ -244,6 +272,7 @@ def main() -> None:
             modes=modes,
             model=args.model,
             token_budget=args.budget,
+            parallel_trials=args.parallel_trials,
         )
     )
 

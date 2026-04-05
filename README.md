@@ -1,7 +1,7 @@
 # DACS — Dynamic Attentional Context Scoping
 
 > **Research prototype & arxiv preprint**  
-> Target venues: NeurIPS / ICLR / AAMAS workshop · 8-week timeline from April 2026
+> Tag [`phase-3-final`](../../releases/tag/phase-3-final) — all paper results reproducible from this tag.
 
 ---
 
@@ -23,9 +23,9 @@ Context scoping in DACS is *intentional, dynamic, and asymmetric* — not a back
 
 ---
 
-## Experimental Results (Phase 1 & 2)
+## Experimental Results (3 Phases, 160 Trials)
 
-### Phase 1 — Canonical 60-trial experiment (N ∈ {3, 5, 10})
+### Phase 1 — Agent count scaling (N ∈ {3, 5, 10}, 60 trials)
 
 | N  | DACS accuracy | Baseline accuracy | Accuracy gain | Context ratio |
 |----|---------------|-------------------|---------------|---------------|
@@ -35,7 +35,7 @@ Context scoping in DACS is *intentional, dynamic, and asymmetric* — not a back
 
 All differences: *p* < 0.0001. DACS context grows at ~+25 tokens per additional agent (sub-linear); baseline grows near-linearly.
 
-### Phase 2 — Agent diversity expansion (3 scenarios)
+### Phase 2 — Agent diversity (3 scenarios, 60 trials)
 
 | Scenario | Description | DACS accuracy | Δ accuracy | Context ratio |
 |---|---|---|---|---|
@@ -43,7 +43,16 @@ All differences: *p* < 0.0001. DACS context grows at ~+25 tokens per additional 
 | s5 — crossfire | 5 × maximally diverse domains | **96.0%** | +59.0 pp | 2.90× |
 | s6 — cascade | 5 agents with inter-agent dependencies | **94.0%** | +37.3 pp | 2.65× |
 
-**Key insight:** The DACS advantage is largest when agent domains are maximally diverse (s5: C++ systems, diffusion models, genomics, memory debugging, clinical writing), confirming that cross-domain semantic bleed is the primary contamination vector in the flat-context baseline.
+LLM-as-judge validation on s5 (400 decisions): agreement 98.0%, Cohen's κ = 0.956.
+
+### Phase 3 — Decision density scaling (2 scenarios, 40 trials)
+
+| Scenario | N | D (decisions/agent) | DACS accuracy | Δ accuracy | Context ratio |
+|---|---|---|---|---|---|
+| s7 — dense | 5 | 8 | **94.0%** | +59.2 pp | 3.24× |
+| s8 — ultra-dense | 3 | 15 | **98.4%** | +54.2 pp | 2.39× |
+
+LLM-as-judge validation: κ = 0.933 (s7), κ = 0.886 (s8), mean κ = 0.909. All results in `results/`.
 
 ---
 
@@ -70,7 +79,7 @@ Token budget is enforced deterministically by `src/context_builder.py` before ev
 ## Repository Structure
 
 ```
-src/                     Core mechanism
+src/                     Core mechanism (~300 lines total)
   ├── orchestrator.py    DACS orchestrator (focus/registry mode switching)
   ├── registry.py        Per-agent state snapshot store (≤200 tokens each)
   ├── context_builder.py Token-counted context assembly & hard cap
@@ -78,23 +87,37 @@ src/                     Core mechanism
   ├── logger.py          Full context-window logging for every LLM call
   └── monitor.py         Real-time registry + focus-mode observer
 
-agents/                  Agent implementations
+agents/                  Agent stub implementations
   ├── base_agent.py      Abstract base with SteeringRequest emission
   ├── code_writer_agent.py
   ├── research_agent.py
   ├── data_processor_agent.py
   ├── debugger_agent.py
-  ├── generic_agent.py
+  ├── generic_agent.py   Used for Phase 2 & 3 scenarios
   └── long_writer_agent.py
 
 experiments/             Experiment harness
-  ├── run_experiment.py  Entry point — runs DACS vs baseline trials
-  ├── task_suite.py      5 scenarios × 3+ decision points, known-correct answers
-  └── metrics.py         Steering accuracy, contamination, context size, responsiveness
+  ├── run_experiment.py  Single entry point — all phases, all scenarios
+  ├── task_suite.py      8 scenarios (s1–s8), known-correct answers per decision point
+  ├── metrics.py         Steering accuracy, contamination, context size
+  ├── llm_judge_phase3.py  LLM-as-judge validation for Phase 3 (s7, s8)
+  ├── llm_judge_s8.py    Focused judge pass for s8_n3_dense_d3
+  ├── plot_phase1.py     Phase 1 figures
+  └── plot_phase2_phase3.py  Phase 2 & 3 figures
 
-results/                 Auto-generated CSVs and JSONL logs — do not edit manually
-  ├── PHASE1_RESULTS.md  Phase 1 analysis (N=3/5/10, 60 trials)
-  └── PHASE2_RESULTS.md  Phase 2 analysis (agent diversity, 60 trials)
+results/                 Auto-generated — do not edit manually
+  ├── PHASE1_RESULTS.md  Phase 1 analysis (60 trials)
+  ├── PHASE2_RESULTS.md  Phase 2 analysis (60 trials)
+  ├── PHASE3_RESULTS.md  Phase 3 analysis (40 trials)
+  ├── llm_judge_phase3_s7.csv   Judge validation data for s7
+  ├── llm_judge_phase3_s8.csv   Judge validation data for s8
+  └── *.jsonl            Per-trial full context-window logs
+
+paper/
+  ├── draft_v2.tex       Full paper (3 phases, all results)
+  ├── main.tex           Phase 1 only version
+  ├── refs.bib           Bibliography
+  └── figures/           Paper figures (PNG)
 
 notes/
   ├── literature-review.md   Per-paper notes: AFM, AOI, AgentOrchestra, ACE, AdaptOrch
@@ -102,66 +125,80 @@ notes/
 
 docs/
   ├── architecture.md        System architecture diagram
-  ├── interfaces.md          Component interface specifications
-  ├── EXPERIMENT_PLAN.md     Full experiment plan (RQ1–RQ7, all phases)
-  └── PHASE_2_PLAN.md        Phase 2 detailed plan
+  └── interfaces.md          Component interface specifications
 
-paper/
-  ├── main.tex               LaTeX paper (arxiv template)
-  └── refs.bib               Bibliography
-
-ACTION_PLAN.md             8-week research timeline
 requirements.txt           Python dependencies
 ```
 
 ---
 
-## Setup & Running
+## Setup & Reproducing Results
 
-**Requirements:** Python 3.11+, an OpenAI- or Anthropic-compatible API key.
+**Requirements:** Python 3.11+, API key for an Anthropic-compatible endpoint.
 
 ```bash
+git clone <repo>
+cd agent-focus-mode
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Set your API key
-export OPENAI_API_KEY=...   # or ANTHROPIC_API_KEY=...
-
-# Run the full experiment suite (DACS vs baseline)
-python experiments/run_experiment.py
-
-# Plot Phase 1 results
-python experiments/plot_phase1.py
+# Set your API key (the paper used MiniMax-M2.7 via an Anthropic-compatible endpoint)
+export MINIMAX_API_KEY=<your-key>
+export DACS_MODEL=MiniMax-M2.7   # optional — this is the default
 ```
 
-Results are written to `results/` as JSONL files (one file per trial) and summary Markdown.
+### Reproduce Phase 1 (N ∈ {3, 5, 10}, 60 trials)
+```bash
+python -m experiments.run_experiment --scenario s1_n3 s2_n5 s3_n10 --mode both --trials 10
+python -m experiments.plot_phase1
+```
+
+### Reproduce Phase 2 (agent diversity, 60 trials)
+```bash
+python -m experiments.run_experiment --scenario s4_n3_homogeneous s5_n5_crossfire s6_n5_cascade --mode both --trials 10
+python -m experiments.plot_phase2_phase3
+```
+
+### Reproduce Phase 3 (decision density, 40 trials)
+```bash
+python -m experiments.run_experiment --scenario s7_n5_dense_d2 s8_n3_dense_d3 --mode both --trials 10 --parallel-trials 4
+python -m experiments.llm_judge_phase3  # runs LLM-as-judge validation
+python -m experiments.plot_phase2_phase3
+```
+
+### Quick smoke test (1 trial per condition, ~10 min)
+```bash
+python -m experiments.run_experiment --scenario s1_n3 --mode both --trials 1
+```
+
+Results are written to `results/summary.csv` (one row per trial) and `results/<run_id>.jsonl` (full context-window log for every LLM call in that trial).
+
+> **Reproducibility note:** All paper results were produced at git tag `phase-3-final`. Check out that tag to guarantee identical code.
 
 ---
 
 ## Key Design Constraints
 
 - **Observability is paramount.** Every LLM call logs the exact token contents of the context window. This is the central experiment variable.
-- **Token budget is deterministic.** `context_builder.py` counts tokens before every call and hard-caps at *T*. The provider never truncates.
-- **Fair baseline.** The flat-context baseline orchestrator uses the identical code path as DACS — focus mode only is disabled. No other differences.
+- **Token budget is deterministic.** `context_builder.py` counts tokens before every call and hard-caps at *T* = 204,800. The provider never truncates.
+- **Fair baseline.** The flat-context baseline uses the identical code path as DACS — only `build_focus_context` is replaced by `build_flat_context`. No other differences.
 - **No external orchestration frameworks.** No LangGraph, CrewAI, etc. The harness is intentionally minimal (~300 lines) to keep full observability over context window contents.
 
 ---
 
-## Experiment Roadmap
+## Experiment Status
 
-| Phase | Status | Description |
-|---|---|---|
-| Phase 1 | ✅ Complete | Canonical 60-trial experiment, N ∈ {3, 5, 10} |
-| Phase 2 | ✅ Complete | Agent diversity: homogeneous, crossfire, cascade |
-| Phase 3 | 🔜 Planned | Decision density scaling (3 → 50 steering events) |
-| Phase 4 | 🔜 Planned | Long-horizon runs (hours of continuous operation) |
-| Phase 5 | 🔜 Planned | Adversarial & stress tests (urgency cascades) |
-| Phase 6 | 🔜 Planned | Large-scale experiments (N = 20–50) |
+| Phase | Status | Scenarios | Trials | RQ answered |
+|---|---|---|---|---|
+| Phase 1 | ✅ Complete | s1 (N=3), s2 (N=5), s3 (N=10) | 60 | Does DACS accuracy scale with N? |
+| Phase 2 | ✅ Complete | s4 (homogeneous), s5 (crossfire), s6 (cascade) | 60 | Does advantage hold across agent diversity? |
+| Phase 3 | ✅ Complete | s7 (N=5, D=8), s8 (N=3, D=15) | 40 | Does advantage grow with decision density? |
 
 ---
 
 ## Paper
 
-The paper in `paper/main.tex` targets an arxiv preprint and a workshop submission (NeurIPS / ICLR / AAMAS 2026). Closest related work: AFM and AOI — see `notes/literature-review.md` for precise distinctions.
+The submission paper is `paper/draft_v2.tex` (3 phases, all results, LLM-as-judge validation). Closest related work: AFM and AOI — see `notes/literature-review.md` for precise distinctions.
 
 ---
 
