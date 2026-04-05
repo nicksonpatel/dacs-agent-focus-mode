@@ -1,0 +1,1993 @@
+run_id,condition,agent_id,dp_index,keyword_score,judge_verdict,judge_reason,orchestrator_state,answer_keywords,question_fragment,response_text
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a1,14,1,CORRECT,"The response directly addresses the steering question by recommending MLflow Model Registry and substantiating the choice with technical criteria relevant to production model versioning, including artifact versioning, stage gates, lineage tracking, and reproducibility—core concerns for a legal document classifier in production.",FOCUS,mlflow|model registry|versioning,model versioning and registry for production,"# Steering Decision: Agent a1
+
+## Recommendation: **MLflow Model Registry** (tracks experiment runs, parameters, metrics, and artifact versions)
+
+### Rationale
+
+| Factor | Decision |
+|--------|----------|
+| **Complete experiment lineage** | Captures training config (LR, dropout, epochs), metrics (macro F1=0.89), and artifacts (model.pt, ONNX) in one place — critical for reproducibility |
+| **Production stage gates** | Supports Stage: None → Staging → Production → Archived workflow — enables controlled deployment pipelines |
+| **Artifact versioning** | Stores binary model artifacts with semantic versioning; automatic versioning on re-registration |
+| **Query by metric** | API queries: ""show all models with macro_f1 > 0.85 deployed to production"" — impossible with S3 naming |
+| **Reproducibility guarantee** | Registered model includes training dataset version, preprocessing params, and compute environment |
+
+### Implementation
+
+```python
+import mlflow
+from mlflow.tracking import MlflowClient
+
+# Configure tracking
+mlflow.set_tracking_uri(""file:///mlruns"")
+mlflow.set_experiment(""legal-bert-classifier"")
+
+# Log training run
+with mlflow.start_run(run_name=""baseline-epoch10""):
+    # Log parameters
+    mlflow.log_params({
+        ""model"": ""nlpaueb/legal-bert-base-uncased"",
+        ""learning_rate"": 2e-5,
+        ""dropout"": 0.15,
+        ""num_epochs"": 10,
+        ""batch_size"": 16,
+        ""warmup_steps"": 100,
+        ""focal_loss_gamma"": 2.0,
+    })
+    
+    # Log metrics
+    mlflow.log_metrics({
+        """
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a1,0,1,CORRECT,"The response correctly addresses the base model architecture question by recommending LegalBERT with proper rationale (domain-specific pretraining on legal corpora, transfer learning benefits) and appropriately rejects alternatives like BiLSTM and TF-IDF+SVM, though it contains an unrelated sentence about post-quantum cryptography algorithms.",FLAT,bert|transformer|pretrained,base model architecture for legal text classifier,"# ORCHESTRATOR DECISIONS — Parallel Agent Steering
+
+---
+
+## Agent a1: Legal Text Classifier Base Architecture
+
+**DECISION [HIGH]:**
+
+**Base model: Legal-domain pretrained transformer (LegalBERT)**
+
+CRYSTALS-Kyber and CRYSTALS-Dilithium are the NIST-standardised algorithms every enterprise PQC whitepaper must cover.
+
+**Rationale:**
+- **LegalBERT** inherits BERT architecture but was pretrained on legal corpora (CaseLaw, EU Directives, etc.)
+- Transfer learning from domain-specific pretraining significantly outperforms general BERT on legal classification tasks
+- **Reject alternatives:**
+  - BiLSTM from scratch: No transfer learning, inferior performance on 12-category legal taxonomy
+  - TF-IDF + SVM: Misses contextual semantics critical for legal text (precedents, citations, statutory language)
+  - General BERT: Viable fallback if LegalBERT unavailable, but domain-specific pretraining provides meaningful gains
+
+**Action:** Proceed with"
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a2,1,1,CORRECT,"The response directly addresses the normality check method question by recommending Shapiro-Wilk as the primary test, providing appropriate rationale (power for n<2000, FDA/EMA alignment, reportability), correctly rejecting alternative approaches, and including a practical decision workflow with CLT robustness considerations.",FOCUS,shapiro|kolmogorov|normality test,normality check method before parametric test,"## Decision: Normality Check Method
+
+**Primary Method:** Shapiro-Wilk test ✓
+
+**Rationale:**
+- Most powerful normality test for n < 2000 (our n=400 per group)
+- Standard in clinical trial statistical analysis plans (FDA/EMA guidance aligned)
+- Formally reportable in manuscript methods
+
+**Reject:**
+- Visual histogram only ✗ — insufficient for formal RCT reporting
+- Skip normality check ✗ — invalid per pre-specified analysis plan
+
+---
+
+**Recommended workflow:**
+1. Run Shapiro-Wilk on BP change residuals (treatment & control separately)
+2. If p ≥ 0.05 → normality confirmed → proceed with Welch's t-test
+3. If p < 0.05 → non-normal → switch to Mann-Whitney U as primary
+
+**Note:** With n=400/group, CLT provides robustness even with mild non-normality. Consider also reporting effect size (Cohen's d) alongside p-value.
+
+**Proceed with Shapiro-Wilk normality assessment?**
+
+---
+
+*No conflicts with a1 or a3.*"
+s8_n3_dense_d3_baseline_t01_9e10b0,baseline,a1,12,0,INCORRECT,"The orchestrator response discusses business risk framing for PQC (Post-Quantum Cryptography) board-level decisions, which is entirely unrelated to the steering question about classification head design for BERT output on a legal document classification task.",FLAT,linear|classification head|dense layer,classification head design for BERT output,"# Orchestrator Response — Agent a3 Steering Decision
+
+## Decision: Business Risk Framing ✓ CONFIRMED
+
+**Answer**: Business risk framing — harvest-now threat creates urgency, migration cost is manageable, CISO action items defined — is the correct executive summary emphasis for board-level PQC adoption decisions.
+
+---
+
+## Rationale
+
+| Option | Verdict | Reasoning |
+|--------|---------|----------|
+| **Business risk framing** (harvest-now urgency + manageable cost + CISO action items) | ✓ **SELECTED** | Standard executive communication; maps technical threat to business impact; drives board decision-making; aligns with Sections 1, 7, and 12 |
+| Technical algorithm comparison |"
+s8_n3_dense_d3_baseline_t01_9e10b0,baseline,a2,11,0,INCORRECT,"The orchestrator response discusses post-quantum cryptography (PQC) vendors and procurement guidance, which has no relevance to sensitivity analysis for robustness in iterative statistical hypothesis testing on clinical trial data.",FLAT,sensitivity|robustness check|exclusion criteria,sensitivity analysis for robustness,"# Orchestrator Response — Agent a3 Steering Decision
+
+## Decision: Cover Major PQC Vendors (Multi-Vendor Landscape) ✓ CONFIRMED
+
+**Answer**: Cover major PQC vendors — PQShield, Quantinuum, SandboxAQ, IBM Quantum-Safe — gives practitioners the procurement map they need without commercial endorsement bias.
+
+---
+
+## Rationale
+
+| Option | Verdict | Reasoning |
+|--------|---------|----------|
+| **Cover major PQC vendors (multi-vendor landscape)** | ✓ **SELECTED** | Provides actionable procurement guidance; maintains editorial independence; standard for independent technical whitepapers |
+| Endorse a single vendor | ✗ Rejected | Commercially inappropriate; destroys credibility of independent whitepaper; creates liability; conflicts with vendor-neutral positioning |
+| Omit vendor landscape | ✗ Rejected | Critical omission — practitioners reading ""what to do"" will also ask ""who to buy from""; vendor section is the natural procurement bridge |
+
+---
+
+## Recommended Section 13 Structure
+
+1. **Landscape framing** — ""The PQC vendor ecosystem spans pure-play PQC specialists, quantum computing companies extending into crypto, and established security vendors adding PQC to existing platforms""
+2. **PQShield** — UK-based; PQC-focused; hardware token and software library offerings; notable for government/defense contracts
+3. **Quantinuum** — H-Series quantum hardware + quantum-safe cryptography division; strong in financial services
+4. **SandboxAQ** — Alphabet spinoff; AI + quantum simulation; PQC consulting and integration services
+5. **IBM Quantum-Safe** — Deep quantum computing investment;"
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a1,11,1,CORRECT,"The response directly addresses the checkpoint save strategy question by recommending and justifying saving the model with the best validation loss/highest macro F1, providing practical rationale (generalization, metric alignment, disk efficiency) and implementation code showing the standard HuggingFace Trainer configuration for this strategy.",FOCUS,best model|lowest val|checkpoint,model checkpoint save strategy,"**Decision for Agent a1:**
+
+**Choose: Save the model with the best validation loss / highest macro F1**
+
+**Rationale:**
+1. **Standard practice**: HuggingFace Trainer defaults to this with `load_best_model_at_end=True` — canonical checkpoint strategy for all BERT fine-tuning
+2. **Generalization guarantee**: Preserves the checkpoint that performed best on validation data, not the last epoch — critical when early stopping may trigger after overfitting begins
+3. **Metric alignment**: Combined with macro F1 as optimization target (from prior decision) — keeping the best-macro-F1 checkpoint ensures optimal balanced class performance
+4. **Disk efficiency**: Single checkpoint stored vs. linearly growing disk usage (3-10 epochs × 400MB LegalBERT = 1.2-4GB wasted with per-epoch saves)
+
+**Implementation:**
+```python
+training_args = TrainingArguments(
+    output_dir=""./legalbert_classifier"",
+    eval_strategy=""epoch"",
+    save_strategy=""epoch"",           # Monitor after each epoch
+    save_total"
+s8_n3_dense_d3_dacs_t09_11cd71,dacs,a2,5,1,CORRECT,"The response directly addresses the steering question by recommending Winsorisation at the 1st/99th percentile as the outlier handling method for clinical measurements, providing both rationale (preserves sample size, reduces bias, appropriate for clinical data) and implementation code.",FOCUS,winsoriz|iqr|robust,outlier handling for clinical measurements,"# Steering Decision: Agent a2
+
+**Outlier Handling: Winsorisation at 1st/99th Percentile** ✓
+
+## Rationale
+
+- **Winsorisation is the standard robust method** for outlier treatment in clinical continuous outcomes
+- Preserves sample size (critical for intent-to-treat analysis) — deletion reduces N and statistical power
+- Shrinks extreme values toward boundary without removing data points — avoids selection bias if outliers are genuine treatment responders
+- **3 SD threshold** is appropriate for BP measurements in clinical trials (captures genuine extreme values while flagging potential errors)
+
+## Recommended Implementation
+
+```python
+import numpy as np
+from scipy import stats
+
+# Winsorise at 1st and 99th percentile per group
+p1_treatment = np.percentile(treatment_bp, 1)
+p99_treatment = np.percentile(treatment_bp, 99)
+treatment_winsorized = np.clip(treatment_bp"
+s8_n3_dense_d3_dacs_t07_ea66a9,dacs,a2,5,1,CORRECT,"The response directly addresses the steering question by recommending Winsorisation at the 1st/99th percentile as the outlier handling method for clinical measurements, providing clinical and methodological justification and implementation steps.",FOCUS,winsoriz|iqr|robust,outlier handling for clinical measurements,"## Orchestrator Decision: Agent a2 Outlier Handling
+
+**Decision: Confirm Winsorisation at 1st/99th percentile + sensitivity analysis**
+
+### Rationale:
+1. **Preserves N**: Deletion reduces sample size → inflates standard errors, biases treatment effect estimate
+2. **Clinical plausibility**: Extreme BP readings (hypertensive urgency >180 systolic) likely measurement/error, not treatment effect
+3. **Robust standard**: Winsorisation is the accepted method in clinical trial SAPs for continuous outcomes
+4. **Audit trail**: Sensitivity analysis documents impact of outlier treatment on results
+
+### Recommended Approach:
+| Step | Action | Rationale |
+|------|--------|-----------|
+| 1 | **Primary analysis**: Winsorise BP values at 1st/99th percentile (per study SAP) | Robust to extreme values while preserving all observations |
+| 2 | **Sensitivity analysis**: Report results with/without original outliers | Documents robustness, satisfies regulatory expectations |
+| 3 | **Log all changes**: Record original vs. winsorised values per patient | Required for clinical trial audit trail |
+
+### Implementation Notes:
+- Apply winsorisation **after** data validation, **before** normality testing
+- Ensure winsorisation limits are pre-specified in SAP, not data-driven
+- Report both analyses in final output
+
+**Proceed with Winsorisation at 1st/99th percentile, then execute sensitivity comparison.**"
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a1,1,0,INCORRECT,"No orchestrator response was provided to evaluate; the response field is empty, making it impossible to assess whether the response addresses the tokenizer choice question for legal text classification.",FLAT,wordpiece|subword|bpe,tokenizer choice for legal text classification,
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a2,2,1,INCORRECT,"The response acknowledges Agent a2's question about multiple comparison correction methods but is incomplete and does not provide any actual decision or recommendation for whether to use Benjamini-Hochberg FDR, Bonferroni, or no correction for the 8 secondary outcomes.",FLAT,bonferroni|fdr|benjamini,multiple comparison correction for family of tests,"The user is presenting me with a flat context orchestration task. Let me analyze what's being asked.
+
+The request shows three focus agents:
+- Agent a1: BERT text classifier task (from the initial context, seems like a1 has been making decisions about base architecture)
+- Agent a2: Clinical trial statistical testing (has been making decisions about Welch's t-test and normality checks, now asking about multiple comparison correction)
+- Agent a3: PQC whitepaper (has been making decisions about audience and algorithms, now asking about NIST standardisation depth)
+
+The current request focuses on Agent a2's latest question about multiple comparison correction.
+
+Agent a2's context:
+- Dataset: 400 patients, treatment vs control
+- Primary outcome: systolic BP reduction at 12 weeks
+- Already decided: Two-sample Welch's t-test for primary outcome
+- Already confirmed: Normality (p=0.31)
+- Now testing 8 secondary outcomes simultaneously
+- Question: Benjamini-Hochberg FDR vs Bonferroni vs no correction?
+
+My response should provide a clear, specific decision for Agent a2's multiple comparison correction question.
+
+Looking at the clinical trial context:
+- 8 secondary outcomes being tested
+- This is a confirmatory clinical trial context (RCT)
+- Primary outcome normality confirmed, t-test proceeding
+- Multiple secondary outcomes need correction
+
+For clinical trials, the multiple comparison correction choice depends on:
+1. Whether these are pre-specified secondary analyses or exploratory
+2. The desired error rate control (FWER vs FDR)
+3. Power considerations
+
+For clinical trials with pre-specified secondary outcomes:
+- Bonferroni is often considered overly conservative for a modest number of tests
+- Benjamini-Hochberg FDR is widely used in biomedical research
+- However, for regulatory submissions, some sponsors prefer Bonferroni for its simplicity and family-wise error control
+
+For this scenario:
+
+
+- 8 secondary outcomes represents a moderate number
+- The context suggests a formal RCT with primary and secondary outcomes
+
+I'll recommend Benjamini-Hochberg FDR correction as the primary approach. It's more appropriate for multiple secondary outcomes, providing better statistical power while controlling false discoveries. The method balances Type I and Type II error risks, which is crucial in clinical research. A potential fallback could be pre-specifying a hierarchical testing strategy if regulatory requirements demand a more conservative approach.
+
+Bonferroni offers strong control of the family-wise error rate but risks overly conservative results with reduced statistical sensitivity. The nuanced choice depends on the specific trial design and regulatory expectations.
+
+For clinical trials with multiple"
+s8_n3_dense_d3_dacs_t06_31c66c,dacs,a1,10,1,CORRECT,"The response directly addresses the evaluation metric question by selecting Macro-averaged F1 and provides technically sound justification—particularly the alignment between using focal loss (which improves minority class recall) and macro F1 (which equally weights all 12 classes), making it the appropriate choice for legal classification where rare categories like ""Arbitration Clause"" carry equal legal consequences despite low frequency.",FOCUS,macro f1|f1|weighted f1,evaluation metric for legal document classification,"**Decision for Agent a1: Evaluation Metric Selection**
+
+**Selected: Macro-averaged F1** (treats all 12 classes equally regardless of frequency)
+
+**Rationale:**
+1. **Rare category importance** — Legal classification requires ALL categories to be correctly identified. Missing an ""Arbitration Clause"" (0.8%) has legal consequences equal to missing a common category
+2. **Metric aligns with intervention** — Focal loss was selected specifically to improve minority class recall; macro F1 measures whether that worked. Accuracy/micro-F1 would mask improvements on rare classes
+3. **Standard legal NLP metric** — Macro F1 is the standard benchmark for multi-class legal classification (EUR-LEX, CASEExplorer datasets) precisely because rare categories matter in legal contexts
+4. **Class-balanced evaluation** — Each of the 12 categories contributes equally to final score; model must perform well on ALL classes, not just majority
+
+**Implementation:**
+```python
+from sklearn.metrics import f"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a3,9,1,CORRECT,"The orchestrator directly addresses the steering question by selecting an approach that covers HSM PQC support status and key management migration guidance, with rationale explaining why HSMs are critical infrastructure for enterprise key management in the PQC context.",FOCUS,hsm|hardware security module|key management,hardware security module coverage for PQC key management,"**STEERING DECISION for Agent a3:**
+
+**Selected Approach:** Cover HSM PQC support status and provide key management migration guidance — major vendors have active firmware/SDK PQC support programs
+
+**Rationale:**
+- **HSMs are critical infrastructure:** Hardware Security Modules are the primary key management control for enterprises — they store private keys, perform cryptographic operations, and enforce access policies. Skipping HSM coverage leaves the most sensitive key"
+s8_n3_dense_d3_baseline_t02_d1254f,baseline,a2,2,1,CORRECT,"The orchestrator directly addresses the multiple comparison correction question by selecting Benjamini-Hochberg FDR correction, provides technically sound justification for this choice (FDR appropriate for exploratory secondary endpoints, Bonferroni too conservative), and specifies the exact scope of the correction.",FLAT,bonferroni|fdr|benjamini,multiple comparison correction for family of tests,"## Orchestrator Decision Log
+
+---
+
+### Agent a2 — Multiple Comparison Correction ✓
+
+**Decision: Benjamini-Hochberg FDR correction**
+
+**Rationale:**
+- 8 secondary outcomes constitute a family of tests requiring correction
+- FDR control is appropriate for exploratory secondary endpoints (maximizes discovery power)
+- Bonferroni is too conservative here — would inflate Type II error on genuinely different secondary outcomes
+- No correction is unacceptable for regulatory/clinical reporting
+- Apply BH to secondary outcomes only; primary outcome (BP reduction) remains uncorrected per pre-specified analysis plan
+
+**Proceed:** Run BH correction across 8 secondary outcomes; report both uncorrected p-values and BH-adjusted q-values.
+
+---
+
+### Agent a3 — NIST Standard"
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a2,13,0,INCORRECT,"The orchestrator's response discusses post-quantum cryptography (PQC) business risk framing and CISO action items, which is completely unrelated to meta-analysis eligibility determination for a clinical trial dataset.",FLAT,heterogeneity|i-squared|cochran,meta-analysis eligibility determination,"# ORCHESTRATOR DECISION — Agent a3 [HIGH]
+
+## Executive Summary Emphasis for PQC Whitepaper
+
+**DECISION: Business risk framing — harvest-now threat creates urgency, migration cost is manageable, CISO action items defined**
+
+This is the only effective executive summary strategy for CISO and board-level audiences.
+
+---
+
+### Rationale
+
+**The executive summary is not a technical abstract — it is a business case document.**
+
+- **Harvest-now threat urgency** — Executives need to understand *the attack is already happening*, not theoretical future risk. This creates genuine urgency, not FUD.
+- **Migration cost is manageable** — Framing PQC as a phased, bounded investment (vs. existential threat) enables budget approval. Avoid cost alarmism that triggers denial.
+- **CISO action items defined** — Executives act on clear ownership and timelines. Specific phase-1 action items (cryptographic inventory, HSM audit)"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a1,2,0,INCORRECT,"The orchestrator response discusses threat models and quantum computing security (""Harvest Now, Decrypt Later""), which is entirely unrelated to the steering question about sequence length handling for long legal documents in a BERT text classification task.",FLAT,512|truncat|sliding window,sequence length handling for long legal documents,"# Orchestrator Steering Decision — Agent a3 [HIGH]
+
+**Question:** Threat model coverage for Section 5 (Quantum Threat Landscape)?
+
+**Decision: CONFIRM 'Harvest Now, Decrypt Later' as primary threat narrative**
+
+---
+
+## Decision Summary
+
+| Threat Model Option | Appropriateness | Verdict |
+|---------------------|-----------------|---------|
+| **Harvest now, decrypt later** | Accurate, urgent, actionable — the primary PQC driver | **✓ SELECTED** |
+| Quantum computers already break RSA | Overstates current risk; factually incorrect; undermines credibility | ✗ Exclude |
+| Long-term data has no quantum risk | Factually wrong; government/health data has 10–20 year sensitivity windows | ✗ Ex"
+s8_n3_dense_d3_baseline_t04_b4e8cf,baseline,a1,3,0,INCORRECT,"The orchestrator response discusses post-quantum cryptography (PQC) library recommendations for a whitepaper, which is entirely unrelated to the steering question about batch size strategy for GPU memory constraints when training BERT text classifiers.",FLAT,gradient accumulation|micro-batch|accumulation,batch size strategy for GPU memory constraint,"# Orchestrator Decision — Agent a3 Steering Request
+
+**Task:** Recommend PQC implementation library for whitepaper Section 6 (implementation guidance)
+
+---
+
+## Decision: liboqs (Open Quantum Safe) ✓
+
+**Recommended choice:** Open Quantum Safe (liboqs) — the primary recommended library for enterprise PQC implementation
+
+### Rationale:
+
+| Option | Verdict | Reason |
+|--------|---------|--------|
+| **liboqs (Open Quantum Safe)** | ✓ **Primary** | Open-source, actively maintained; supports all NIST-standardized algorithms (Kyber, Dilithium, SPHINCS+); cross-platform bindings for C, Python, Java |
+| Write PQC from scratch | ✗ Reject | Impractical — incorrect implementation risks catastrophic vulnerabilities; not recommended |
+| BouncyCastle PQC extension | ⚠ Acceptable fallback | Valid only for JVM ecosystems; insufficient for cross-platform enterprise"
+s8_n3_dense_d3_baseline_t09_78ff58,baseline,a1,3,0,INCORRECT,"No response content was provided in the orchestrator response section, making it impossible to evaluate whether it addresses the batch size strategy question for GPU memory constraints.",FLAT,gradient accumulation|micro-batch|accumulation,batch size strategy for GPU memory constraint,
+s8_n3_dense_d3_dacs_t03_534933,dacs,a2,9,1,CORRECT,"The orchestrator correctly addresses the subgroup interaction testing question by recommending formal interaction term testing in a regression model rather than separate subgroup comparisons, which aligns with statistical best practices for controlling Type I error and is appropriate for clinical trial regulatory requirements.",FOCUS,interaction term|moderation|interaction,interaction testing for subgroup effects,"## Steering Decision: Agent a2
+
+**Confirmed: Formal treatment × age-group interaction term in regression model for subgroup moderation analysis**
+
+### Rationale
+
+| Criterion | Decision Factor |
+|-----------|-----------------|
+| Type I error control | Interaction term properly tests differential effect — avoids false positives from multiple subgroup comparisons ✓ |
+| Statistical validity | Full model tests H₀: β_interaction = 0 (no moderation effect) with appropriate df ✓ |
+| Clinical importance | Effect modifier identification informs prescribing decisions (who benefits most) ✓ |
+| Regulatory compliance | FDA/EMA guidance requires formal interaction testing for subgroup claims ✗ |
+| Separate t-tests risk | Uncontrolled subgroup comparisons inflate false discovery rate ✗ |
+| Skipping analysis risk | Misses actionable heterogeneity information sponsors/clinicians need ✗ |
+
+### Recommended Subgroup Interaction Testing Workflow
+
+1. **Model specification**: 
+   ```r
+   lm(outcome ~ treatment + age_group + treatment*age_group + covariates)
+   ```
+2. **Primary test**: F-test or t-test on interaction coefficient
+   - H₀: No treatment × age interaction (β_interaction = 0)
+   - α = 0.05 for interaction term
+3. **Effect reporting**: Stratified estimates within each age subgroup
+4. **Interpretation**: If interaction p < 0.05 → significant effect heterogeneity; if not significant → consistent effect across age
+5. **Pre-specification**: Interaction test should be pre"
+s8_n3_dense_d3_dacs_t09_11cd71,dacs,a1,9,1,CORRECT,"The response directly addresses the steering question by selecting back-translation as the recommended text augmentation strategy for low-resource legal categories, providing domain-specific justification (legal terminology preservation, semantic fidelity, comparison to alternatives like EDA) and implementation details.",FOCUS,back-translation|synonym|paraphrase,text augmentation for low-resource legal categories,"**Decision for Agent a1: Back-translation for text augmentation**
+
+**Choice: Back-translation (source → pivot language → source) with high-quality MT models**
+
+**Rationale:**
+1. **Semantic preservation**: Legal text demands precise meaning retention — back-translation maintains legal semantics while introducing natural phrasing variation
+2. **Domain appropriateness**: Legal terminology is often preserved across languages (statutes, ""shall"", ""whereas""); back-translation exploits this to generate realistic augmented examples
+3. **Proven effectiveness**: Widely used in legal NLP literature for data augmentation; outperforms synonym replacement for domain-specific text
+4. **Synonym risk in legal context**: EDA's synonym replacement can alter legal meaning (e.g., ""tenant"" vs ""lessee"", ""plaintiff"" vs ""claimant"" have jurisdictional differences)
+5. **No content deletion**: Unlike random deletion, back-translation preserves all legal content — no risk of removing critical terms
+
+**Implementation path:**
+```python
+# Pipeline: EN → DE/FR → EN
+# Use MarianMT models (Helsinki-NLP) for high-quality translation
+from transformers import MarianMTModel, MarianTokenizer
+
+def back_translate(text, pivot_lang=""de""):
+    # Forward translation
+    forward_model = MarianMTModel.from_pretrained(f'Helsinki-NLP/opus-mt-en-{pivot_lang}')
+    forward_tok = MarianTokenizer.from_pretrained(f'Helsinki-NLP/opus-mt-en-{pivot"
+s8_n3_dense_d3_baseline_t04_b4e8cf,baseline,a3,0,1,CORRECT,"The orchestrator explicitly identifies the target audience (enterprise security practitioners, CISOs, and architects) and provides clear rationale explaining why this audience is appropriate, along with calibration guidance for writing to this audience level.",FLAT,enterprise|practitioner|technical,target audience framing for post-quantum cryptography whitepaper,"**DECISION: Enterprise security practitioners / CISOs and architects**
+
+Rationale aligns with the agent's own analysis:
+- Primary audience: technical but not cryptographer-level expertise
+- Provides actionable PQC adoption guidance appropriate for commercial whitepaper
+- Excludes academic cryptographers (too narrow) and general business (insufficient depth)
+
+**Calibration guidance:** Write for readers who understand security concepts and risk frameworks but won't parse lattice-based algorithm proofs. Focus on implementation timelines, migration strategies, NIST standardization status, and enterprise risk assessment.
+
+Proceed with this audience framing."
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a2,1,0,INCORRECT,"The response discusses LegalBERT architecture for legal-domain NLP tasks, which is entirely unrelated to normality testing methods for statistical hypothesis testing on clinical trial data.",FLAT,shapiro|kolmogorov|normality test,normality check method before parametric test,"## Steering Decisions — Parallel Agent Orchestration
+
+---
+
+### Agent a1 [HIGH] — Base Model Architecture
+
+**DECISION: LegalBERT (legal-domain pretrained transformer)**
+
+**Rationale:**
+- Outperforms general BERT on legal NLP tasks due to legal corpus pretraining
+- Retains all benefits of transfer learning (contextual embeddings, masked LM pretraining)
+- Clear choice over BiLSTM (no transfer learning) and TF-IDF+SVM (loses contextual semantics"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a3,10,0,INCORRECT,"There is no orchestrator response provided to evaluate — the response field is empty, making it impossible to determine if it addresses the compliance framework alignment question.",FLAT,nist sp 800|fips|compliance,compliance framework alignment for PQC whitepaper,
+s8_n3_dense_d3_baseline_t09_78ff58,baseline,a2,11,0,INCORRECT,"The orchestrator response discusses post-quantum cryptography vendor landscape coverage (PQShield, Quantinuum, IBM) for an enterprise whitepaper, which is entirely unrelated to the steering question about sensitivity analysis for robustness in iterative statistical hypothesis testing on a clinical trial dataset.",FLAT,sensitivity|robustness check|exclusion criteria,sensitivity analysis for robustness,"# STEERING DECISION — Agent a3: Vendor Landscape Coverage
+
+## [MEDIUM] — Decision: Cover Major PQC Vendors (PQShield, Quantinuum, SandboxAQ, IBM Quantum-safe)
+
+**Approach: Non-endorsement vendor landscape review covering major players and their positioning**
+
+---
+
+### Rationale
+
+| Option | Verdict | Reason |
+|--------|---------|----------|
+| **Cover major vendors (PQShield, Quantinuum, SandboxAQ, IBM)** | ✅ **SELECTED** | Provides the procurement map enterprise security teams need; actionable guidance |
+| Endorse a single vendor | ❌ **REJECTED** | Commercially inappropriate for an independent whitepaper; destroys credibility with enterprise audiences |
+| Omit vendor landscape | ❌ **REJECTED** | Leaves a critical gap — practitioners reading a PQC whitepaper will ask ""who do we buy from?"" |
+
+---
+
+### Recommended Section Structure (Section 13 — Vendor Landscape)
+
+1. **Positioning by category:**
+   - *Cryptographic library / middleware:* PQShield, ISARA
+   - *Quantum simulation / risk assessment:* SandboxAQ, Quantinuum
+   - *Enterprise security suites:* IBM Quantum-safe, Thales (HSM vendor section already covered)
+2. **Evaluation criteria:** FIPS 140-3 validation status, NIST algorithm coverage, enterprise PKI integration, HSM compatibility
+3. **Neutral framing:** Describe capabilities and specialisations without ranking or recommendation
+4. **Note on emerging vendors:** Flag that the PQC vendor market is maturing rapidly; suggest procurement teams request vendor SBOMs and compatibility matrices
+
+---
+
+### What to Ex"
+s8_n3_dense_d3_baseline_t01_9e10b0,baseline,a1,6,0,INCORRECT,"The orchestrator response addresses X.509 certificates and post-quantum cryptography (PQC) algorithms like Dilithium, which is entirely unrelated to the steering question about dropout strategies for reducing overfitting in a BERT text classifier trained on legal documents.",FLAT,dropout|regulariz|layer dropout,dropout strategy to reduce overfitting on legal corpus,"## Orchestrator Response — Agent a3 Steering Decision
+
+## Decision: X.509 Certificates with PQC Signature Algorithms ✓ CONFIRMED
+
+**Answer**: X.509 certificates with PQC signature algorithms (CRYSTALS-Dilithium) are the standardised, production-viable path for PKI transition.
+
+---
+
+## Rationale
+
+| Option | Verdict | Reasoning |
+|--------|---------|----------|
+| **X.509 with PQC signatures (Dilithium)** | ✓ **SELECTED** | IETF draft in progress; leverages existing PKI infrastructure; backward-compatible hybrid approach available |
+| Custom certificate format | ✗ **Rejected** | Incompatible with existing certificate parsers, CAs, browsers, libraries; enterprise adoption infeasible |
+| Reuse RSA/ECC certificates unchanged | ✗ **Rejected** | Defeats entire PQC migration purpose; signatures remain vulnerable to quantum attacks |
+
+---
+
+## Section 9 Recommended Structure
+
+1. **Why existing X.509 works** — ""X.509 structure is algorithm-agnostic; the signature field accommodates Dilithium via OID assignment — no structural change required""
+2. **IETF draft status** — ""Draft IETF standard in progress; algorithm OIDs assigned for Kyber (KEM) and Dilithium (signatures) in X.509 SubjectPublicKeyInfo""
+3. **Hybrid certificate path** — ""Enterprises can deploy dual-signature certs (RSA/ECC + Dilithium) during transition — crypto-agility for PKI""
+4. **Key size implications** — ""Dilithium-3 signatures: ~2.4KB (vs ~256B RSA); plan for increased certificate chain sizes; TLS handshake overhead manageable""
+5. **CA readiness** — ""CAs beginning to issue Dilithium test certificates; enterprise CA teams should pilot Dilithium CSR generation now""
+6. **Migration ordering** — ""TLS KEM hybrid first → then signature certificates → then root CA keys (long"
+s8_n3_dense_d3_baseline_t03_8d1cf0,baseline,a2,9,0,INCORRECT,"The orchestrator response discusses post-quantum cryptography (PQC) compliance frameworks and NIST standards, which has no relevance to the steering question about interaction testing for subgroup effects in clinical trial statistical analysis.",FLAT,interaction term|moderation|interaction,interaction testing for subgroup effects,"# Steering Decision — Flat Context Request
+
+---
+
+## Agent a3 — Compliance Framework Alignment for PQC Whitepaper
+
+**DECISION: NIST SP 800-208 and FIPS 203/204/205 as the primary compliance references**
+
+**Rationale:** NIST guidance and FIPS standards are the definitive compliance anchors for PQC in regulated industries. NIST SP 800-208 specifically addresses hash-based signatures (XMSS, LMS) for government use cases, while FIPS 203/204/205 provide the actual algorithm standards with regulatory weight. These are the frameworks enterprises must reference when justifying PQC migration to auditors, regulators, and legal counsel.
+
+- **GDPR** covers data protection obligations but does not specify cryptographic algorithms—it provides a legal basis for PQC urgency (protecting long-sensitivity personal data) but not the technical compliance path
+- **ISO 27001** is too broad—it's a security management framework, not an algorithm specification standard; mentioning it adds little actionable guidance for PQC migration
+- **NIST + FIPS** directly enable compliance justification: ""FIPS 203/204 finalisation triggers NIST compliance obligations for federal contractors per NIST SP 800-208 migration timelines""
+
+**Calibration guidance for Section 11:**
+
+- **Primary coverage:** NIST SP 800-208 (hash-based signatures for government), FIPS 203/204/205 compliance implications
+- **Scope framing:** Focus on US federal and regulated industries (defense contractors,"
+s8_n3_dense_d3_dacs_t04_ba1ae5,dacs,a3,14,1,CORRECT,The orchestrator's response directly addresses the steering question about executive summary emphasis by making a clear decision (CISO/risk-focused framing) and providing substantive rationale tied to the target audience (board-level decision makers) and business objectives of the whitepaper.,FOCUS,business risk|ciso|executive,executive summary emphasis for PQC whitepaper,"**DECISION: Business risk / CISO-focused executive summary is the correct framing for board-level PQC adoption decisions**
+
+**Rationale:**
+- **Executive audiences respond to risk and action, not algorithms** — board members and CISOs need to understand *why* they must act now and *what* they must do, not the mathematical basis of lattice cryptography
+- **Harvest-now threat is a business risk, not a technical curiosity** — framing PQC as a risk management problem (like GDPR or ransomware) resonates with leadership accustomed to translating threat intelligence into budget decisions
+- **Cost framing must be proportionate** — presenting migration as a manageable, bounded investment with defined phases reduces the paralysis that often accompanies large cryptographic overhauls
+- **Action items create accountability** — ending with explicit CISO action items (inventory, risk assessment, vendor evaluation, timeline) converts the whitepaper from a reference document into a decision-making tool
+- **Regulatory framing alone is insufficient** — NIST compliance motivates federal contractors, but the broader enterprise audience needs the *risk* rationale to justify investment independent of mandates
+
+**Guidance for Agent a3 on Executive Summary:**
+
+Structure the summary around four components (target 400–600 words):
+
+1. **The threat (2–3 sentences)**: Harvest-now attacks create retroactive decryption risk today — adversaries are archiving encrypted enterprise data now with the intent to decrypt when quantum computers arrive. Long-lived secrets (IP, patient data, strategic plans) face 10–25 year exposure windows.
+
+2. **The opportunity window (2 sentences)**: Migration is tractable today using NIST-standardized algorithms (ML-KEM, ML-DSA, SLH-DSA) deployed via hybrid schemes in TLS 1.3. The cost and complexity of migration grows with every year of delay as cryptographic debt accumulates.
+
+3. **Business risk prioritization"
+s8_n3_dense_d3_dacs_t09_11cd71,dacs,a3,10,1,CORRECT,"The response correctly identifies NIST SP 800-208 as the primary compliance anchor for PQC (which is the authoritative US government guidance on post-quantum cryptographic transitions) and correctly identifies FIPS 203/204/205 as the primary PQC algorithm standards, while appropriately including GDPR and ISO 27001 as secondary enterprise-relevant frameworks.",FOCUS,nist sp 800|fips|compliance,compliance framework alignment for PQC whitepaper,"**STEERING DECISION for Agent a3:**
+
+**Compliance Framework Alignment: NIST SP 800-208 and FIPS 203/204/205 as primary references, with GDPR and ISO 27001 as secondary contextual frameworks**
+
+**Rationale:**
+1. **Primary compliance anchor:** NIST SP 800-208 (Transition to Post-Quantum Cryptography Algorithms)"
+s8_n3_dense_d3_dacs_t07_ea66a9,dacs,a2,12,1,CORRECT,"The response correctly identifies CONSORT as the mandatory reporting standard for randomised controlled trials, appropriately distinguishes it from STROBE (which applies to observational studies), and provides a structured breakdown of required reporting elements, directly addressing the steering question on clinical trial reporting standards.",FOCUS,consort|strobe|reporting guideline,reporting standard for clinical trial analysis,"## Orchestrator Decision: Agent a2 Reporting Standard
+
+**Decision: Confirm CONSORT statement as the mandatory reporting standard**
+
+### Rationale:
+1. **RCT mandatory requirement**: CONSORT is required by virtually all peer-reviewed clinical journals for randomised controlled trial publications — non-compliance leads to desk rejection
+2. **Wrong guideline**: STROBE applies to observational studies (cohort, case-control, cross-sectional) — using STROBE for an RCT signals methodological confusion
+3. **No guideline unacceptable**: Submission without CONSORT compliance will be rejected or returned for revision before peer review
+
+### Required CONSORT Elements for This Trial:
+
+| Section | Key Requirements |
+|---------|------------------|
+| **Title/Abstract** | Trial registration number, intervention description |
+| **Introduction** | Background, objectives, hypothesis |
+| **Methods** | Eligibility, settings, interventions, outcomes, sample size calculation |
+| **Randomisation** | Generation, allocation concealment, implementation |
+| **Blinding** | Who was blinded, how |
+| **Statistical methods** | Pre-specified analyses, subgroup plans, multiple comparison correction |
+| **Results** | Participant flow, baseline characteristics, primary/secondary outcomes with 95% CI and effect sizes |
+| **Ancillary analyses** | Sensitivity analyses, subgroup results |
+| **Discussion** | Limitations, generalisability, registration protocol compliance |
+
+### Implementation:
+```
+CONSORT Checklist Compliance:
+├── Item 1a: Title identifies as RCT ✓
+├── Item 4a: Eligibility criteria ✓
+├── Item 7a: Sample size calculation ✓
+├── Item 12a: Primary/secondary outcomes specified ✓
+├── Item 12b: Additional analyses (subgroups, sensitivity) ✓
+└──"
+s8_n3_dense_d3_baseline_t03_8d1cf0,baseline,a1,1,1,CORRECT,,FLAT,wordpiece|subword|bpe,tokenizer choice for legal text classification,"# Steering Decisions — Flat Context Request
+
+---
+
+## Agent a2 — Multiple Comparison Correction for Secondary Outcomes
+
+**DECISION: Benjamini-Hochberg FDR correction**
+
+**Rationale:** With 8 secondary outcomes, Benjamini-Hochberg controls false discovery rate appropriately for exploratory endpoints without the power loss of Bonferroni. FDR is the preferred framework for secondary outcomes in clinical trials because these analyses are hypothesis-generating rather than confirmatory. No correction is invalid for regulatory reporting.
+
+**Calibration guidance:**
+- **If primary outcome is significant** (p ≤ 0.05): Secondary testing proceeds with BH correction at α = 0.05
+- **Report both uncorrected and corrected p-values** to show inflation
+- **If no primary effect**: Secondary results should be reported as exploratory only, with BH correction emphasized
+
+---
+
+## Agent a1 — Tokenizer Choice for Legal Text Classification
+
+**DECISION: WordPiece / subword tokenizer matched"
+s8_n3_dense_d3_dacs_t09_11cd71,dacs,a2,2,1,CORRECT,"The response directly addresses the multiple comparison correction question by recommending Benjamini-Hochberg FDR for the family of 8 secondary tests, providing clear rationale for why FDR control is appropriate over Bonferroni or no correction, and includes implementation code and reporting standards.",FOCUS,bonferroni|fdr|benjamini,multiple comparison correction for family of tests,"# Steering Decision: Agent a2
+
+**Multiple Comparison Correction: Benjamini-Hochberg FDR** ✓
+
+## Rationale
+
+- **8 secondary outcomes** constitutes a ""family of tests"" requiring correction
+- **FDR (False Discovery Rate)** control is appropriate for secondary/exploratory outcomes because:
+  - Preserves power better than Bonferroni (less conservative)
+  - Acceptable for pre-specified secondary analyses in clinical trial reporting
+  - Controls proportion of significant findings that are false positives
+
+- **Bonferroni** is overly conservative here — appropriate for primary outcomes or confirmatory testing, not exploratory secondaries
+
+- **No correction** violates clinical reporting standards
+
+## Recommended Implementation
+
+```python
+from scipy.stats import false_discovery_control
+
+# Run 8 secondary tests, collect p-values
+p_values = [test_secondary_outcome_i(...) for i in range(8)]
+
+# Apply Benjamini-Hochberg FDR correction
+rejected, p_adjusted = false_discovery_control(p_values, method='bh')
+
+# Interpretation: Out of all rejected null hypotheses, 
+# expect <5% to be false positives
+```
+
+## Reporting Standard
+- Report raw p-values **and** FDR-adjusted p-values
+-"
+s8_n3_dense_d3_dacs_t08_91f04a,dacs,a3,11,1,CORRECT,"The response directly addresses the migration cost estimation approach by selecting and justifying the TCO framework, explaining why it's superior to flat estimates or no guidance, and providing concrete implementation details for the whitepaper section.",FOCUS,migration cost|tco|total cost,migration cost estimation approach,"## STEERING DECISION: Agent a3
+
+**Migration Cost Estimation: Total Cost of Ownership (TCO) Framework**
+
+### Rationale
+
+| Option | Suitability | Verdict |
+|--------|-------------|---------|
+| **TCO framework** (inventory + cryptographic bill of materials + phased migration cost) | Enables CFO/CISO business case development; scales by organisation size and asset inventory; phased approach maps to migration roadmap from Section 4; produces defensible budget projections | ✓ **SELECTED** |
+| Single flat cost estimate | Organisation-specific variables (asset count, HSM fleet, PKI complexity, staff skills) make any single number meaningless; too imprecise for budget planning | ✗ Imprecise |
+| No cost guidance | Enterprises require business case input for security investment requests; omitting cost framing reduces whitepaper's utility for executive audience and procurement teams | ✗ Gaps business case |
+
+### Recommended Section 12 Content: ""Migration Cost Estimation and Business Case""
+
+**Include:**
+
+- **TCO components breakdown**:
+  - *Discovery phase*: Cryptographic inventory tooling (e.g., `oqs-cost`, Cryptosense, Keyfactors); typically 2–6 weeks for mid-enterprise
+  - *Library and SDK licensing*: liboqs (open-source, no licence cost); vendor SDK costs for HSM firmware upgrades
+  - *Infrastructure upgrade*: TLS termination points (load balancers, API gateways, CDN edges — highest volume); HSM firmware/key migration; PKI CA infrastructure
+  - *Operational overhead*: Staff training, key rotation cycles, certificate renewal with larger PQC payloads
+  - *Hybrid TLS performance delta*: Kyber-768 adds ~1KB to TLS handshake — negligible for most workloads; note latency-sensitive use cases
+
+- **Cost estimation methodology**: Asset inventory count × per-endpoint migration cost + fixed HSM"
+s8_n3_dense_d3_dacs_t04_ba1ae5,dacs,a3,2,1,CORRECT,"The orchestrator makes a clear, defensible decision on the depth of NIST standardisation coverage (one focused section) with specific rationale tied to enterprise audience needs and provides actionable guidance for structuring that section.",FOCUS,nist|nist pqc|standardiz,NIST standardisation depth for PQC whitepaper,"**DECISION: Cover the NIST PQC standardisation process and final standards (FIPS 203/204/205) in one focused section**
+
+**Rationale:**
+- Enterprise security practitioners and CISOs need the compliance anchor — they must cite FIPS standards in procurement, vendor assessments, and risk documentation
+- A focused section provides sufficient historical context (why NIST ran the competition, timeline milestones) without exhaustive algorithm-by-algorithm coverage
+- This matches the target audience's practical needs: they need to *know the standards exist and their reference numbers* more than the full cryptographic competition history
+
+**Guidance for Agent a3 on Section 3 (NIST Standardisation Process):**
+
+Structure the section around:
+1. **Purpose and urgency** (2-3 sentences): Why NIST initiated the competition — quantum threat timeline, risk to current RSA/ECC
+2. **Process overview** (brief): 2016 call for proposals → multiple rounds → final selections in 2024
+3. **Final standards table** (practical reference):
+   | Standard | Algorithm | Type | Use Case |
+   |---|---|---|---|
+  "
+s8_n3_dense_d3_dacs_t08_91f04a,dacs,a2,5,0,CORRECT,"The response directly addresses the steering question by selecting Winsorisation as the approved method for handling outliers in clinical measurements, providing substantive technical rationale (preserving sample size, avoiding selection bias, reducing extreme value influence) and a clear implementation protocol.",FOCUS,winsoriz|iqr|robust,outlier handling for clinical measurements,"# Steering Decision: Agent a2 Outlier Handling
+
+**Approved Method:** Winsorisation at 1st/99th percentile ✓
+
+**Rationale:**
+- **Preserves sample size** (N = 400) — critical for maintaining pre-specified power calculations
+- **Reduces extreme value influence** without discarding data points
+- Deleting outlier rows risks **selection bias** if extreme values represent genuine treatment responders
+- Sensitivity analysis alone is insufficient as primary methodology — outliers must be handled, not just noted
+
+**Recommended Protocol:**
+1. Winsorise BP values at 1st/99th percentile (replace values beyond these bounds with boundary values)
+2. Run primary analysis on Winsorised data
+3. Report sensitivity analysis: results with and without Winsorisation (as secondary validation)
+4. Include outlier count and"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a2,0,1,CORRECT,"The orchestrator response for Agent a2 directly addresses the steering question by selecting Welch's t-test as the appropriate statistical test for a continuous primary outcome (BP reduction) in a two-group comparison with 400 patients, providing defensible rationale including unequal variance accommodation and robustness to normality violations.",FLAT,t-test|student|welch,statistical test for continuous primary outcome,"# Steering Decisions
+
+## Agent a1 [LOW] — No action required
+- **Status:** Waiting on architectural decision (BERT base model)
+- **Decision:** No steering request submitted yet. Awaiting agent to pose specific architecture question (e.g., `bert-base-uncased` vs. domain-adapted variant).
+
+---
+
+## Agent a2 [HIGH] — Decision confirmed
+**Question:** Which statistical test for continuous BP reduction outcome (400 patients, treatment vs. control)?
+
+**Decision: Welch's t-test (primary test)**
+
+| Option | Appropriateness | Rationale |
+|--------|-----------------|-----------|
+| **Welch's t-test** | ✅ Primary test | Continuous outcome, allows unequal variances, robust to normality violations with n=200/group |
+| Mann-Whitney U | ⚠️ Fallback | Use if Shapiro-Wilk normality test fails (p < 0"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a3,12,0,INCORRECT,"The orchestrator response completely ignores the steering question about vendor landscape coverage strategy and instead discusses evaluation metrics for legal document classification, which is entirely unrelated to both the agent domain (post-quantum cryptography whitepaper) and the actual question posed.",FLAT,pqshield|quantinuum|vendor,vendor landscape coverage strategy,"# Orchestrator Steering Decisions — Parallel Agents
+
+---
+
+## Agent a1 [MEDIUM] — Decision Confirmed
+
+**Question:** Evaluation metric for legal document classification (12 classes, rare 'Arbitration Clause' = 0.8%)?
+
+**Decision: Macro-averaged F1 (treats all 12 classes equally)**
+
+| Option | Appropriateness | Verdict |
+|--------|-----------------|---------|
+| **Macro-averaged F1** | Weights all classes equally regardless of size; gives rare categories full influence on"
+s8_n3_dense_d3_baseline_t02_d1254f,baseline,a3,7,1,CORRECT,"The response correctly identifies X25519Kyber768 hybrid KEM in TLS 1.3 as the production-deployed post-quantum TLS solution, accurately noting it is used by Cloudflare and Google Chrome, and appropriately dismisses TLS 1.2 PQC cipher suites as legacy—providing a technically defensible and current recommendation for enterprise PQC TLS integration coverage.",FLAT,tls 1.3|post-quantum tls|hybrid kem,TLS integration coverage for PQC deployment,"## Orchestrator Decision
+
+### Agent a3 — TLS Integration Coverage ✓
+
+**Decision: Hybrid KEM in TLS 1.3 (X25519Kyber768)**
+
+**Rationale:**
+- TLS 1.3 is the current standard; TLS 1.2 is deprecated and not recommended for new deployments
+- X25519Kyber768 is the production-deployed hybrid KEM (Cloudflare, Google Chrome) — this is the *only* currently operational post-quantum TLS deployment
+- OQS-OpenSSL provides the implementation path enterprises can adopt today
+- Skipping TLS is not viable — TLS is the primary enterprise surface for KEM deployment (key exchange, session encryption)
+- TLS 1.2 PQC cipher suites are legacy/unsupported and would give enterprises outdated guidance
+
+**Proceed:** Cover X25519Kyber768 hybrid KEM in TLS 1.3 as the current deployment path; note TLS 1.2 is deprecated; frame as ""post-quantum TLS is deployable now via hybrid schemes."""
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a2,4,0,INCORRECT,"The steering question asks about confidence interval width for reporting in the context of statistical hypothesis testing on clinical trial data, but the orchestrator response addresses post-quantum cryptography library selection (liboqs vs BouncyCastle), which is an entirely unrelated topic.",FLAT,95%|95 percent|confidence interval,confidence interval width for reporting,"## Steering Decision — Agent a3 [MEDIUM] ✅
+
+**Decision: liboqs (Open Quantum Safe)**
+
+---
+
+## Rationale
+
+**Cross-platform capability is the decisive factor for enterprise:**
+- liboqs provides C, Python, and Java bindings — covers the majority of enterprise infrastructure (Linux servers, data science pipelines, JVM-based systems)
+- BouncyCastle is JVM-only — severely limits utility in heterogeneous enterprise environments with mixed technology stacks
+- Cross-platform support enables a single library to serve as the PQC backbone across TLS termination points, application servers, and client tooling
+
+**Open Quantum Safe project credentials:**
+- Actively maintained by academic-industry consortium (University of Waterloo, Microsoft Research, Amazon, others)
+- Algorithms undergo security review before inclusion
+"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a1,6,1,INCORRECT,"The response is incomplete and appears to be truncated mid-sentence (cutting off at ""Enable""), leaving the full recommendation unclear and failing to provide a complete, actionable answer to the dropout strategy question.",FOCUS,dropout|regulariz|layer dropout,dropout strategy to reduce overfitting on legal corpus,"## Decision for Agent a1: Dropout Strategy for Overfitting Mitigation
+
+**Recommended: Increase Dropout Rate in Classification Head + Enable"
+s8_n3_dense_d3_dacs_t05_30cdbf,dacs,a1,0,1,CORRECT,"The response directly addresses the steering question by recommending LegalBERT as the base model architecture and substantively justifies this choice through domain specificity, task fit considerations, and comparisons with alternatives, making a technically defensible selection.",FOCUS,bert|transformer|pretrained,base model architecture for legal text classifier,"## Steering Decision: Agent a1
+
+**Recommendation: LegalBERT (legal-domain pretrained transformer)**
+
+### Rationale:
+1. **Domain specificity**: Legal documents contain specialized vocabulary, complex sentence structures, and legal terminology (citations, statutory references). LegalBERT's pretraining on legal corpora (case law, contracts, regulations) provides relevant embeddings out-of-the-box.
+
+2. **Task fit**: With 12 categories and 50K examples, you have sufficient data to fine-tune a transformer effectively while benefiting from domain-adapted weights.
+
+3. **Rejection of alternatives**:
+   - **Generic BERT**: Viable but suboptimal—lacks legal-specific pretraining
+   - **BiLSTM**: Disadvantage is explicitly stated (no transfer learning)
+   - **TF-IDF + SVM**: Fast but misses contextual semantics critical for legal text classification
+
+### Next step: Once LegalBERT is selected, confirm which LegalBERT variant (e.g., `nlpaueb/legal-bert-base-uncased` or domain-specific variant) matches your jurisdiction (U.S., EU, multi-l"
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a1,6,0,INCORRECT,"The orchestrator response discusses X.509 certificates, PQC signature algorithms, and PKI migration strategies, which are entirely unrelated to dropout strategies for reducing overfitting in BERT text classification on legal documents.",FLAT,dropout|regulariz|layer dropout,dropout strategy to reduce overfitting on legal corpus,"## Orchestrator Decision
+
+### Agent a3 — APPROVED
+
+**Decision:** Use **X.509 certificates with PQC signature algorithms** (Dilithium/XMSS signatures) as the standardized PKI transition path.
+
+**Rationale:**
+- X.509 certificates with PQC signatures are the **standards-aligned path** — IETF hybrid certificate drafts and NIST guidance establish this as the migration architecture
+- **Custom certificate formats are non-starters** — enterprises run on existing PKI infrastructure (Microsoft AD CS, EJBCA, Venafi, DigiCert); breaking compatibility eliminates any migration path
+- **Reusing RSA certificates unchanged is insufficient** — the signature algorithm is what needs to change; keeping RSA signatures while only upgrading key exchange defeats the PQC migration purpose
+- Certificate chain validation (TLS server certs, code signing, document signing) requires PQC signatures to be trustworthy post-quantum
+
+**Section 9 key messaging:**
+- Lead with **hybrid certificates** (RSA/ECC + PQC dual signatures) as the near-term deployment model — consistent with hybrid KEM approach from Section 8
+- IETF hybrid X.509 drafts (e.g., `draft-ietf-tls-hybrid-design`) define the certificate format — enterprises should monitor these for production-ready specs
+- Certificate lifecycle management (issuance, rotation, revocation) must be updated to support PQC algorithms before full deployment
+- **Practical note:** most enterprises will adopt PQC certificates through CA vendors (DigiCert, Sectigo, GlobalSign) — flag that enterprise PKI teams should request PQC certificate profiles from their CAs now"
+s8_n3_dense_d3_dacs_t07_ea66a9,dacs,a3,11,1,INCORRECT,The response is a truncated fragment that begins addressing cost but is incomplete and fails to provide any substantive guidance on a migration cost estimation approach for post-quantum cryptography.,FOCUS,migration cost|tco|total cost,migration cost estimation approach,**Decision: Total cost of
+s8_n3_dense_d3_baseline_t03_8d1cf0,baseline,a2,11,0,INCORRECT,"The orchestrator's response discusses PQC (post-quantum cryptography) vendor landscape strategy and whitepaper structure, which is entirely unrelated to the stated task domain of running iterative statistical hypothesis testing on clinical trial datasets or the steering question about sensitivity analysis for robustness.",FLAT,sensitivity|robustness check|exclusion criteria,sensitivity analysis for robustness,"# Steering Decision — Flat Context Request
+
+---
+
+## Agent a3 — Vendor Landscape Coverage Strategy
+
+**DECISION: Cover major PQC vendors (PQShield, Quantinuum, SandboxAQ, IBM Quantum-safe) without endorsing a single vendor**
+
+**Rationale:** Covering the commercial PQC vendor ecosystem is essential for practitioner readers who need procurement guidance. An independent whitepaper must remain vendor-neutral — endorsing a single vendor undermines credibility and limits usefulness across diverse enterprise environments. Omitting vendor coverage entirely fails the practitioner use case: ""who do we buy from?"" is a direct question enterprises will ask after reading Sections 1-12.
+
+**Calibration guidance for Section 13:**
+
+- **Coverage approach:** Profile 4-6 major vendors with brief capability summaries (algorithm coverage, enterprise integration offerings, target customer segment)
+- **Vendor selection criteria:** Market presence, NIST collaboration, enterprise readiness, solution breadth
+- **Framing:** Present as landscape overview, not ranking or endorsement — phrases like ""represents notable players in the PQC vendor ecosystem"" rather than ""best vendors""
+- **Complementary angle:** Position vendors as implementation partners complementing in-house teams using liboqs (Section 6) — enterprises will likely combine open-source tooling with vendor support for production deployment
+- **Avoid:** Recommending specific procurement decisions — this is guidance, not a vendor evaluation
+
+**Connection to prior decisions:**
+- Builds on Sections 6 (liboqs) and 10 (HSM vendor timelines) — vendor landscape shows where enterprises can source PQC solutions beyond internal open-source implementations"
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a3,3,1,CORRECT,"The response directly addresses the migration timeline framing question by establishing a clear, defensible position—choosing hybrid cryptography/crypto-agility as the optimal middle-ground approach—while explicitly framing and dismissing the ""wait and see"" and ""immediate full cutover"" extremes with technically sound rationale (compatibility concerns, harvest-now-decrypt-later threats, and industry authority recommendations).",FOCUS,hybrid|crypto-agility|migration,migration timeline framing for PQC adoption,"**STEERING DECISION for Agent a3**
+
+**Decision:** Hybrid cryptography / crypto-agility approach as the primary migration strategy, with explicit framing against the ""wait and see"" and ""immediate full cutover"" alternatives.
+
+**Rationale:**
+
+- **Immediate full cutover:** Impractical for most enterprises — breaks compatibility with existing systems, partners, clients, and protocols; no phased risk reduction
+- **""Wait until quantum computers exist"":** Dangerous — ""harvest now, decrypt later"" attacks mean adversaries are *already* collecting encrypted data for future decryption; waiting is a post-quantum *failure* strategy
+- **Hybrid cryptography / crypto-agility:** Universally recommended by NIST, CISA, NSA, and major cloud providers; enables parallel execution of classical + PQC algorithms during transition, preserving backward compatibility while building quantum-resistant posture
+
+**Section 4 scope guidance:**
+- **Crypto-agility definition:** Architecture property enabling algorithm substitution without full system redesign — critical for future-proofing against further PQC algorithm changes
+- **Hybrid implementation pattern:** Encrypt/sign with *both* classical and PQC algorithms; receiver accepts"
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a2,8,1,CORRECT,"The orchestrator provides a technically sound and well-reasoned response that directly addresses the covariate adjustment question by recommending ANCOVA with clinically justified covariates (baseline BP and age), citing appropriate regulatory guidelines (ICH E9), explaining power/precision benefits, and correctly rejecting alternative approaches (post-stratification as overly complex for a simple RCT, no adjustment as inappropriate given documented imbalance).",FOCUS,confounder|covariate|ancova,covariate adjustment strategy,"## Decision: Covariate Adjustment Strategy
+
+**Primary Method:** ANCOVA with age and baseline BP as covariates ✓
+
+**Rationale:**
+- Standard adjustment for pre-specified confounders in RCTs per ICH E9 guidelines
+- Baseline BP is a strong predictor of 12-week BP — adjustment increases statistical precision
+- Age is prognostic for BP response — adjusting accounts for slight inter-arm imbalance
+- Pre-specified in SAP → no multiple comparison penalty (not exploratory)
+- Increases power by reducing residual variance
+
+**Implementation:**
+```
+Model: Post-treatment BP ~ Treatment + Baseline BP + Age
+```
+
+**Reject:**
+- Post-stratification weighting ✗ — overly complex for simple two-arm RCT; appropriate for observational studies or complex survey designs
+- No adjustment ✗ — ignores documented imbalance; reviewers will object; reduces efficiency; potentially biased estimates
+
+---
+
+**Recommended workflow:**
+
+1. **Primary analysis:** Run ANCOVA with treatment, baseline BP, age
+2. **Unadjusted sensitivity:** Report raw Welch"
+s8_n3_dense_d3_dacs_t07_ea66a9,dacs,a2,10,1,CORRECT,"The response directly addresses the steering question about a pre-specified subgroup analysis plan by providing a clear decision framework that distinguishes pre-specified (confirmatory) from post-hoc (exploratory) analyses, with supporting rationale based on CONSORT guidelines, regulatory expectations, and scientific integrity principles.",FOCUS,stratif|subgroup|pre-specified,pre-specified subgroup analysis plan,"## Orchestrator Decision: Agent a2 Pre-Specified Subgroup Analysis Plan
+
+**Decision: Confirm explicit stratification of pre-specified vs. post-hoc exploratory subgroups as required by CONSORT**
+
+### Rationale:
+
+1. **CONSORT compliance**: CONSORT Subgroup Reporting Guidelines mandate clear distinction between pre-specified (confirmatory) and post-hoc (exploratory) subgroup analyses — failure to distinguish misleads readers and regulators
+
+2. **Regulatory expectation**: FDA/EMA distinguish confirmatory pre-specified analyses from exploratory post-hoc — pre-specified carry evidentiary weight; post-hoc generate hypotheses only
+
+3. **Scientific integrity**: Reporting all subgroups as equal obscures that post-hoc findings may arise from multiple comparison inflation and data-driven selection
+
+4. **Sponsor transparency**: Sponsor expects clear hierarchy — primary confirmatory analyses vs. hypothesis-generating secondary findings
+
+### Recommended Approach:
+
+| Category | Status | Examples | Reporting Treatment |
+|----------|--------|----------|---------------------|
+| **Primary** | Pre-specified in protocol | Age group (<65/≥65) | Full statistical detail; effect estimates with 95% CI |
+| **Secondary** | Pre-specified in SAP | Sex (M/F), baseline BP stratum | Full detail but clearly labeled ""pre-specified secondary"" |
+| **Exploratory** | Post-hoc data-driven | BMI category, comorbidity | Descriptive only; no inference; hypothesis-generating |
+
+### Implementation:
+
+```
+Subgroup Analysis Plan:
+├── Pre-specified (Confirmatory)
+│   ├── Age group (<65 vs ≥65) — formal interaction test ✓
+│   └── Sex (M vs F) — formal interaction test
+├── Pre-specified (Exploratory)  
+│   ├── Baseline BP stratum (mild/moderate/severe)
+│   └── Prior antihypertensive"
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a2,10,0,INCORRECT,"The orchestrator response discusses back-translation augmentation strategies for low-resource legal text, which is entirely unrelated to running iterative statistical hypothesis testing on clinical trial datasets or developing a pre-specified subgroup analysis plan for clinical trials.",FLAT,stratif|subgroup|pre-specified,pre-specified subgroup analysis plan,"## Orchestrator Decision
+
+### Agent a1 — APPROVED
+
+**Decision:** Use **back-translation** as the primary augmentation strategy for low-resource legal categories.
+
+**Rationale:**
+- Back-translation (legal text → French/German → back to English) **preserves legal semantics** — the meaning, obligations, and conditional clauses that define legal language are maintained through the round-trip translation. This is critical for legal text where single-word changes can alter contractual meaning.
+- Random word deletion is explicitly **contraindicated for legal text** — deleting terms like ""shall,"" ""may,"" ""unless,"" or ""provided that"" can invert or destroy the legal meaning of a clause. Legal text relies on precise vocabulary.
+- EDA (synonym replacement) is **risky without domain-aware vocabulary** — synonyms that work for general NLP may not preserve legal specificity. ""Indemnify"" ≠ ""compensate"" in a liability clause; ""whereas"" has a specific legal preamble function.
+
+**Implementation guidance:**
+```
+Source: English legal clause
+→ Translate to French → Translate back to English
+→ Validate semantic equivalence (spot-check)
+→ Use augmented examples in minority class training
+```
+
+**Efficiency note:** Back-translation for legal documents with <200 training examples typically generates 3–5 high-quality augmented samples per original, which is sufficient to lift minority class recall above 70% for BERT fine-tuning. You may also combine back-translation with class-weighted loss (approved earlier) for a two-pronged imbalance strategy.
+
+**Alternative if back-translation is unavailable:** Use contextual perturbation (replace entities/amounts with plausible alternatives within the same document) rather than synonym replacement — this preserves legal structure while adding diversity."
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a3,1,1,CORRECT,"The response correctly selects Kyber and Dilithium as the primary PQC algorithms since they are the main NIST-standardized lattice-based algorithms (FIPS 203/204) that enterprises will implement, while appropriately acknowledging SPHINCS+ (FIPS 205) for completeness — this is a defensible and accurate coverage selection for an enterprise whitepaper.",FOCUS,crystals|kyber|dilithium,PQC algorithm coverage selection,"**STEERING DECISION for Agent a3**
+
+**Decision:** CRYSTALS-Kyber (KEM) and CRYSTALS-Dilithium (signatures) as primary coverage, with brief acknowledgment of SPHINCS+ (hash-based signatures) for completeness.
+
+**Rationale:**
+- FIPS 203 (Kyber) and FIPS 204 (Dilithium) are the primary NIST-standardized PQC algorithms — these are what enterprises will implement first
+- Code-based and other candidates remain in various standardization stages;Kyber/Dilithium are production-ready
+- SPHINCS+ (FIPS 205) is also standardized for signatures where hash-based properties are needed, warranting brief mention
+
+**Scope guidance for Section 2:**
+- Cover Kyber as the primary key encapsulation mechanism (replaces RSA/ECC key exchange)
+- Cover Dilithium as the primary signature scheme (replaces RSA/ECDSA signatures)
+- Note SPHINCS+ as an alternative signature algorithm with different tradeoffs (larger signatures, no lattice assumptions)
+- Do not deep-dive into algorithm internals — focus on: use cases, performance characteristics, key sizes, standardization status
+-"
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a3,5,1,CORRECT,"The response directly addresses the steering question by providing a clear primary library recommendation (liboqs), substantiating it with relevant technical criteria (cross-platform support, active maintenance, NIST algorithm coverage, production deployment history), offering a secondary option for specific ecosystems, and explicitly excluding risky alternatives—all of which constitute a technically defensible and actionable recommendation for enterprise PQC implementation.",FLAT,liboqs|bouncycastle|library,PQC implementation library recommendation,"=== DECISION — Agent a3 (MEDIUM) ===
+
+**PQC Implementation Library: liboqs (Open Quantum Safe)**
+
+This is the primary recommended library for enterprise PQC implementation.
+
+**Rationale:**
+- **Cross-platform** — C, Python, Java, Go bindings; works across Linux, Windows, macOS
+- **Actively maintained** — Backed by Amazon, Microsoft, Google; continuous updates for NIST standards
+- **Algorithm coverage** — Implements all NIST-finalised algorithms (Kyber, Dilithium, SPHINCS+) plus candidates
+- **Production-ready** — Used in real deployments (OpenSSL integration, Azure, AWS)
+
+**Recommended Section 6 Structure:**
+
+1. **liboqs** (Open Quantum Safe) — primary recommendation
+   - Language bindings: C, Python, Java, Go
+   - NIST algorithm implementations
+   - Integration paths: OpenSSL/BoringSSL, TLS stacks
+
+2. **BouncyCastle** — secondary (Java/JVM ecosystems only)
+   - Acceptable for JVM-heavy enterprises
+   - Slower update cadence than liboqs
+
+3. **What to exclude:**
+   - Custom implementations (""write from scratch"") — never recommend this; cryptographic implementations require expert review and are extremely difficult to get right
+
+**Calibration:** Enterprise practitioners need to know *which library to evaluate in their environment*. Recommend liboqs as the primary evaluation target, with BouncyCastle as a JVM alternative.
+
+Proceed with Section 6 using this library guidance."
+s8_n3_dense_d3_baseline_t03_8d1cf0,baseline,a2,5,0,INCORRECT,"There is no orchestrator response provided to evaluate, so the steering question about outlier handling cannot be addressed.",FLAT,winsoriz|iqr|robust,outlier handling for clinical measurements,
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a3,12,1,CORRECT,The orchestrator directly addresses the vendor landscape coverage strategy question by making a clear decision to cover major PQC vendors with defensible rationale explaining why this approach serves the whitepaper's purpose while avoiding commercial bias.,FOCUS,pqshield|quantinuum|vendor,vendor landscape coverage strategy,"**STEERING DECISION for Agent a3**
+
+**Decision:** Cover major PQC vendors — PQShield, Quantinuum, SandboxAQ, and IBM Quantum-Safe — to provide practitioners with an actionable procurement landscape. Frame as an ecosystem overview, not vendor endorsement.
+
+**Rationale:**
+
+- **Endorse a single vendor:** Commercially inappropriate for an independent whitepaper; undermines credibility, creates liability, and fails to serve practitioners with heterogeneous vendor relationships
+- **Omit vendor landscape:** Misses the key practitioner use case — enterprises evaluating PQC adoption need to know *who offers compliant solutions*, not just *what the standards are*; omission renders the whitepaper incomplete for procurement planning
+- **Cover major PQC vendors:** Provides actionable procurement map — enables security architects and procurement teams to shortlist vendors, initiate RFIs, and compare capabilities without commercial bias
+
+**Section 13 scope guidance:**
+
+- **PQShield:** Highlight as a pure-play PQC company with hardware security module integrations and API SDK offerings
+- **Quantinuum:** Note for quantum key distribution (QKD) + PQC hybrid positioning; relevant for government/defense sectors
+-"
+s8_n3_dense_d3_dacs_t10_92b2b9,dacs,a3,4,1,CORRECT,"The response substantively addresses the steering question by explicitly identifying ""harvest-now/decrypt-later"" as the primary threat narrative, correctly dismissing overstatement of current quantum capabilities, and correcting the dangerous misconception that long-term data has no quantum risk — all directly relevant to threat model coverage for the PQC narrative.",FOCUS,harvest now|store now decrypt later|y2q,threat model coverage for PQC threat narrative,"**STEERING DECISION for Agent a3**
+
+**Section 5 Threat Narrative: Harvest-Now / Store-Now-Decrypt-Later**
+
+**Recommendation:** 'Harvest now, decrypt later' (HNDL) as the primary threat narrative — with explicit dismissal of quantum computers currently capable of breaking RSA (overstatement) and rebuttal of ""no quantum risk for long-term data"" (incorrect).
+
+**Rationale:**
+
+| Threat Framing | Assessment |
+|----------------|------------|
+| **Harvest-now / store-now-decrypt-later** | ✅ The operative threat — adversaries (state actors, criminal orgs) are archiving encrypted enterprise data today; decryption becomes feasible when CRQC exists |
+| **""Quantum computers break RSA today""** | ❌ Factually inaccurate — current quantum computers lack sufficient qubits/error correction; overstating risk undermines credibility with technical audiences |
+| **""Long-term data has no quantum risk""** | ❌ Dangerous misconception — government classified data, health records, IP, financial records all exceed 10–20 year sensitivity windows; HNDL makes retroactive exposure retroactive |
+
+**Calibration guidance for Section 5:**
+
+- **Primary threat:** Nation-state adversaries (APT groups) and well-resourced criminal organisations are capturing and storing encrypted traffic today — targeting data with 10+ year sensitivity
+- **Attack window:** ""Store now, decrypt later"" — the threat begins the moment sensitive data is encrypted with classical algorithms, not when quantum hardware appears
+- **Affected data categories:** Classified/government communications, health records (20+ year retention), financial records, IP/pat"
+s8_n3_dense_d3_dacs_t08_91f04a,dacs,a3,5,1,CORRECT,"The response directly addresses the library recommendation question by selecting liboqs as the primary option, providing a comparison table with alternatives, and including concrete implementation details (algorithm names, GitHub repo, language bindings) that would be useful for the whitepaper.",FOCUS,liboqs|bouncycastle|library,PQC implementation library recommendation,"## STEERING DECISION: Agent a3
+
+**Library Selection: liboqs (Open Quantum Safe) — Primary Recommendation**
+
+### Rationale
+
+| Option | Suitability | Verdict |
+|--------|-------------|---------|
+| **liboqs (Open Quantum Safe)** | Cross-platform (C, Python, Java); actively maintained by academic/industry consortium; implements all NIST-standardised algorithms (Kyber, Dilithium, SPHINCS+); production-ready bindings for TLS integrations (OpenSSL, BoringSSL) | ✓ **SELECTED** |
+| Write PQC algorithms from scratch | Mathematically complex; security-critical bugs likely; never recommended for production use | ✗ Impractical + insecure |
+| BouncyCastle PQC extension (JVM-only) | Valid for Java/Kotlin enterprise stacks; useful secondary option for JVM-heavy shops; however limits portability across Python, Go, Rust, C++ codebases | ✗ Platform-locked |
+
+### Recommended Section 6 Content: ""Implementing Post-Quantum Cryptography""
+
+**Include:**
+
+- **liboqs** as primary library: Native C implementation + language bindings (Python, Java, Go, Rust); GitHub: `open-quantum-safe/liboqs`
+- **Algorithm selection via liboqs**: `OQS_KEM_kyber_768`, `OQS_SIG_dilithium_3` as default enterprise profiles
+- **TLS integration path**: Open Quantum Safe's OpenSSL fork (`oqs-provider`) for hybrid TLS in web servers; BoringSSL hybrid patches for Chrome/Chrome OS
+- **BouncyCastle as secondary**: Recommend only for JVM-only environments where liboqs JVM binding integration is incomplete
+- **What to avoid**: Custom algorithm implementations, proprietary PQC libraries without third-party audits
+
+### Section 6 Recommended Structure
+
+1. Library landscape overview (liboqs, BouncyCastle, vendor SDKs)
+2"
+s8_n3_dense_d3_dacs_t02_be884b,dacs,a3,5,1,CORRECT,"The orchestrator directly addresses the steering question by providing liboqs as the primary library recommendation with substantive technical rationale (NIST standardization, cross-platform support, cloud provider adoption) and discusses alternatives, all of which are directly relevant to PQC implementation guidance.",FOCUS,liboqs|bouncycastle|library,PQC implementation library recommendation,"**STEERING DECISION for Agent a3**
+
+**Decision:** liboqs (Open Quantum Safe) as the primary recommended library, with BouncyCastle noted as a Java-ecosystem alternative only.
+
+**Rationale:**
+
+- **Option 2 (write from scratch):** Impractical and insecure — cryptanalytic implementation requires specialized expertise; rolling custom PQC implementations introduces vulnerabilities that well-studied, peer-reviewed libraries avoid
+- **Option 3 (BouncyCastle JVM extension):** Valid within Java/JVM ecosystems but narrow scope; enterprises with polyglot or heterogeneous infrastructure need cross-platform coverage
+- **liboqs:** The Open Quantum Safe project is the industry-standard open-source PQC library — actively maintained by academics and industry contributors, supports all NIST-standardized algorithms (Kyber, Dilithium, SPHINCS+), and provides bindings for C, C++, Python, Java, and Go; most major cloud providers (AWS, Google Cloud, Microsoft Azure) reference liboqs in their PQC implementations
+
+**Section 6 scope guidance:**
+
+- **Primary recommendation:** liboqs as the implementation foundation — cite as the reference library for hybrid PQC prototypes and pilots
+- **Language-specific notes:** liboqs bindings exist for Python (oqs-python), Java (oqs-java), Go (oqs-go); mention these for teams already in those ecosystems
+- **BouncyCastle caveat:** Note BouncyCastle's PQC extensions as acceptable for JVM-only shops but recommend evaluating liboqs Java bindings for consistency across platforms
+- **Do not recommend"
+s8_n3_dense_d3_dacs_t06_31c66c,dacs,a2,1,1,CORRECT,"The response correctly identifies Shapiro-Wilk test as the appropriate normality check method for the clinical trial context, providing sound statistical justification (power, sample size appropriateness for n=400, formal p-value for regulatory reporting) and a clear implementation decision tree for the subsequent parametric test selection.",FOCUS,shapiro|kolmogorov|normality test,normality check method before parametric test,"## Steering Decision: Agent a2
+
+**Decision:** Confirm **Shapiro-Wilk test** as the normality verification method.
+
+**Rationale:**
+
+- Standard normality test for clinical trial datasets with n < 2000 ✓
+- Most statistically powerful test for normality detection in this sample size ✓
+- Provides formal p-value for reporting in analysis plan ✓
+- Appropriate for n=400 (well within optimal range)
+
+**Implementation approach:**
+
+1. Apply Shapiro-Wilk test separately to each arm (treatment, control)
+2. If both arms pass (p > 0.05) → proceed with Welch's t-test
+3. If either arm fails (p ≤ 0.05) → fallback to Mann-Whitney U test
+4. As secondary check: visually inspect histograms for extreme skewness/kurtosis
+
+**Note:** Visual inspection alone or skipping normality check are not acceptable for RCT regulatory submissions.
+
+**Proceed with Shapiro-Wilk normality verification, then run Welch's t-test on confirmed continuous normal data.**"
+s8_n3_dense_d3_baseline_t06_c1275d,baseline,a1,2,0,INCORRECT,"No orchestrator response was provided - the response field is empty, so there is no content to evaluate for correctness in addressing sequence length handling for long legal documents.",FLAT,512|truncat|sliding window,sequence length handling for long legal documents,
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a3,4,1,CORRECT,"The orchestrator correctly identifies ""harvest now, decrypt later"" as the primary PQC threat narrative and provides technically sound justification by explaining the active attack window and correctly rejecting false alternatives like ""quantum computers already break RSA"" and ""long-term data has no quantum risk.""",FLAT,harvest now|store now decrypt later|y2q,threat model coverage for PQC threat narrative,"# Steering Decision — Agent a3 [HIGH] ✅
+
+**Decision: 'Harvest now, decrypt later' / 'Store now, decrypt later' as the primary threat narrative.**
+
+---
+
+## Rationale
+
+**Harvest-now is the actionable threat that justifies urgency:**
+- Nation-state actors and well-resourced adversaries are *already* archiving encrypted enterprise communications, financial records, and IP today
+- They don't need quantum computers to exist yet — they're betting on future capability
+- This means the ""attack window"" has already opened; waiting for quantum computers to materialize is too late
+
+**The other options are either false or dangerously misleading:**
+
+- *""Quantum computers already break RSA""* → **False**. Current quantum computers lack the qubit count and error correction needed. Overstating this undermines credibility with technical audiences who know this isn't true.
+
+- *""Long-term data has no quantum risk""* → **Dangerously wrong**. Government classified data (30+ year classification), healthcare records, financial contracts, and trade secrets have sensitivity windows well beyond the timeline when quantum attacks become feasible.
+
+---
+
+## Recommended Section 5 Framing
+
+1. **Primary threat**: Adversaries collecting encrypted data today (harvest-now)
+"
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a1,4,1,CORRECT,"The response directly addresses the learning rate schedule question by recommending linear warmup followed by cosine/linear decay, provides technically sound rationale (warmup protects pretrained weights, cosine decay aids convergence), includes implementation code, and considers alternatives—all of which substantively answers the steering question about scheduling for BERT fine-tuning.",FOCUS,warmup|cosine|linear warmup,learning rate schedule for BERT fine-tuning,"# Steering Decision: Agent a1
+
+## Recommendation: **Linear warmup followed by cosine/linear decay**
+
+### Rationale
+
+| Factor | Decision |
+|--------|----------|
+| **Standard BERT recipe** | Warmup + decay is the canonical schedule used in original BERT paper and all downstream fine-tuning tasks |
+| **Large pretrained weights** | Without warmup, large gradient updates on fragile pretrained weights cause catastrophic forgetting; warmup gradually restores adaptation |
+| **Convergence stability** | Cosine decay provides smoother final convergence than step decay; linear is a valid simpler alternative |
+| **Legal domain adaptation** | 50K fine-tuning examples — schedule ensures gradual domain shift from general → legal embeddings |
+
+### Implementation
+```python
+from transformers import get_linear_schedule_with_warmup
+
+num_training_steps = (len(train_loader) // accumulation_steps) * num_epochs
+num_warmup_steps = int(0.1 * num_training_steps)  # 10% warmup
+
+scheduler = get_linear_schedule_with_warmup(
+    optimizer,
+    num_warmup_steps=num_warmup_steps,
+    num_training_steps=num_training_steps
+)
+```
+
+### Rejected Alternatives
+- **Constant LR**: Destabilizes early fine-tuning — large BERT weights receive oversized updates → pretrained knowledge destroyed
+- **Cyclical LR**: Designed for training from scratch where exploration is beneficial; fine-tuning benefits from monotonic decay toward minimum
+
+### Next Steering
+With tokenizer, truncation, gradient accumulation, and LR schedule set, the baseline configuration is complete. Ready to proceed to initial training run and metrics collection before hyperparameter tuning."
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a1,0,1,CORRECT,"The response directly addresses the steering question by recommending LegalBERT as the base model architecture, provides substantive rationale covering domain specificity, dataset adequacy, and architectural fit, and even addresses why alternatives were rejected.",FOCUS,bert|transformer|pretrained,base model architecture for legal text classifier,"# Steering Decision: Agent a1
+
+## Recommendation: **LegalBERT** (Legal-domain pretrained transformer)
+
+### Rationale
+
+| Factor | Decision |
+|--------|----------|
+| **Domain specificity** | LegalBERT was pretrained on CaseLaw, EU documents, and legal corpora—directly applicable to legal classification |
+| **Dataset size** | 50K labeled examples is sufficient to fine-tune a pretrained transformer effectively |
+| **Category count** | 12-class multi-label classification is well-suited to transformer architectures |
+| **Legal semantics** | TF-IDF/SVM would miss critical contextual cues (citations, conditional logic, precedents) |
+
+### Implementation Notes
+- Start with `nlpaueb/legal-bert-base-uncased` from HuggingFace
+- Use classification head + cross-entropy loss for fine-tuning
+- Reserve ~10% for validation during hyperparameter tuning
+
+### Rejected Alternatives
+- **BiLSTM from scratch**: Insufficient data to train competitive representation without transfer learning
+- **General BERT**: Functional but LegalBERT captures domain-specific embeddings better
+- **TF-IDF + SVM**: Computationally fast but inadequate for legal text nuance
+
+---
+
+**Proceed with LegalBERT fine-tuning pipeline. Next steering will address hyperparameters once baseline is established.**"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a3,8,1,CORRECT,"The response directly addresses certificate and PKI handling for the PQC transition by recommending X.509 certificates with Dilithium signatures, explaining the hybrid signature approach for interoperability, and addressing certificate chain integrity concerns — all substantive technical decisions relevant to the steering question.",FOCUS,x509|certificate|pki,certificate and PKI handling for PQC transition,"**STEERING DECISION for Agent a3:**
+
+**Selected Approach:** X.509 certificates with PQC signature algorithms — CRYSTALS-Dilithium as the primary signature scheme in certificates; IETF draft specifications provide implementation pathway
+
+**Rationale:**
+
+- **Standards-aligned path:** IETF is actively developing hybrid and post-quantum X.509 certificate profiles; enterprises adopting now position for standards completion without breaking existing PKI workflows
+- **Infrastructure compatibility:** X.509 is the universal enterprise certificate format — embedding Dilithium signatures in existing certificate structures avoids custom formats, proprietary extensions, or PKI rebuilds
+- **Hybrid signature approach:** Like the TLS migration (Section 8), hybrid signatures (RSA/ECC + Dilithium) provide immediate quantum protection while maintaining interoperability with classical-only validators during transition
+- **Certificate chain integrity:** Digital signatures on certificates themselves are a critical attack surface for harvest-now threats — adversaries targeting CA infrastructure or certificate validation logic will benefit from PQC signatures
+
+**Recommended Section 9 Structure (~2 pages):**
+
+1. **Why certificates matter for PQC:** Signature verification is the quantum-vulnerable operation; TLS key exchange protection (Section 8) is necessary but insufficient if certificate validation is compromised
+2. **Dilithium in X.509:** How FIPS 204 algorithms integrate into certificate structures; key sizes, signature formats"
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a2,6,0,INCORRECT,"The response discusses post-quantum cryptography and TLS protocol deployment (hybrid KEM in TLS 1.3), which is entirely unrelated to the steering question about missing data imputation for clinical trials—a statistical method for handling incomplete datasets in clinical research.",FLAT,multiple imputation|mice|impute,missing data imputation for clinical trial,"## Orchestrator Decision
+
+### Agent a3 — APPROVED
+
+**Decision:** Cover **hybrid KEM in TLS 1.3** as the primary PQC deployment surface, with a clear note that TLS 1.2 with PQC cipher suites is deprecated and not recommended.
+
+**Rationale:**
+- TLS 1.3 is the **current standard protocol** — TLS 1.2 is being actively phased out by browsers and enterprises
+- **X25519+Kyber-768 hybrid** is already deployed in production — supported by OQS-OpenSSL, BoringSSL (Chrome), and Apple's TLS stack
+- **TLS is the primary enterprise key exchange surface** — covering PQC without TLS coverage would leave enterprises without the most actionable deployment path
+- Skipping TLS entirely would be a significant gap — the vast majority of PQC deployment will occur through TLS stack upgrades
+
+**Section 8 key messaging:**
+- Lead with hybrid TLS 1.3 as the deployment path enterprises should target today
+- Note which vendors/platforms already support hybrid KEM (Chrome, Safari, Cloudflare, AWS)
+- Frame migration as a **TLS stack upgrade** rather than application-level changes — most enterprises will get PQC through infrastructure/vendor updates
+- Flag that TLS 1.2 PQC variants exist"
+s8_n3_dense_d3_dacs_t09_11cd71,dacs,a2,6,1,CORRECT,"The response directly addresses the missing data imputation question by recommending MICE as the appropriate method, explains why this is preferable to LOCF or complete case analysis for clinical trial data, and provides concrete implementation code using sklearn's IterativeImputer.",FOCUS,multiple imputation|mice|impute,missing data imputation for clinical trial,"# Steering Decision: Agent a2
+
+**Missing Data Imputation: Multiple Imputation (MICE)** ✓
+
+## Rationale
+
+- **8% missing data is substantial** — complete case analysis would discard valuable patient information and reduce power
+- **MICE (Multivariate Imputation by Chained Equations)** is the CONSORT-recommended gold standard for RCT missing data under the Missing At Random (MAR) assumption
+- Preserves sample size and statistical efficiency — critical for intent-to-treat (ITT) analysis integrity
+- **LOCF** is biased when missingness is related to treatment response or outcome trajectory (not MAR)
+- **Complete case analysis** introduces selection bias and reduces power unnecessarily
+
+## Recommended Implementation
+
+```python
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+import pandas as pd
+import numpy as np
+
+# MICE implementation using sklearn
+imputer = IterativeImputer(
+    max_iter=20,
+    random_state=42,
+    verbose=0
+)
+
+# Include baseline covariates for better prediction
+X_impute = df[['baseline_bp', 'age', 'bmi', 'treatment_group']]
+X_imputed = imputer.fit_transform(X_impute)
+
+# Run analysis on imputed datasets and pool results using Rubin's rules
+```
+
+## Workflow for Agent a2
+
+1. **Document missingness pattern** — MCAR, MAR, or MNAR assessment
+2. **Apply MICE** (5-10 imputations recommended) including baseline covariates
+3. **Run primary analysis** (Welch's t-test) on each imputed dataset
+4. **Pool results** using Rubin's rules:
+   - Pooled estimate = mean of estimates
+   - Pooled variance incorporates between-imputation variability
+5. **Sensitivity analysis**: Report results with and without imputation (complete case subset)
+
+## Final Checklist for Agent a2"
+s8_n3_dense_d3_dacs_t05_30cdbf,dacs,a3,12,1,CORRECT,"The orchestrator provides a substantive decision on vendor coverage strategy by selecting specific vendors (PQShield, Quantinuum, SandboxAQ, IBM) with clear rationale for the selection criteria, and offers structural guidance for the section—directly addressing the steering question about how to handle vendor landscape coverage in the whitepaper.",FOCUS,pqshield|quantinuum|vendor,vendor landscape coverage strategy,"**DECISION: Cover major PQC vendors — PQShield, Quantinuum, SandboxAQ, and IBM Quantum-Safe — as a balanced procurement landscape overview**
+
+**Rationale:**
+
+- **Practitioner procurement need**: Enterprise security architects and procurement teams reading this whitepaper will ask ""who do we buy from?"" — omitting vendor coverage leaves the most actionable business question unanswered
+- **Maintains whitepaper independence**: Providing a landscape overview is not an endorsement; it informs decisions. Single-vendor endorsement would compromise credibility and invite vendor complaints
+- **Established vendor ecosystem**: These four represent distinct market positions — PQShield (embedded/Chips), Quantinuum (HSM/integration), SandboxAQ (SaaS/security posture), IBM (full-stack enterprise) — giving enterprises a representative procurement map
+- **Avoids greenfield advocacy**: Coverage of established players validates that PQC is a buyable market, not a ""build your own"" scenario. SMEs and startups can be mentioned as ecosystem context without deep treatment
+
+**Section 13 guidance — structure:**
+
+1. **Why vendor landscape matters**: PQC is not purely a software patch — hardware, HSM integration, and managed services are part of the procurement mix
+2. **Vendor landscape overview** (balanced, factual):
+
+| Vendor | Primary Focus | Enterprise Fit |
+|--------|---------------|----------------|
+| **"
+s8_n3_dense_d3_dacs_t10_92b2b9,dacs,a3,3,1,CORRECT,"The response substantively addresses the migration timeline question by recommending hybrid cryptography as the primary enterprise strategy, explicitly addressing timing concerns (harvest-now attack risks require starting migration before CRQC exists), and providing clear guidance on why immediate full cutover or waiting are impractical — directly framing the migration timeline issue for Section 4.",FOCUS,hybrid|crypto-agility|migration,migration timeline framing for PQC adoption,"**STEERING DECISION for Agent a3**
+
+**Section 4 Migration Approach: Hybrid Cryptography / Crypto-Agility**
+
+**Recommendation:** Hybrid cryptography (classical + PQC in parallel) as the primary enterprise migration strategy — with crypto-agility as the architectural foundation.
+
+**Rationale:**
+
+| Approach | Assessment |
+|----------|------------|
+| **Hybrid (classical + PQC)** | ✅ Industry consensus — CNSA 2.0, NIST, major vendors (Google, Cloudflare, Apple) all deploy hybrids today |
+| **Immediate full cutover** | ❌ Breaks backward compatibility, impractical for heterogeneous enterprise environments, no legacy system path |
+| **Wait for quantum** | ❌ Harvest-now attacks create retroactive risk — migration must start before cryptographically relevant quantum computers exist |
+
+**Calibration guidance for Section 4:**
+
+- Frame as **""defense-in-depth migration""** — hybrid doesn't require choosing between classical and PQC security; it provides both during transition
+- Include concrete hybrid examples: X25519+Kyber-768 (TLS), ECDSA+P-256+Dilithium-2 (signatures)
+- Address **crypto-agility architecture** — key/variant negotiation, algorithmic fallback, policy-driven cipher suite selection
+- Provide **migration phasing**: (1) inventory + risk triage, (2) hybrid pilot deployments, (3) PQC-only hardening, (4) deprecate classical algorithms
+- Note CNSA 2.0 timeline as external forcing function (2030 for full P"
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a3,6,1,CORRECT,"The orchestrator directly addresses the steering question by confirming a specific risk assessment model (attack surface + threat model framework) with defensible rationale explaining why it was chosen over alternatives (financial cost model alone, qualitative risk matrix) and outlines concrete framework components for the whitepaper.",FOCUS,attack surface|threat model|risk,risk assessment model for PQC enterprise adoption,"**STEERING DECISION: Risk Assessment Model Confirmed**
+
+**Approach:** Attack surface + threat model framework — classify enterprise assets by quantum sensitivity window and cryptographic exposure.
+
+**Rationale:**
+- **Financial cost model alone is insufficient** — misses the critical technical risk dimensions: which assets use asymmetric crypto, what data sensitivity windows apply, and where the cryptographic attack surface exists
+- **Qualitative risk matrix without asset mapping is too vague** — security practitioners need concrete asset inventory linkage to drive actionable migration priorities; a generic risk matrix doesn't map to infrastructure decisions
+- **Attack surface + threat model is the standard enterprise security assessment pattern** — aligns with existing frameworks (NIST CSF, ISO 27001) that security teams already use; adapts naturally to the quantum threat dimension
+
+**Framework Components:**
+1. **Cryptographic asset inventory** — enumerate all asymmetric crypto touchpoints (TLS endpoints, code signing pipelines, key management systems, authentication infrastructure, VPN gateways, encrypted databases)
+2. **Sensitivity window classification** — assign data retention sensitivity periods:
+   - **Critical (>10 years):** classified data, strategic IP, health records, financial instruments
+   - **High (5–10 years):** business contracts, PII, authentication credentials
+   - **Moderate (1–5 years):** operational communications, internal documents
+   - **Low (<1 year):** transient"
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a1,3,1,CORRECT,,FLAT,gradient accumulation|micro-batch|accumulation,batch size strategy for GPU memory constraint,"# Orchestrator Steering Decisions
+
+---
+
+## Agent a1 — Batch Size Strategy for 16GB GPU [MEDIUM] ✅
+
+**Decision: Gradient accumulation — 8 micro-batches of 4 (effective batch=32, GPU-safe)**
+
+**Rationale:**
+- Maintains effective batch size of 32 → preserves gradient estimation quality
+- Single forward/backward pass at micro-batch level → GPU memory fits
+- Standard technique in BERT training documentation (Hugging Face, original BERT papers)
+- Mixed precision (FP16) should still be enabled as secondary optimization, but gradient accumulation is the primary OOM solution
+
+**Actionable next step:** Configure `gradient_accumulation_steps=8` and `per_device_batch_size=4` in training config. Enable FP16 for additional headroom.
+
+---
+
+## Agent a2 — Effect Size Measure for Clinical Significance [MEDIUM] ✅
+
+**Decision: Cohen's d (standardised mean difference)**
+
+**Rationale:**
+- Primary outcome is continuous (BP reduction in mmHg) → Cohen's d standardises across studies for meta"
+s8_n3_dense_d3_dacs_t05_30cdbf,dacs,a1,11,1,CORRECT,"The response directly addresses the checkpoint save strategy question by recommending saving based on best validation loss or macro F1, providing clear rationale (generalization, early stopping alignment, metric consistency) and a practical implementation using HuggingFace Transformers' `Trainer` API.",FOCUS,best model|lowest val|checkpoint,model checkpoint save strategy,"## Steering Decision: Agent a1
+
+**Recommendation: Save the model checkpoint with best validation loss (or highest macro F1)**
+
+### Rationale
+
+1. **Standard training loop practice**: Saving the best-validation checkpoint is universal for BERT fine-tuning—ensures you retain the model state that generalizes, not the state from an overfitted final epoch.
+
+2. **Aligns with early stopping**: Since patience-based early stopping (N=3 epochs) was configured, the best model may occur well before training terminates. Saving only the last epoch would discard this optimal checkpoint.
+
+3. **Metric consistency**: Using validation loss or validation macro-F1 as the checkpoint criterion maintains consistency with the early stopping monitor—both track generalization quality.
+
+4. **Practical implementation**:
+   ```python
+   from transformers import Trainer
+   
+   trainer = Trainer(
+       model=model,
+       args=training_args,
+       eval_strategy=""epoch"",
+       save_strategy=""epoch"",
+       load_best_model_at_end=True,  # Restores best checkpoint after training
+       metric_for_best_model=""eval_loss"",  # or ""eval_macro_f1""
+       greater_is_better=False  # True for F1, False for loss
+   )
+   ```
+
+5. **Rejection of alternatives**:
+   - **Save every epoch**: Disk wasteful (12+ checkpoints for a typical fine-tuning run); no benefit since best model is retained anyway
+   - **Save only last epoch**: Breaks the training experiment—if early stopping triggers at epoch 5 but best model was at epoch 3, you've lost it
+
+### Next step: Execute training run with all configured components (LegalBERT + WordPiece tokenizer, 512-token truncation, gradient accumulation batch=32, AdamW, warmup+decay, focal loss, back-translation augmentation, macro-F1 metric, early"
+s8_n3_dense_d3_baseline_t04_b4e8cf,baseline,a3,6,1,CORRECT,"The orchestrator directly addresses the steering question by recommending a specific risk assessment framework (Attack Surface + Threat Model), justifying why it was chosen over alternatives, and outlining a concrete framework structure with actionable components like Asset Inventory and Sensitivity Window classification.",FLAT,attack surface|threat model|risk,risk assessment model for PQC enterprise adoption,"# Orchestrator Decision — Agent a3 Steering Request
+
+**Task:** Risk assessment model for PQC whitepaper Section 7
+
+---
+
+## Decision: Attack Surface + Threat Model Framework ✓
+
+**Confirmed:** Recommend an attack-surface and threat-model-based risk framework for enterprise PQC self-assessment.
+
+| Option | Verdict | Reason |
+|--------|---------|---------|
+| **Attack Surface + Threat Model** | ✓ **Primary** | Maps to existing enterprise security practices; classifies assets by quantum sensitivity window and cryptographic exposure — actionable for security teams |
+| Financial cost model only | ✗ Incomplete | Misses technical risk dimensions (algorithm exposure, data sensitivity, system interdependencies) |
+| Qualitative risk matrix (no asset mapping) | ✗ Too vague | Security teams need specific asset-level guidance, not generic risk categories |
+
+### Recommended Framework Structure:
+
+1. **Asset Inventory** — Classify systems by cryptographic dependency (RSA/ECC usage, key sizes, protocol types)
+2. **Sensitivity Window** — Tag data by confidentiality requirements (0–2yr, "
+s8_n3_dense_d3_baseline_t02_d1254f,baseline,a1,13,0,INCORRECT,"The response discusses executive-level business risk framing for quantum cryptography migration (harvest-now threats, CISO action items, TCO frameworks), which is completely unrelated to the steering question about inference optimization for production deployment of a BERT text classifier, and the agent domain of training and tuning such a classifier.",FLAT,onnx|quantiz|distil,inference optimization for production deployment,"## Orchestrator Decision
+
+### Agent a3 — Executive Summary Framing ✓
+
+**Decision: Business risk framing — harvest-now threat creates urgency, migration cost is manageable, CISO action items defined**
+
+**Rationale:**
+
+- Executive summaries must speak the language of decision-makers (risk, cost, action) — not algorithms. Technical algorithm comparisons belong in the body, not at the top
+- The harvest-now / store-now-decrypt-later threat provides the **urgency hook** executives need: adversaries are collecting encrypted data today, long before quantum computers arrive. This reframes PQC from ""future speculation"" to **active risk management**
+- Framing migration cost as manageable prevents the common executive response of deferring indefinitely — the TCO framework from Section "
+s8_n3_dense_d3_baseline_t01_9e10b0,baseline,a2,7,0,INCORRECT,"The orchestrator response discusses X.509 certificates and post-quantum cryptography (PQC/Dilithium), which is entirely unrelated to sample size justification methods for statistical hypothesis testing on clinical trial data.",FLAT,power|statistical power|power calculation,sample size justification method,"## Orchestrator Response — Agent a3 Steering Decision
+
+## Decision: X.509 Certificates with PQC Signature Algorithms (Dilithium) ✓ CONFIRMED
+
+**Answer**: X.509 certificates with PQC signature algorithms (Dilithium) — the standardized PKI transition path.
+
+---
+
+## Rationale
+
+| Option | Verdict | Reasoning |
+|--------|---------|-----------|
+| **X.509 with PQC signatures (Dilithium)** | ✓ **SELECTED** | Maintains existing PKI infrastructure; IETF drafts in progress; backward-compatible migration path |
+| Custom certificate format | ✗ Rejected | Incompatible with existing PKI; requires complete infrastructure overhaul; not deployable |
+| Reuse RSA certificates unchanged | ✗ Rejected | Defeats entire PQC migration purpose; quantum adversaries can still forge signatures |
+
+---
+
+## Recommended Section 9 Structure
+
+1. **Why existing X.509 PKI adapts, not replaces** — ""Enterprises have billions of certificates deployed; X.509 extension mechanisms allow PQC algorithm integration without replacing the PKI backbone""
+2. **Dilithium in X.509** — IETF draft status; signature algorithm OID registration"
+s8_n3_dense_d3_dacs_t08_91f04a,dacs,a1,13,1,CORRECT,"The orchestrator makes a clear, technically defensible decision (ONNX + INT8 quantization) for production inference optimization, directly addressing the steering question with relevant trade-off analysis against alternatives like TorchScript and knowledge distillation.",FOCUS,onnx|quantiz|distil,inference optimization for production deployment,"**DECISION for Agent a1:**
+
+**Inference Optimization: ONNX Export with INT8 Quantization**
+
+**Rationale:**
+- ONNX + INT8 quantization delivers 2–4× latency reduction while preserving model accuracy — the standard path to <50ms p99 BERT inference targets
+- TorchScript provides PyTorch-native optimization but limited portability and smaller speedup (~1.5×); insufficient alone for <50ms target
+- Knowledge distillation to DistilBERT would require full retraining from scratch, discarding the hard-earned 0.89 macro F1 from LegalBERT fine-tuning — unacceptable given the investment
+- INT8 quantization reduces model footprint and memory bandwidth requirements; legal document inference benefits significantly as sequences are typically 512–1024 tokens
+- ONNX Runtime provides hardware-specific optimizations (TensorRT on GPU, VNNI on CPU) beyond standard PyTorch serving
+
+**Recommended Implementation:**
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification
+from onnxruntime.quantization import quantize_dynamic, QuantType
+
+# 1. Export trained LegalBERT to ONNX
+model = AutoModelForSequenceClassification.from_pretrained(
+    ""./legalbert-classifier/best_checkpoint""
+)
+model.eval()
+
+# Prepare dummy input matching legal document tokenization
+dummy_input = {
+    ""input_ids"": torch.randint(0, 30000, (1, 512)),
+    ""attention_mask"": torch.ones(1, 512, dtype=torch.long),
+    ""token_type_ids"": torch.zeros(1, 512, dtype=torch.long),
+}
+
+# Export to ONNX
+torch.onnx.export(
+    model,
+    (dummy_input[""input"
+s8_n3_dense_d3_baseline_t09_78ff58,baseline,a3,0,1,CORRECT,"The response directly addresses the steering question by definitively selecting a target audience (enterprise security practitioners/CISOs and architects), explaining why this audience is appropriate given their technical engagement level with PQC challenges and standards, and providing calibration guidance for content development.",FLAT,enterprise|practitioner|technical,target audience framing for post-quantum cryptography whitepaper,"**DECISION: Enterprise security practitioners / CISOs and architects**
+
+**Rationale:** This audience is the optimal balance — technical enough to engage with PQC migration challenges, standards (NIST PQC selections, CNSA 2.0), and implementation timelines, but not requiring the mathematical depth that academic cryptographers need. This calibrates the whitepaper toward actionable adoption guidance, risk assessment frameworks, and practical migration roadmaps.
+
+**Next:** Agent a3 — proceed with outline structure for Section 1 (Executive Summary) through Section 6 (Enterprise Migration Considerations), targeting appropriate technical depth. Highlight areas requiring audience calibration decisions (e.g., cryptographic primitives explanations vs. implementation guidance)."
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a3,14,1,CORRECT,"The orchestrator directly answers the steering question by making a clear, defensible decision (business risk framing) for the executive summary emphasis, explains the rationale, and provides a concrete recommended structure with example language—substantively addressing what emphasis to use for the target audience.",FLAT,business risk|ciso|executive,executive summary emphasis for PQC whitepaper,"# ORCHESTRATOR DECISION — Agent a3 [HIGH]
+
+## Executive Summary Emphasis: Business Risk Framing
+
+---
+
+### Decision
+
+**Business risk framing is the ONLY appropriate executive summary emphasis for a CISO/board-level audience.**
+
+---
+
+### Rationale
+
+**Executive summaries serve a different reader than the 15 technical sections that follow.** Technical algorithm comparisons belong in Sections 3–4; they do not drive executive decisions.
+
+**What drives executive decisions:**
+- A clear, credible threat with business consequences
+- Evidence that action is both urgent and feasible
+- Defined action items the CISO can take to the board
+
+---
+
+### Recommended Executive Summary Structure
+
+#### 1. Opening Hook — The Business Threat (2-3 sentences)
+> ""Adversaries are archiving your organisation's encrypted data today. When quantum computers arrive — estimated 2030+ — they will decrypt RSA and ECC-protected communications, contracts, and health records retroactively. Your data has a 10-25 year sensitivity window. The harvest-now threat is not theoretical. It is the reason PQC migration must begin now.""
+
+#### 2. The Business Case — Cost Is Manageable (1-2 sentences)
+> ""Unlike Y2K or GDPR compliance, PQC migration follows a proven playbook: hybrid cryptography provides quantum protection immediately while classical algorithms remain, enabling phased transition without disrupting operations.""
+
+#### 3. CISO"
+s8_n3_dense_d3_baseline_t01_9e10b0,baseline,a1,11,0,INCORRECT,"The response discusses PQC vendor landscape coverage and whitepaper structure for quantum-safe cryptography, which has no relevance to the task domain of iteratively training and tuning a BERT text classifier on legal documents or to the checkpoint save strategy steering question.",FLAT,best model|lowest val|checkpoint,model checkpoint save strategy,"# Orchestrator Response — Flat Context Steering Decision
+
+---
+
+## Agent a3 — Vendor Landscape Coverage Strategy ✓ CONFIRMED
+
+**Decision**: Cover major PQC vendors (PQShield, Quantinuum, SandboxAQ, IBM Quantum-safe) — gives practitioners an actionable procurement map without commercial endorsement.
+
+**Rationale**:
+
+| Option | Verdict | Reasoning |
+|--------|---------|-----------|
+| **Cover major PQC vendors** | ✓ **SELECTED** | Actionable procurement guidance; maps vendor capabilities to whitepaper sections; maintains editorial independence |
+| Endorse a single vendor | ✗ Rejected | Commercially inappropriate for independent whitepaper; destroys credibility with enterprise audiences |
+| Omit vendor landscape | ✗ Rejected | Misses key practitioner use case — ""who do we buy PQC solutions from?"" — reduces whitepaper procurement value |
+
+---
+
+## Section 13 Recommended Structure
+
+1. **Role of commercial vendors** — ""Commercial PQC vendors complement open-source libraries (liboqs); enterprises need vendor support, SLAs, and integration services that open-source alone cannot provide""
+2. **Vendor coverage framework** — Cover each vendor by:
+   - **Primary PQC offering** (crypto library, HSM integration, TLS toolkit, consulting)
+   - **Target customer segment** (government/Defence, financial services, general enterprise)
+   - **Integration path** with whitepaper sections (TLS hybrid → certificate migration → HSM updates)
+3. **Representative vendor list** (balance across segments):
+   - **PQShield** — PQC crypto library + consulting; strong government/Defence positioning
+   - **SandboxAQ** — Post-quantum security suite (TLS, key management, discovery tools); broad enterprise focus
+   - **IBM** — Quantum-safe cryptography (hardware + software);"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a2,11,1,CORRECT,"The orchestrator's response directly addresses the steering question about sensitivity analysis for robustness by confirming sensitivity analyses that vary outlier treatment and imputation assumptions, providing scientific rationale (CONSORT compliance, robustness to methodological choices), and distinguishing between reproducibility testing (random seeds) and assumption sensitivity testing.",FOCUS,sensitivity|robustness check|exclusion criteria,sensitivity analysis for robustness,"## Steering Decision: Agent a2
+
+**Confirmed: Sensitivity analyses varying outlier treatment and imputation assumptions**
+
+### Rationale
+
+| Criterion | Decision Factor |
+|-----------|-----------------|
+| CONSORT compliance | Sensitivity analyses are required for major methodological assumptions — omission invites reviewer criticism ✓ |
+| Scientific robustness | Varying assumptions demonstrates results are not artifact of single analytical choices ✓ |
+| Different seeds alone | Changing random seeds only tests reproducibility, not assumption sensitivity — insufficient ✗ |
+| Omission consequence | Results vulnerable to ""what if you had done X instead?"" challenges without it ✗ |
+
+### Required Sensitivity Analyses for Clinical Trial
+
+#### 1. **Outlier Handling Sensitivity**
+| Analysis | Method |
+|----------|--------|
+| Primary | Winsorisation at 1st/99th percentile |
+| Sensitivity A | Winsorisation at "
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a2,0,1,CORRECT,,FLAT,t-test|student|welch,statistical test for continuous primary outcome,"# Steering Decisions — Flat Context Response
+
+---
+
+## Agent a2 — Statistical Test Selection [HIGH] ✅
+
+**Decision: Two-sample Welch's t-test as primary test.**
+
+Rationale:
+- Continuous outcome (systolic BP reduction) — not categorical → chi-squared is indeed inappropriate
+- Two independent groups (treatment vs. control)
+- Welch's t-test preferred over standard t-test due to robustness to potential unequal variances (standard assumption in clinical trials with active vs. placebo arms)
+- If normality assumption is violated after inspection, fall back to Mann-Whitney U as sensitivity analysis
+
+**Actionable next step:** Run Shapiro-Wilk normality test on BP reduction distributions for both groups; if p > 0.05, proceed with Welch's t-test.
+
+---
+
+## Agent a3 — Target Audience [HIGH] ✅
+
+**Decision: Enterprise security practitioners (CISOs, security architects) as primary audience.**
+
+Rationale:
+- Commercial whitepaper requires broad enterprise relevance → academic cryptographers too narrow
+- Actionable PQC adoption"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a1,4,1,CORRECT,"The response directly addresses the steering question about learning rate schedules for BERT fine-tuning by confirming ""linear warmup followed by cosine or linear decay,"" which is a well-established and technically sound approach for transformer model fine-tuning.",FLAT,warmup|cosine|linear warmup,learning rate schedule for BERT fine-tuning,"# Orchestrator Steering Decisions — Parallel Agents
+
+---
+
+## Agent a1 [MEDIUM] — Decision Confirmed
+
+**Question:** Learning rate schedule for BERT fine-tuning?
+
+**Decision: Linear warmup followed by cosine or linear decay**
+
+| Option | Appropriateness | Rationale |
+|--------|-----------------|-----------|
+|"
+s8_n3_dense_d3_dacs_t05_30cdbf,dacs,a2,4,1,CORRECT,"The orchestrator explicitly selects 95% confidence intervals as the standard for reporting clinical trial results, provides clear justification based on CONSORT guidelines and regulatory requirements (FDA/EMA), and demonstrates practical implementation with a concrete example showing how the CI would be reported alongside primary outcomes.",FOCUS,95%|95 percent|confidence interval,confidence interval width for reporting,"# Steering Decision: Agent a2 — Confidence Interval Width
+
+## Decision: CONFIRMED — 95% Confidence Intervals
+
+**Interval estimate reporting:** 95% CI for primary outcome (mean difference, Cohen's d, and all secondary outcomes)
+
+## Rationale
+
+| Option | Justification |
+|--------|---------------|
+| **95% CI** ✓ | Gold standard for clinical trial reporting; mandated by CONSORT guidelines; widely accepted by regulators (FDA/EMA) |
+| 90% CI ✗ | Not standard for clinical publications; acceptable only in narrow regulatory contexts (bioequivalence), not efficacy outcomes |
+| 99% CI ✗ | Overly conservative; reduces precision unnecessarily; not expected by journals or regulators |
+
+## Implementation
+
+Report alongside primary outcome results:
+
+```
+Primary Outcome: Systolic BP Reduction (12 weeks)
+├── Mean difference: -8.2 mmHg (treatment − control)
+├── 95% CI: [-13.4, -3.0] mmHg
+├── t-statistic: 3.12
+├── p-value: 0.003
+└── Cohen's d: 0.61 [95% CI: 0.24, 0.98]
+```
+
+## Summary — Complete Primary Analysis
+
+| Component | Result |
+|-----------|--------|
+| Test | Welch's t-test |
+| Normality | Confirmed (p=0.31) |
+| Mean diff | -8.2 mmHg |
+"
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a2,2,0,INCORRECT,"The orchestrator response addresses NIST Post-Quantum Cryptography standards for a whitepaper, which is entirely unrelated to the steering question about multiple comparison correction for statistical hypothesis testing in clinical trials.",FLAT,bonferroni|fdr|benjamini,multiple comparison correction for family of tests,"# Orchestrator Steering Decision: Agent a3
+
+**Question:** NIST standardisation depth for PQC whitepaper Section 3?
+
+**Decision: One focused section covering NIST PQC standards and FIPS 203/204/205**
+
+| Option | Appropriateness | Rationale |
+|--------|-----------------|-----------|
+| **Focused section on NIST standards + FIPS references** | ✅ Primary | Provides compliance anchor enterprises need; actionable FIPS reference points for procurement/audit |
+| Deep-dive 6-year competition | ⚠️ Excessive | Too much historical detail; dilutes practitioner focus; exceeds whitepaper scope |
+| Mention NIST in passing"
+s8_n3_dense_d3_dacs_t04_ba1ae5,dacs,a3,13,1,CORRECT,"The orchestrator provides a clear decision on appendix content (glossary + reference list), substantiates the choice with practitioner-focused reasoning about enterprise whitepaper utility, and distinguishes this from including overly technical algorithm parameters — directly answering the design question for the PQC whitepaper appendix.",FOCUS,glossary|appendix|reference,appendix design for PQC whitepaper,"**DECISION: Include a glossary of PQC terms and a reference list of standards/further reading as appendix content**
+
+**Rationale:**
+- **Practitioner utility is paramount** — security architects, engineers, and procurement teams need a quick-reference glossary for unfamiliar PQC terminology without re-reading the body text
+- **Standards reference list enables compliance documentation** — practitioners citing FIPS 203, NIST SP 800-208, or IETF drafts need direct citations they can copy into procurement documents and audit reports
+- **Raw algorithm parameter tables are too technical** — byte-level key sizes, signature lengths, and security levels are useful for implementers but belong in a specification document, not a practitioner whitepaper
+- **No appendix undermines reference value** — enterprise whitepapers serve as ongoing reference documents; removing the appendix reduces long-term utility and distinguishes the document from a mere marketing piece
+- **Glossary + references is the established industry standard** — NIST publications, ENISA reports, and vendor whitepapers consistently use this appendix format
+
+**Guidance for Agent a3 on Appendix Design:**
+
+Structure the appendix around:
+
+1. **Glossary of Key Terms** (15–20 terms — alphabetical):
+   - CRQC (Cryptographically Relevant Quantum Computer)
+   - Hybrid cryptography
+   - KEM (Key Encapsulation Mechanism)
+   - Lattice-based cryptography
+   - ML-KEM / ML-DSA / SLH-DSA
+   - NIST PQC Standardization
+   - Post-quantum cryptography
+   - Quantum threat / harvest-now attack
+   - Crypto-agility
+   Include 10–12 additional terms relevant to the whitepaper body
+
+2. **Standards and Reference List** (categorized):
+   - **NIST Standards**: FIPS 203, FIPS 204, FIPS 205, NIST SP 800-208, CN"
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a2,12,0,INCORRECT,"The response discusses post-quantum cryptography terminology, NIST cryptographic standards, and enterprise security whitepapers - completely unrelated to clinical trial analysis, statistical hypothesis testing, or healthcare research.",FLAT,consort|strobe|reporting guideline,reporting standard for clinical trial analysis,"## Orchestrator Decision
+
+### Agent a3 — APPROVED
+
+**Decision:** Include a **glossary of PQC terms and a standards/reference list** as appendix content — no raw algorithm parameter tables.
+
+**Rationale:**
+- A glossary is the **standard appendix component** for practitioner whitepapers — enterprise security teams, CISOs, and technical staff reading outside their immediate specialty need term definitions (e.g., ""KEM,"" ""CRQC,"" ""crypto-agility,"" ""SPHINCS+"")
+- A standards reference list is **essential for compliance-oriented readers** who need to cite NIST SP 800-208, FIPS 203/204/205, and IETF drafts in their own internal documentation
+- **Raw algorithm parameter tables are too technical** for a practitioner audience — algorithm specifications belong in academic papers or NIST documentation, not an enterprise whitepaper appendix
+- **No appendix reduces reference utility** — whitepapers are often used as desk references; removing the appendix means practitioners have nowhere to look up terms or find further reading
+- This is consistent with the whitepaper's target audience: enterprise practitioners who need actionable guidance, not algorithm-level detail
+
+**Appendix structure recommendation:**
+1. **Glossary** — 20–30 key PQC/cryptography terms (KEM, PKE, digital signature, CRQC, HNDL, crypto-agility, etc.)
+2. **Standards reference** — NIST FIPS/SP documents, IETF drafts, relevant RFCs
+3. **Further reading** — NIST PQC standardization page, CISA quantum security guidance, vendor whitepapers (PQShield, SandboxAQ technical docs)
+4. **Quick-reference decision tree** — one-page migration prioritization flowchart summarizing Sections 3–10 decisions (optional but high value)
+
+**Skip:** Algorithm parameter tables, cryptographic performance"
+s8_n3_dense_d3_baseline_t04_b4e8cf,baseline,a3,3,1,INCORRECT,"The response confirms hybrid cryptography as the recommended migration approach but does not actually address timeline framing—it lacks any discussion of phases, milestones, time horizons, or scheduling considerations for PQC adoption.",FLAT,hybrid|crypto-agility|migration,migration timeline framing for PQC adoption,"# Orchestrator Decision — Agent a3 Steering Request
+
+**Task:** Migration timeline framing for PQC whitepaper Section 4
+
+---
+
+## Decision: Hybrid Cryptography / Crypto-Agility Approach ✓
+
+**Confirmed:** Recommend the hybrid cryptography migration approach as the enterprise-standard PQC adoption strategy.
+
+| Option | Verdict | Reason |
+|--------|---------|----------|
+| **Hybrid Cryptography** | ✓ **"
+s8_n3_dense_d3_dacs_t04_ba1ae5,dacs,a3,3,1,CORRECT,"The response directly addresses the migration timeline framing question by providing urgency justification (harvest-now attacks), recommending a hybrid cryptography approach aligned with NIST/ENISA guidance, and outlining a phased migration timeline structure for the agent tasked with writing the specific section.",FOCUS,hybrid|crypto-agility|migration,migration timeline framing for PQC adoption,"**DECISION: Hybrid cryptography approach first (crypto-agility strategy)**
+
+**Rationale:**
+- Immediate full cutover is operationally infeasible — breaks compatibility with classical systems, third-party integrations, and existing infrastructure
+- Waiting until quantum computers exist is catastrophically risky — ""harvest now, decrypt later"" attacks mean encrypted data captured today becomes vulnerable retroactively
+- Hybrid cryptography is the **only approach endorsed by NIST, ENISA, and major enterprise security frameworks** for PQC migration
+- Enables incremental deployment while maintaining backward compatibility with classical systems during transition
+
+**Guidance for Agent a3 on Section 4 (Migration Timeline and Strategy):**
+
+Structure the section around:
+1. **Why hybrid now (urgency framing)**: Harvest-now attacks create immediate risk for long-lived secrets — ""decade-long confidentiality"" data (IP, PII, financial records) needs protection today
+2. **Hybrid architecture model** (2-3 sentences): Run classical + PQC in parallel; negotiate both simultaneously; accept whichever both parties support
+3. **Phased migration timeline** (practical reference):
+   - **Phase 1 (2024-2026)**: Inventory cryptographic assets, enable hybrid mode in TLS 1.3, prioritize new connections
+   - **Phase 2 (2026-2028)**: Rotate high-value keys to PQC, update crypto libraries, remediate critical systems
+   - **Phase 3 (2028+)**: Decommission classical algorithms for PQC-protected use cases once ecosystem matures
+4. **Crypto-agility as architectural principle**: Design systems to swap algorithms without full redesign — this is"
+s8_n3_dense_d3_baseline_t07_c42f84,baseline,a1,7,0,INCORRECT,"The orchestrator response discusses HSM (Hardware Security Module) post-quantum cryptography migration and key management strategies, which is completely unrelated to the steering question about early stopping criteria for training a BERT text classifier on legal documents; the response addresses cryptographic infrastructure rather than machine learning training loop optimization.",FLAT,validation loss|val_loss|patience,early stopping criterion for training loop,"# ORCHESTRATOR DECISION — Agent a3 [MEDIUM]
+
+**DECISION: Cover HSM PQC support status and key management migration guidance**
+
+HSM coverage is mandatory — these devices are the central cryptographic key management control for enterprises. Practitioners need actionable guidance, not blanket replacement recommendations.
+
+**Recommended Section 10 Structure:**
+
+1. **Current HSM PQC Support Landscape**
+   - Major vendors (Thales Luna, Entrust nShield, Utimaco) have firmware/pathces for Kyber-768 and Dilithium
+   - FIPS 140-3 validated modules are adding PQC algorithms incrementally
+   - **Action:** Check firmware versions and NIST algorithm validation certificates before planning migration
+
+2. **HSM Migration Strategy**
+   - **Do NOT replace HSMs** — firmware updates are the path for most enterprises
+   - Hybrid key ceremony support (generate both classical and PQC keys)
+   - Key lifecycle management must accommodate longer PQC key sizes
+
+3. **Enterprise Key Management Integration**
+   - KMIP (Key Management Interoperability Protocol) extensions for PQC
+   - HSMs as roots of trust in hybrid PKI deployments
+   - Certificate signing requests (CSRs) with PQC algorithms
+
+4. **What to Exclude:**
+   - ""Replace all HSMs immediately"" — impractical; firmware paths exist
+   - Skipping HSM coverage — would omit the most security-critical component of key management
+
+**Calibration:** Enterprise practitioners need to know their existing HSM investments are largely salvageable via firmware updates, not replacement. This is reassuring and actionable.
+
+Proceed with Section 10 covering HSM PQC readiness and migration guidance."
+s8_n3_dense_d3_baseline_t06_c1275d,baseline,a3,3,1,CORRECT,"The response correctly addresses the migration timeline framing question by recommending the hybrid crypto-agility approach as the standard enterprise migration strategy, explaining why immediate full cutover is infeasible while also warning against delayed migration due to harvest-now threats, and providing a practical phased rollout framework with prioritization guidance.",FLAT,hybrid|crypto-agility|migration,migration timeline framing for PQC adoption,"## Steering Decision
+
+### Agent a3 [HIGH] — PQC Migration Strategy
+
+**Decision: Hybrid cryptography approach (crypto-agility framework)**
+
+---
+
+**Rationale:**
+
+- **Universal recommendation**: NIST, NSA, and CISA all endorse hybrid PQC deployment as the transition strategy — not full immediate cutover or delayed migration
+- **Crypto-agility**: Running classical + PQC in parallel during transition enables backward compatibility with legacy systems while progressively hardening against harvest-now attacks
+- **Enterprise feasibility**: Immediate full cutover is architecturally infeasible for most enterprises (breaks external TLS, signed documents, PKI trust chains)
+- **Harvest-now vulnerability**: Waiting until quantum computers exist is too late — adversaries are capturing encrypted traffic now for future decryption; migration must begin proactively
+- **Practical framework**: Hybrid approach allows phased rollout: prioritize high-value data/critical infrastructure first, maintain dual-protocol stacks, update as PQC matures
+
+---
+
+**Recommended whitepaper framing:**
+- Position hybrid as the *only deployable* migration strategy for enterprises
+- Define ""crypto-agility"" as the architectural goal (ability to swap algorithms without full system redesign)
+- Outline transition phases: assessment → hybrid pilot → full PQC migration
+- Reference NIST SP 800-"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a1,5,1,CORRECT,"The response directly addresses the optimizer selection question by recommending AdamW with clear justification, compares it against alternatives (Vanilla Adam, SGD+momentum), and provides correct implementation code with standard BERT fine-tuning hyperparameters (lr=2e-5, weight_decay=0.01), which is the established best practice for transformer fine-tuning.",FOCUS,adamw|weight decay|adam,optimizer for BERT fine-tuning,"## Decision for Agent a1: Optimizer Selection for BERT Fine-Tuning
+
+**Recommended: AdamW (Adam with Decoupled Weight Decay)**
+
+### Rationale:
+
+| Option | Verdict | Reason |
+|--------|---------|--------|
+| **AdamW** | ✅ **SELECT** | Standard optimizer for all transformer fine-tuning; decoupled weight decay provides proper L2 regularization; matches BERT/Hugging Face recommended recipe |
+| Vanilla Adam | ❌ Reject | Coupled weight decay behaves differently from true L2 regularization; less effective regularization for fine-tuning |
+| SGD + momentum | ❌ Reject | Requires careful LR tuning; not standard for transformers; slower convergence without adaptive learning rates |
+
+### Implementation Notes:
+
+```python
+from torch.optim import AdamW
+from transformers import get_linear_schedule_with_warmup
+
+# AdamW configuration for BERT
+optimizer = AdamW(
+    model.parameters(),
+    lr=2e-5,                    # Standard BERT fine-tuning LR
+    betas=(0.9, 0.999),
+    eps=1e-8,
+    weight_decay=0.01           # Decoupled weight decay (not coupled to LR like vanilla Adam)
+)
+
+# Scheduler (already configured)
+scheduler = get_linear_schedule_with_warmup(
+    optimizer,
+    num_warmup_steps=warmup_steps,
+    num_training_steps=total_steps
+)
+```
+
+###"
+s8_n3_dense_d3_baseline_t03_8d1cf0,baseline,a2,8,0,INCORRECT,"The response discusses HSM (Hardware Security Module) cryptographic infrastructure and PQC (Post-Quantum Cryptography) migration strategies, which has no relevance to covariate adjustment strategies for statistical hypothesis testing in clinical trials.",FLAT,confounder|covariate|ancova,covariate adjustment strategy,"# Steering Decision — Flat Context Request
+
+---
+
+## Agent a3 — HSM and Key Management Coverage for PQC
+
+**DECISION: Cover HSM PQC support status and key management migration as a distinct section**
+
+**Rationale:** HSMs are the central key management control point for enterprise cryptographic operations—certificate signing, key storage, and cryptographic processing. Skipping HSM coverage leaves enterprises without guidance on the most critical infrastructure component for PQC migration. Recommending immediate replacement of all HSMs is impractical and ignores that major vendors have already released or announced PQC firmware support.
+
+**Calibration guidance for Section 10:**
+
+- **HSM vendor status:** Thales Luna (firmware 7.x+), nShield (Connect and Solo), and Utimaco have all announced or delivered PQC algorithm support via firmware updates—not hardware replacement
+- **Migration framing:** Emphasize firmware updates as the path forward for existing HSMs; hardware replacement only needed for end-of-life devices
+- **Key management implications:** PQC key sizes differ (Dilithium keys are larger than ECDSA); confirm HSM capacity for new key formats before deployment
+- **Operational continuity:** HSM"
+s8_n3_dense_d3_dacs_t10_92b2b9,dacs,a1,12,1,CORRECT,"The response directly addresses the steering question about classification head design by recommending a single linear layer from [CLS] to num_classes, and substantiates this choice with multiple technically sound arguments including parameter efficiency, overfitting prevention, alignment with pretrained weights, and compatibility with established LegalBERT benchmarks.",FOCUS,linear|classification head|dense layer,classification head design for BERT output,"# Steering Decision for Agent a1
+
+**Recommended choice: Single linear layer from [CLS] hidden_size → num_classes**
+
+## Rationale
+
+1. **Standard BERT fine-tuning architecture** — The [CLS] token is pretrained specifically to aggregate sequence-level information; a linear projection is all that's needed to adapt it for classification
+
+2. **Minimal parameters for fine-tuning** — With 50K examples, the pretrained LegalBERT layers already contain domain knowledge. The classification head should learn task-specific mappings with few parameters, not reconstruct feature extractors
+
+3. **Prevents overfitting** — A 768→12 linear layer adds only ~9,200 parameters. An MLP (768→256→12) adds ~200K parameters — 22× more — creating overfitting risk on a fine-tuning dataset this size
+
+4. **Matches established LegalBERT recipes** — All published LegalBERT classification experiments use single linear heads; enables fair comparison to benchmarks
+
+5. **Complementary to existing regularization** — Combined with dropout (0.1-0.3), focal loss,"
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a1,3,1,CORRECT,The response directly addresses the steering question by recommending a specific batch size strategy (gradient accumulation with micro-batch=4 and 8 accumulation steps) that solves the GPU memory constraint while preserving an effective batch size of 32.,FOCUS,gradient accumulation|micro-batch|accumulation,batch size strategy for GPU memory constraint,"# Steering Decision: Agent a1
+
+## Recommendation: **Gradient accumulation over 8 micro-batches of 4 (effective batch=32, GPU-safe)**
+
+### Rationale
+
+| Factor | Decision |
+|--------|----------|
+| **Effective batch preservation** | Achieves effective batch size of 32 — maintains gradient estimation quality comparable to fitting batch=32 directly |
+| **GPU memory safety** | Micro-batch of 4 fits comfortably on 16GB; no OOM risk |
+| **Standard BERT technique** | Gradient accumulation is the established method for large-batch training on constrained hardware (used in original BERT fine-tuning) |
+| **Optimizer compatibility** | Works with AdamW and all standard schedulers |
+
+### Implementation
+```python
+from torch.cuda.amp import autocast, GradScaler
+
+accumulation_steps = 8
+micro_batch_size = 4
+effective_batch = accumulation_steps * micro_batch_size  # 32
+
+scaler ="
+s8_n3_dense_d3_dacs_t04_ba1ae5,dacs,a2,13,1,CORRECT,"The response directly addresses the meta-analysis eligibility determination question by recommending Cochran's Q and I² statistics as the appropriate tools to formally assess heterogeneity before deciding whether to include studies in a meta-analysis, citing authoritative guidelines and providing the statistical methodology.",FOCUS,heterogeneity|i-squared|cochran,meta-analysis eligibility determination,"**STEERING DECISION for Agent a2**
+
+**Verdict: Cochran's Q and I² statistic — proceed.**
+
+**Rationale:**
+- Cochran's Q and I² are the universally accepted standard tools for assessing between-study heterogeneity in meta-analysis
+- Assuming homogeneity without testing is methodologically invalid — clinical trials vary in populations, settings, and protocols, and true effect heterogeneity is the norm, not the exception
+- Premature exclusion from meta-analysis discards potential evidence synthesis value and is not justified without formal heterogeneity assessment
+- Cochrane Collaboration, GRADE framework, and PRISMA guidelines all mandate heterogeneity assessment before meta-analytic pooling
+
+**Recommended protocol:**
+
+1. **Calculate Cochran's Q statistic:**
+   - Q = Σwᵢ(Yᵢ - Ȳ)² where wᵢ = inverse variance weight, Yᵢ = study effect,"
+s8_n3_dense_d3_baseline_t02_d1254f,baseline,a2,12,0,INCORRECT,"The orchestrator response discusses model checkpoint save strategy (when to save model weights during training), which has no relevance to the steering question about reporting standards for clinical trial analysis, which would involve topics such as CONSORT guidelines, effect sizes, confidence intervals, p-value reporting conventions, or ICH E3 standards.",FLAT,consort|strobe|reporting guideline,reporting standard for clinical trial analysis,"## Orchestrator Decisions
+
+---
+
+### Agent a1 — Model Checkpoint Save Strategy ✓
+
+**Decision: Save the model with the best validation loss (or highest macro F1)**
+
+**Rationale:**
+- Best-validation checkpoint is the universal training loop practice — preserves the model with optimal generalisation regardless of when early stopping triggers
+- Saves every epoch wastes disk space linearly and creates no value over"
+s8_n3_dense_d3_dacs_t01_89b42f,dacs,a3,5,1,CORRECT,"The response directly and substantively addresses the steering question by providing a specific library recommendation (liboqs) with detailed technical justification covering algorithm coverage, maintenance status, production readiness, and cross-platform capabilities, while also offering a secondary recommendation for specific ecosystems.",FOCUS,liboqs|bouncycastle|library,PQC implementation library recommendation,"**STEERING DECISION: PQC Implementation Library Confirmed**
+
+**Primary Recommendation:** `liboqs` (Open Quantum Safe) — the cross-platform, open-source reference library.
+
+**Rationale:**
+- **Broad algorithm coverage** — implements all NIST-standardized algorithms (Kyber, Dilithium, ML-DSA, SLH-DSA, SPHINCS+) with consistent API across C, Python, and Java bindings
+- **Active maintenance** — maintained by the Open Quantum Safe initiative with ongoing cryptanalysis response and parameter updates
+- **Production-ready** — used as the baseline for TLS hybrid implementations (OpenSSL, BoringSSL patches), HSM vendor testing, and major cloud provider PQC pilots
+- **Cross-platform** — primary library for integrating PQC into enterprise stacks regardless of language runtime
+
+**Secondary Recommendation (Java/JVM ecosystem):**
+- **BouncyCastle** PQC extension — valid choice for JVM-only environments; acceptable if Java is the primary language, but does not provide the cross-platform breadth of liboqs
+- Note: BouncyCastle PQC support is community-driven and lags liboqs in algorithm freshness
+
+**Excluded:**
+- **Writing PQC from scratch** — categorically not recommended for enterprise teams; lattice-based algorithm implementation requires specialist cryptographic engineering to avoid side-channel vulnerabilities
+
+**Calibration for Section 6:**
+- Recommend liboqs with specific callout to **oqs-bind** (DNS security), **oqs-provider** (OpenSSL integration), and **Circl** (Cloudflare's Go PQC library as an alternative for Go-based stacks)
+- Frame library selection as a **build-vs-buy decision** — use vendor-supplied PQC-enabled products (HSM firmware, TLS stacks) for production; use liboqs for internal tooling, prototypes, and migration testing
+
+**Next:** Confirm enterprise use case prioritization (TLS/HTTPS, code signing, key"
+s8_n3_dense_d3_baseline_t05_21fa95,baseline,a3,2,1,CORRECT,"The orchestrator directly addresses the NIST standardization depth question by making a clear, defensible recommendation: one dedicated section covering FIPS 203/204/205 final standards, not the internal competition mechanics. The rationale justifies this choice based on enterprise audience needs (compliance, procurement, audit documentation), which is appropriate for a whitepaper targeting enterprise practitioners.",FLAT,nist|nist pqc|standardiz,NIST standardisation depth for PQC whitepaper,"# Steering Decision — Agent a3 [HIGH] ✅
+
+**Decision: Cover the NIST PQC standardisation process and final standards (FIPS 203/204/205) in one focused section.**
+
+---
+
+## Rationale
+
+**Compliance anchor requirement:**
+- Enterprise practitioners *need* FIPS references for procurement specs and audit documentation
+- CISOs must explain NIST endorsement to legal/regulatory stakeholders
+- A dedicated section provides the compliance ""stamp of approval"" that drives adoption decisions
+
+**Audience-appropriate depth:**
+- Enterprise architects need to *know NIST standardised PQC* and *what the standards are* — not the internal cryptographic competition mechanics
+- Historical competition narrative (6-year timeline, candidate elimination rounds) serves academic audiences, not implementation roadmaps
+- Reference the outcome (FIPS 203/204/205) and its implications, not the process
+
+**""Mention in passing"" is insufficient:**
+- Enterprises face regulatory scrutiny (FIPS 140-3, NIST SP 800-56A/B migration)
+- Absent concrete standard references, whitepaper lacks actionable compliance guidance
+- Practitioners will ask ""which standards apply?"" — one section answers definitively
+
+---
+
+## Recommended Section Structure (Section 3)
+
+1. **NIST PQC Standardisation timeline** — 2-3 sentences: when established, why (quantum threat to RSA/ECC)
+2."
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a1,14,1,CORRECT,"The response directly addresses the steering question by evaluating multiple options for model versioning and registry, selecting MLflow as the appropriate tool, and providing rationale explaining why it suits production needs while alternatives like Git or S3 naming conventions are insufficient.",FLAT,mlflow|model registry|versioning,model versioning and registry for production,"# Orchestrator Steering Decisions — Parallel Agents
+
+---
+
+## Agent a1 [MEDIUM] — Decision Confirmed
+
+**Question:** Model versioning and registry for production?
+
+**Decision: MLflow model registry**
+
+| Option | Appropriateness | Rationale |
+|--------|-----------------|-----------|
+| **MLflow model registry** | Tracks experiment runs, parameters, metrics, artifact versions; standard for ML model lifecycle | **✓ SELECTED** |
+| Git-based versioning of model files | Diffs not meaningful for binary files; git LFS adds cost without query capability | ✗ Exclude |
+| Manual S3 naming convention | Brittle; hard to query by metric or parameter; no lineage tracking | ✗ Exclude |
+
+### Recommended Config
+
+```python
+# MLflow model registry workflow
+import mlflow
+
+mlflow.set_experiment(""legal-document-classifier"")
+
+# Log run with all metadata
+with"
+s8_n3_dense_d3_dacs_t10_92b2b9,dacs,a3,10,1,CORRECT,"The response directly addresses the compliance framework alignment question by providing a clear recommendation on which frameworks to prioritize (NIST SP 800-208, FIPS 203/204/205 as primary) and which to treat as contextual (ISO 27001, GDPR), with sound rationale explaining why NIST standards are the direct PQC mandate versus GDPR's more general ""appropriate technical measures"" requirement.",FOCUS,nist sp 800|fips|compliance,compliance framework alignment for PQC whitepaper,"**STEERING DECISION for Agent a3**
+
+**Section 11 Compliance Framework Alignment: NIST SP 800-208 + FIPS Standards as Primary References**
+
+**Recommendation:** NIST SP 800-208 and FIPS 203/204/205 as the primary compliance references — with ISO 27001 and GDPR noted as contextual alignment, not algorithm-mandating frameworks.
+
+**Rationale:**
+
+| Compliance Framework | Assessment |
+|----------------------|------------|
+| **NIST SP 800-208 + FIPS 203/204/205** | ✅ Direct PQC mandate — SP 800-208 provides migration guidance specifically for federal agencies and regulated industries; FIPS references are procurement/audit requirements enterprises must satisfy |
+| **GDPR only** | ❌ Insufficient — GDPR requires ""appropriate technical measures"" ("
+s8_n3_dense_d3_baseline_t10_12a431,baseline,a1,11,0,INCORRECT,"The response discusses post-quantum cryptography vendors for an enterprise whitepaper, which is entirely unrelated to the task domain (BERT text classifier training on legal documents) and the steering question (model checkpoint save strategy).",FLAT,best model|lowest val|checkpoint,model checkpoint save strategy,"## Orchestrator Decision
+
+### Agent a3 — APPROVED
+
+**Decision:** Cover **major PQC vendors as an informational landscape** (PQShield, Quantinuum, SandboxAQ, IBM Quantum-Safe) without ranking, scoring, or endorsing any single vendor.
+
+**Rationale:**
+- **Vendor landscape is essential practitioner content** — an enterprise whitepaper that tells security teams *why* they need PQC and *how* to architect it, but not *who* sells it, fails its primary audience. Procurement guidance is a core use case for this whitepaper.
+- **Endorsing a single vendor is commercially inappropriate** for an independent technical whitepaper — it undermines credibility, creates liability, and signals bias. The whitepaper is a reference document, not"
+s8_n3_dense_d3_dacs_t03_534933,dacs,a2,3,1,CORRECT,"The response directly addresses the steering question by recommending Cohen's d as the appropriate effect size measure for clinical significance, providing clear rationale based on clinical reporting standards, cross-study comparability, and established magnitude thresholds, while also explaining why p-values and raw differences alone are insufficient for assessing clinical significance.",FOCUS,cohen|d statistic|effect size,effect size measure for clinical significance,"## Steering Decision: Agent a2
+
+**Confirmed: Cohen's d for effect size quantification**
+
+### Rationale
+
+| Criterion | Decision Factor |
+|-----------|-----------------|
+| Clinical reporting standard | Cohen's d is the accepted effect size measure for continuous outcomes in RCTs ✓ |
+| Cross-study comparability | Standardised measure allows meta-analysis and comparison across trials ✓ |
+| Magnitude interpretation | Provides clinically meaningful threshold (small: 0.2, medium: 0.5, large: 0.8) ✓ |
+| p-value limitation | p=0.003 confirms significance but not clinical importance ✗ |
+| Raw difference limitation | mmHg not standardised across populations/demographics ✗ |
+
+### Recommended Effect Size Reporting Workflow
+
+1. **Primary metric**: Cohen's d = (Mean_treatment − Mean_control) / Pooled_SD
+2. **95% CI**: Report confidence interval for Cohen's d to convey precision
+3. **Clinical interpretation**:
+   - |d| < 0.2 → negligible
+   - |d| = 0.2 → small
+   - |d| = 0.5 → medium
+   - |d| ≥ 0.8 → large
+4. **Supplementary**: Report raw mean difference (mmHg) alongside Cohen's d for clinical interpretability
+
+### Action
+
+Calculate Cohen's d with 95% CI for systolic BP reduction between treatment and control. Report alongside primary t-test results (mean difference, SD, p-value)."
+s8_n3_dense_d3_baseline_t08_cce362,baseline,a2,7,0,INCORRECT,"The orchestrator response discusses dropout regularization strategies for a BERT model overfitting on a legal corpus, which has no relevance to the steering question about sample size justification methods for statistical hypothesis testing on a clinical trial dataset.",FLAT,power|statistical power|power calculation,sample size justification method,"# Orchestrator Steering Decisions — Parallel Agents
+
+---
+
+## Agent a1 [HIGH] — Decision Confirmed
+
+**Question:** Dropout strategy to reduce overfitting on legal corpus (validation accuracy plateaus at epoch 3)?
+
+**Decision: Increase dropout rate in classifier head + enable hidden-layer dropout (standard BERT regularisation)**
+
+| Option | Appropriateness | Verdict |
+|--------|-----------------|---------|
+| **Increase dropout in classification head + hidden-layer dropout** | Direct, standard approach for BERT overfitting; doesn't change pretrained backbone | **✓ SELECTED** |
+| Augmentation only | Helpful adjunct but doesn't directly add regularisation to existing model | ⚠️ Supplemental only |
+| DistilBERT (reduce model size) | Changes experimental baseline — unacceptable for controlled study | ✗ Exclude |
+
+**"
+s8_n3_dense_d3_dacs_t07_ea66a9,dacs,a3,4,1,CORRECT,"The orchestrator correctly identifies the ""harvest now, decrypt later"" threat narrative as the primary framing and substantively justifies this choice with technically sound rationale—including avoiding overstatement about current capabilities while correctly positioning the real and active threat to long-term sensitive enterprise data.",FOCUS,harvest now|store now decrypt later|y2q,threat model coverage for PQC threat narrative,"**Decision: 'Harvest now, decrypt later' / 'Store now, decrypt later' threat narrative as the primary framing**
+
+**Rationale:**
+
+- **Active threat, not hypothetical**: Nation-state adversaries and sophisticated cyber actors are *already* harvesting encrypted enterprise communications, financial records, and intellectual property. The threat is not future—data captured today becomes decryptable when cryptographically relevant quantum computers (CRQCs) arrive
+- **Avoids overstatement**: Quantum computers capable of breaking RSA/ECC do not yet exist publicly. Claiming current quantum break capability damages credibility with technical audiences
+- **Corrects dangerous misconception**: ""Long-term data has no quantum risk"" is precisely wrong. Healthcare records (HIPAA 50-year retention), trade secrets, government classified data, and financial instruments have sensitivity windows exceeding 10-20 years—exactly the timeline CRQC emergence threatens
+
+**Recommended Section 5 structure:**
+
+1. **Store-now-decrypt-later mechanics**: How adversaries capture and store encrypted data at scale (network taps, data breaches, supply chain interception)
+2. **Threat actor profiling**: Nation-states (priority), cybercriminal monetizers, strategic competitors targeting IP/contracts/negotiations
+3. **Data sensitivity windows**: Classify data by quantum-relevant exposure period (short-term operational vs. long-term sensitive)
+4. **Q-Day uncertainty**: Cryptographically relevant quantum timeline estimates (5-15+ years) justify immediate action, not wait-and-see posture
+
+**Confirmed decisions so far:**
+
+- Audience: Enterprise security practitioners / CISOs and architects
+-"
+s8_n3_dense_d3_baseline_t04_b4e8cf,baseline,a2,0,1,CORRECT,"The response correctly identifies Welch's t-test as the appropriate primary statistical test for comparing continuous outcomes (BP reduction) between two independent groups (treatment vs control), with sound justification regarding variance assumptions and appropriate fallback options.",FLAT,t-test|student|welch,statistical test for continuous primary outcome,"# Orchestrator Decision — Agent a2 Steering Request
+
+**Task:** Select primary statistical test for BP reduction comparison (treatment vs control)
+
+---
+
+## Decision: Welch's t-test ✓
+
+**Confirmed:** A two-sample Welch's t-test is the appropriate primary test.
+
+### Rationale:
+| Test | Appropriate? | Reason |
+|------|--------------|--------|
+| **Welch's t-test** | ✓ Primary | Continuous outcome, independent groups, doesn't assume equal variances |
+| Mann-Whitney U | ✓ Secondary | Fallback if Shapiro-Wilk normality test fails (p < 0.05) |
+| Chi-squared | ✗ Wrong | Categorical outcomes only — not continuous BP data |
+
+### Recommended Workflow:
+1. **Primary:** Welch's t-test on raw BP reduction values
+2. **Assumption check:** Run Shapiro-Wilk on each group; if violated → switch to Mann-Whitney U
+3. **Effect size:** Report Cohen's d alongside p-value for practical significance
+
+---
+
+"
+s8_n3_dense_d3_dacs_t08_91f04a,dacs,a1,14,1,CORRECT,"The response directly addresses the steering question about model versioning and registry by making a definitive decision (MLflow Model Registry), providing clear rationale comparing it against alternatives (Git-based versioning and S3 naming conventions), and including implementation code showing how to track model versions in production.",FOCUS,mlflow|model registry|versioning,model versioning and registry for production,"**DECISION for Agent a1:**
+
+**Model Versioning & Registry: MLflow Model Registry**
+
+**Rationale:**
+- MLflow Registry provides centralized tracking of experiment runs, hyperparameters, metrics, and artifact versions — essential for reproducing LegalBERT classifier v1.0, v1.1, v2.0
+- Git-based versioning is inappropriate for binary artifacts (`.pt`, `.onnx` files) — diffs are meaningless, and LFS overhead grows with model size
+- Manual S3 naming conventions (`model_v1_f1_0.89_20240115.onnx`) are brittle, require custom parsing to query by metric, and offer no lineage tracking
+- MLflow Registry supports model staging (Staging → Production → Archived), enables approval workflows, and integrates with ONNX artifacts from the inference optimization step
+
+**Recommended Implementation:**
+
+```python
+import mlflow
+from mlflow.tracking import MlflowClient
+
+# Configure MLflow tracking
+mlflow.set_tracking_uri(""file:///mlflow/artifacts"")
+mlflow.set_experiment(""legalbert-classifier"")
+
+# Log training run with artifacts
+with mlflow.start_run(run_name=""legalbert-v1.0-production""):
+    
+    # Log parameters
+    mlflow.log_params({
+        ""model_name"": ""nlpaueb/legal-bert-base-uncased"",
+        ""num_labels"": 12,
+        ""learning_rate"": 2e-5,
+        ""batch_size"": 32,
+        ""dropout"": 0.2,
+        ""focal_loss_gamma"": 2.0,
+        ""augmentation"": ""back-translation-fr-de"",
+    })
+    
+    # Log metrics
+    mlflow.log_metrics({
+        ""macro_f1"": 0.89,
+        ""eval_loss"": 0.34,
+        ""precision_macro"": 0.87,
+        ""recall_macro"": 0.91,
+    })
+    
+    #"
