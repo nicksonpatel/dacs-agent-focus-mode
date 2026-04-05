@@ -1,0 +1,78 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Anonymous(2024{\natexlab{a}})]{afm2024}
+Anonymous.
+\newblock {AFM}: Adaptive focus memory for long-context dialogue.
+\newblock \emph{arXiv preprint arXiv:2511.12712}, 2024{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2511.12712}.
+
+\bibitem[Anonymous(2024{\natexlab{b}})]{aoi2024}
+Anonymous.
+\newblock {AOI}: Autonomous operations intelligence with three-layer memory
+  architecture.
+\newblock \emph{arXiv preprint arXiv:2512.13956}, 2024{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2512.13956}.
+
+\bibitem[Anonymous(2025{\natexlab{a}})]{adaptorch2025}
+Anonymous.
+\newblock Scalable self-evolving multi-agent systems via dynamic mixture of
+  experts.
+\newblock \emph{arXiv preprint arXiv:2601.09742}, 2025{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2601.09742}.
+
+\bibitem[Anonymous(2025{\natexlab{b}})]{adaptorch2025b}
+Anonymous.
+\newblock {AdaptOrch}: Topology as the optimization frontier in multi-agent llm
+  systems.
+\newblock \emph{arXiv preprint arXiv:2602.16873}, 2025{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2602.16873}.
+
+\bibitem[Anonymous(2025{\natexlab{c}})]{agentorchestra2025}
+Anonymous.
+\newblock {AgentOrchestra}: Tool-environment-agent protocol for hierarchical
+  multi-agent systems.
+\newblock \emph{arXiv preprint arXiv:2506.12508}, 2025{\natexlab{c}}.
+\newblock URL \url{https://arxiv.org/abs/2506.12508}.
+
+\bibitem[Anonymous(2025{\natexlab{d}})]{codedelegator2025}
+Anonymous.
+\newblock {CodeDelegator}: Mitigating context pollution in code-as-action
+  agents via role separation.
+\newblock \emph{arXiv preprint arXiv:2601.14914}, 2025{\natexlab{d}}.
+\newblock URL \url{https://arxiv.org/abs/2601.14914}.
+
+\bibitem[Anonymous(2025{\natexlab{e}})]{lemon2025}
+Anonymous.
+\newblock {Lemon Agent}: Three-tier progressive context management in
+  orchestrator-worker systems.
+\newblock \emph{arXiv preprint arXiv:2602.07092}, 2025{\natexlab{e}}.
+\newblock URL \url{https://arxiv.org/abs/2602.07092}.
+
+\bibitem[Anonymous(2025{\natexlab{f}})]{opencode2025}
+Anonymous.
+\newblock {OpenCode}: Open-source llm code agents, 2025{\natexlab{f}}.
+
+\bibitem[Anonymous(2025{\natexlab{g}})]{sidequest2025}
+Anonymous.
+\newblock {SideQuest}: Model-driven kv cache management for long-horizon
+  single-agent tasks.
+\newblock \emph{arXiv preprint arXiv:2602.22603}, 2025{\natexlab{g}}.
+\newblock URL \url{https://arxiv.org/abs/2602.22603}.
+
+\bibitem[Anonymous(2026)]{ace2026}
+Anonymous.
+\newblock {ACE}: Agentic context engineering as an evolving playbook.
+\newblock \emph{arXiv preprint arXiv:2510.04618}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2510.04618}.
+
+\bibitem[{Anthropic}(2025)]{anthropic2025code}
+{Anthropic}.
+\newblock Claude code agent teams, 2025.
+\newblock URL \url{https://www.anthropic.com/claude-code}.
+
+\end{thebibliography}
