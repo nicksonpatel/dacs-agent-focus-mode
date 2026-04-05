@@ -204,4 +204,4 @@ The submission paper is `paper/draft_v2.tex` (3 phases, all results, LLM-as-judg
 
 ## License
 
-Research prototype. Not yet licensed for redistribution.
+MIT License — see [LICENSE](LICENSE) for details.
