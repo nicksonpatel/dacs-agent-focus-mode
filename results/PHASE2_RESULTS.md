@@ -6,6 +6,23 @@
 
 ---
 
+## Metric Validation: LLM-as-Judge
+
+Before presenting results, the keyword-matching accuracy metric was independently validated using an LLM-as-judge evaluation on all 400 decisions in s5_n5_crossfire (the most diverse scenario and therefore the hardest test of keyword validity).
+
+| Metric | Value |
+|---|---|
+| Agreement rate (keyword vs judge) | **98.0%** |
+| Cohen's κ | **0.956** (near-perfect) |
+| Keyword accuracy | 96.0% DACS / 37.0% baseline |
+| Judge accuracy | 94.5% DACS / 35.5% baseline |
+| DACS advantage (keyword) | +59.0 pp |
+| DACS advantage (judge) | +59.0 pp |
+
+The accuracy gap is identical under both metrics. The 5 baseline false positives were contaminated responses that accidentally contained a vocabulary term from the correct domain while addressing the wrong agent — direct evidence of the contamination mechanism. Full details: `results/llm_judge_summary.md`.
+
+---
+
 ## Summary Table
 
 | Scenario | Condition | Trials | Accuracy | ±SE | Contamination | ±SE | Avg ctx (tok) | ±SE |
