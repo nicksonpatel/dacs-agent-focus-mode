@@ -435,7 +435,7 @@ These are needed for Phase 2 scenarios to be interesting enough.
 
 ## Phase 3 — Decision Density Scaling
 
-**Status:** Not started. Depends on Phase 2 agent implementations.  
+**Status:** ✅ Complete (April 4, 2026). 40 trials total — 10 DACS + 10 baseline × 2 scenarios. Full results: `results/PHASE3_RESULTS.md`.  
 **Estimated duration:** 30–50 trials. Each trial is longer (more decisions per agent).  
 **Purpose:** RQ4 — tests whether DACS advantage increases nonlinearly with decision count
 

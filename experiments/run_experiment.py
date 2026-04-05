@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import csv
+import fcntl
 import os
 import uuid
 from datetime import datetime, timezone
@@ -194,9 +195,14 @@ async def run_experiment(
                     **{k: metrics[k] for k in fieldnames[5:]},
                 }
                 rows.append(row)
-                # Write immediately so progress is preserved on crash
-                writer.writerow(row)
-                summary_file.flush()
+                # Write immediately so progress is preserved on crash.
+                # Use fcntl advisory lock so parallel processes don't interleave rows.
+                fcntl.flock(summary_file, fcntl.LOCK_EX)
+                try:
+                    writer.writerow(row)
+                    summary_file.flush()
+                finally:
+                    fcntl.flock(summary_file, fcntl.LOCK_UN)
 
     summary_file.close()
 
