@@ -1,7 +1,11 @@
 # DACS — Phase 2: Architecture Design Plan
 
+> **Note:** "Phase 2" here refers to the **architecture design sprint** (building `docs/architecture.md` and `docs/interfaces.md`), NOT the agent-diversity experiment called Phase 2 in the paper.  
+> In the paper and `EXPERIMENT_PLAN.md`, Phase 2 = agent diversity experiment (s4–s6). This doc predates that naming.  
+> Also note: actual token budget used is **T=204,800** (not T=32,768/128,000 from early planning below), and the LLM is **MiniMax-M2.7** (not GPT-4o-mini). See `docs/interfaces.md` for corrected values.
+
 **Timeline:** Days 7–14   (April 5–12, 2026)  
-**Status:** Ready to begin — Phase 1 literature review complete, formal definition resolved  
+**Status:** ✅ Complete — architecture.md and interfaces.md delivered and implemented  
 **Deliverables:** `/docs/architecture.md` + `/docs/interfaces.md`
 
 ---

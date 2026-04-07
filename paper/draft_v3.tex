@@ -491,7 +491,7 @@ The harness has four components:
 
 \paragraph{LLM backend.}
 Phases~1--3 use MiniMax-M2.7 via an Anthropic-compatible API endpoint
-(token budget 204{,}800).
+(context window 204{,}800 tokens).
 Phase~4 uses Claude Haiku~4.5 via OpenRouter (agents and orchestrator both
 use the same model, maintaining a single-model stack with no confound from
 model differences within each phase).
@@ -1180,7 +1180,7 @@ responses (see \S\ref{sec:contam_gap}); M1 remains the primary quality
 indicator for real-agent deployments.
 
 \paragraph{Model coverage.}
-Phases~1--3 use MiniMax-M2.7 (token budget 204{,}800);
+Phases~1--3 use MiniMax-M2.7 (context window 204{,}800 tokens);
 Phase~4 uses Claude Haiku~4.5 via OpenRouter.
 The consistent DACS advantage across two distinct model families provides
 initial evidence of model-family independence, but generalisation to

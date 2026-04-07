@@ -9,14 +9,14 @@
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| LLM provider | **GPT-4o-mini** | Cheaper for 60 runs; tiktoken for counting; 128k context confirmed |
-| Tokenizer | **tiktoken** (`cl100k_base`) | Deterministic, fast, no GPU, matches GPT-4o-mini encoding |
+| LLM provider | **MiniMax-M2.7** (Phases 1–3) / **Claude Haiku 4.5 via OpenRouter** (Phase 4) | Anthropic-compatible endpoint; tiktoken cl100k_base for counting |
+| Tokenizer | **tiktoken** (`cl100k_base`) | Deterministic, fast, no GPU, matches encoding used in experiments |
 | Concurrency model | **asyncio** | Agents are LLM-call-bound, not CPU-bound; cleaner event loop |
 | Agent heartbeat trigger | **Event-based** (every step / status change) | Reproducible; avoids clock-drift across LLM latencies |
 | Steering history depth K | **K=10** | Matches FocusContext spec; ablate to K=5 if budget is tight |
 | Log format | **JSON lines** (`.jsonl`) | Structured, grep-able, directly parseable by experiment harness |
 | Baseline context assembly | **Concatenate all agents** | Simpler; worst-case contamination; fair comparison |
-| Token budget T | **T = 128,000** | GPT-4o-mini 128k confirmed; baseline needs this so it doesn't fail mechanically |
+| Token budget T | **T = 204,800** | MiniMax-M2.7 / Claude Haiku 4.5 supported limit; baseline needs this so it doesn't fail mechanically |
 | Focus timeout | **60s wall clock or 3 LLM turns**, whichever first | Prevents stuck focus sessions; configurable via `focus_timeout` |
 
 ---
@@ -31,7 +31,7 @@
 F(aᵢ) estimate: 500 (task) + 10×400 (K=10 steering turns) + 200 (current request) = **4,700 tokens**  
 Registry entry: 200 tokens max; compressed registry excludes the focus agent.
 
-**All values well within T=128,000.** DACS uses ~7k tokens at N=10; baseline uses ~47.5k. The ~6.8× gap is the central experimental result.
+**All values well within T=204,800.** DACS uses ~7k tokens at N=10; baseline uses ~47.5k. The ~6.8× gap is the central experimental result.
 
 ---
 
@@ -210,7 +210,7 @@ class SteeringRequestQueue:
 ### Log line formats
 
 ```json
-{"ts": "2026-04-04T12:00:01.000Z", "event": "STEERING_REQUEST", "request_id": "abc-123", "agent_id": "a2", "urgency": "HIGH", "blocking": true, "question_tokens": 45}
+{"ts": "2026-04-04T12:00:01.000Z", "event": "STEERING_REQUEST", "request_id": "abc-123", "agent_id": "a2", "urgency": "HIGH", "blocking": true, "question": "Should I include sparse attention variants in the survey?"}
 {"ts": "2026-04-04T12:00:02.500Z", "event": "STEERING_RESPONSE", "request_id": "abc-123", "agent_id": "a2", "context_size_at_time": 6834, "orchestrator_state": "FOCUS", "response_tokens": 112}
 ```
 
@@ -446,7 +446,7 @@ All log lines are JSON, written to a single `.jsonl` file per experiment run. Fi
 | Event | Producer | Required fields |
 |---|---|---|
 | `REGISTRY_UPDATE` | `RegistryManager.update()` | `ts`, `agent_id`, `status`, `urgency`, `summary_tokens` |
-| `STEERING_REQUEST` | `SteeringRequestQueue.enqueue()` | `ts`, `request_id`, `agent_id`, `urgency`, `blocking`, `question_tokens` |
+| `STEERING_REQUEST` | `SteeringRequestQueue.enqueue()` | `ts`, `request_id`, `agent_id`, `urgency`, `blocking`, `question` |
 | `CONTEXT_BUILT` | `ContextBuilder` | `ts`, `mode`, `agent_id` (null for REGISTRY), `token_count`, `registry_entries` |
 | `TRANSITION` | `Orchestrator._transition()` | `ts`, `from`, `to`, `agent_id`, `trigger`, `request_id` (if applicable) |
 | `LLM_CALL` | `Orchestrator._llm_call()` | `ts`, `state`, `agent_id`, `context_tokens`, `response_tokens`, `latency_ms` |
@@ -460,8 +460,8 @@ All log lines are JSON, written to a single `.jsonl` file per experiment run. Fi
 
 ## Pre-Implementation Checklist
 
-- [x] Token budget confirmed: T=128,000 (GPT-4o-mini 128k context)
-- [x] LLM provider: GPT-4o-mini (cost estimate: ~$0.15/run × 60 runs = ~$9 total)
+- [x] Token budget confirmed: T=204,800 (MiniMax-M2.7 / Claude Haiku 4.5 compatible)
+- [x] LLM provider: MiniMax-M2.7 (Phases 1–3), Claude Haiku 4.5 via OpenRouter (Phase 4)
 - [x] Tokenizer: tiktoken cl100k_base
 - [x] All design decisions resolved (see table at top)
 - [x] SteeringRequest/Response schemas finalized

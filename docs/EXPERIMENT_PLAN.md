@@ -1,6 +1,11 @@
 # DACS — Comprehensive Experimentation Plan
 
-**Status:** Active — Phase by phase, smallest to largest  
+> **Note:** This was the original planning document written before Phase 1 began.  
+> Execution diverged after Phase 3: Phases 4–6 (long-horizon, adversarial, N=20–50) were **not executed** as described here.  
+> Instead, the paper's Phase 4 became the **real-agent validation** experiment (`experiments_real_agent/`).  
+> For current results see `results/PHASE1_RESULTS.md`, `PHASE2_RESULTS.md`, `PHASE3_RESULTS.md`, `results_real_agent_haiku/`, and `paper/draft_v3.tex`.
+
+**Status:** Original plan — superseded by actual execution  
 **Paper target:** arxiv preprint + NeurIPS/ICLR/AAMAS workshop  
 **Core question:** Does isolating per-agent context during orchestrator steering measurably improve accuracy, reduce contamination, and maintain responsiveness — at all scales and durations?
 
@@ -1113,13 +1118,15 @@ This timeline reflects phase-by-phase ordering. Do not start a phase until the p
 | Phase 0 — Verification | ✅ Complete | 2/2 | Both conditions verified, exit 0 |
 | Phase 1 — 60 trials | ✅ Complete | 60/60 | DACS 90–96.7% vs baseline 21–60%, all p<0.0001, RQ1+RQ2 confirmed |
 | Phase 2 — Diversity | ✅ Complete | 61/60 | DACS 90–96% vs baseline 37–57%, +37–59 pp gap, RQ3 confirmed |
-| Phase 3 — Density | ⏳ Not started | 0/~40 | — |
-| Phase 4 — Long horizon | ⏳ Not started | 0/~20 | — |
-| Phase 5 — Adversarial | ⏳ Not started | 0/~10 | — |
-| Phase 6 — Scale N=20..50 | ⏳ Not started | 0/~20 | — |
+| Phase 3 — Density | ✅ Complete | 40/~40 | DACS 94–98.4% vs baseline 34.8–44.8%, RQ4 confirmed |
+| Phase 4 — Real-agent validation | ✅ Complete | 40/40 | DACS 79.8–83.7% vs baseline 62.6–63.3% with real LLM agents (Haiku 4.5) |
+| Phase 4 (plan) — Long horizon | ❌ Not executed | 0 | Superseded by real-agent validation |
+| Phase 5 — Adversarial | ❌ Not executed | 0 | Partial coverage via concurrency experiment (supplementary) |
+| Phase 6 — Scale N=20..50 | ❌ Not executed | 0 | Out of paper scope |
 
 ---
 
-*Last updated: April 4, 2026 — Phase 2 complete*  
+*Original plan last updated: April 4, 2026 — Phase 2 complete*  
+*Actual execution completed: April 7, 2026 — all paper phases complete*  
 *Total planned trials: ~210 experimental runs + long-horizon sessions*  
-*Total estimated LLM calls: 5,000–15,000 depending on Phase 4 scope*
+*Total actual trials: 200 (Phases 1–4) + 44 supplementary concurrency trials*
