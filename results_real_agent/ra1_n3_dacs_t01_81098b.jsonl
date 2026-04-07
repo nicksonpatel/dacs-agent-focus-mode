@@ -1,0 +1,1 @@
+{"event": "RUN_START", "run_id": "ra1_n3_dacs_t01_81098b", "condition": "DACS", "scenario": "ra1_n3", "n_agents": 3, "focus_mode": true, "model": "MiniMax-M2.7", "token_budget": 204800, "harness": "real_agent", "ts": "2026-04-06T07:21:52.342Z"}
