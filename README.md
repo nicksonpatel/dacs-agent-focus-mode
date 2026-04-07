@@ -1,7 +1,8 @@
 # DACS — Dynamic Attentional Context Scoping
 
 > **Research prototype & arxiv preprint**  
-> Tag [`phase-3-final`](../../releases/tag/phase-3-final) — all paper results reproducible from this tag.
+> Active paper: `paper/draft_v3.tex` — Phases 1–4 (200 trials).  
+> Tag [`phase-3-final`](../../releases/tag/phase-3-final) — Phases 1–3 synthetic results reproducible from this tag.
 
 ---
 
@@ -23,7 +24,7 @@ Context scoping in DACS is *intentional, dynamic, and asymmetric* — not a back
 
 ---
 
-## Experimental Results (3 Phases, 160 Trials)
+## Experimental Results (4 Phases, 200 Trials)
 
 ### Phase 1 — Agent count scaling (N ∈ {3, 5, 10}, 60 trials)
 
@@ -53,6 +54,17 @@ LLM-as-judge validation on s5 (400 decisions): agreement 98.0%, Cohen's κ = 0.9
 | s8 — ultra-dense | 3 | 15 | **98.4%** | +54.2 pp | 2.39× |
 
 LLM-as-judge validation: κ = 0.933 (s7), κ = 0.886 (s8), mean κ = 0.909. All results in `results/`.
+
+### Phase 4 — Real-agent validation (N ∈ {3, 5}, 40 trials)
+
+Agents are autonomous LLMs (Claude Haiku 4.5 via OpenRouter) that write their own free-form steering questions. The orchestrator also uses Haiku, keeping a single-model setup. Validated with two independent judges.
+
+| Scenario | N | DACS acc (Haiku judge) | Baseline acc | DACS acc (GPT-4o-mini judge) | Baseline acc | Context ratio | *p* |
+|---|---|---|---|---|---|---|---|
+| ra1\_n3 | 3 | **79.8%** | 62.6% | **85.4%** | 67.7% | 2.08× | 0.0023 |
+| ra2\_n5 | 5 | **83.7%** | 63.3% | **89.7%** | 68.2% | 2.85× | 0.0008 |
+
+Accuracy gain consistent with Phase 1 at matched N (+17–21 pp). Real-agent baselines outperform synthetic stubs because real agents phrase questions more precisely; DACS advantage is structurally identical. All results in `results_real_agent_haiku/`.
 
 ---
 
@@ -85,18 +97,20 @@ src/                     Core mechanism (~300 lines total)
   ├── context_builder.py Token-counted context assembly & hard cap
   ├── protocols.py       SteeringRequest / SteeringComplete data structures
   ├── logger.py          Full context-window logging for every LLM call
-  └── monitor.py         Real-time registry + focus-mode observer
+  ├── monitor.py         Real-time registry + focus-mode observer
+  └── openrouter_client.py  Anthropic-compatible client for OpenRouter backend
 
-agents/                  Agent stub implementations
+agents/                  Agent implementations
   ├── base_agent.py      Abstract base with SteeringRequest emission
+  ├── generic_agent.py   Configurable step-driven agent (Phases 1–3)
+  ├── llm_agent.py       Real LLM-driven agent for Phase 4 (emits [[STEER:]] markers)
   ├── code_writer_agent.py
   ├── research_agent.py
   ├── data_processor_agent.py
   ├── debugger_agent.py
-  ├── generic_agent.py   Used for Phase 2 & 3 scenarios
   └── long_writer_agent.py
 
-experiments/             Experiment harness
+experiments/             Synthetic agent harness (Phases 1–3)
   ├── run_experiment.py  Single entry point — all phases, all scenarios
   ├── task_suite.py      8 scenarios (s1–s8), known-correct answers per decision point
   ├── metrics.py         Steering accuracy, contamination, context size
@@ -104,6 +118,18 @@ experiments/             Experiment harness
   ├── llm_judge_s8.py    Focused judge pass for s8_n3_dense_d3
   ├── plot_phase1.py     Phase 1 figures
   └── plot_phase2_phase3.py  Phase 2 & 3 figures
+
+experiments_real_agent/  Phase 4 real-agent harness
+  ├── run.py             CLI entry point (OpenRouter or MiniMax backend)
+  ├── scenario_defs.py   ra1_n3 and ra2_n5 scenario definitions + rubrics
+  ├── judge.py           Offline LLM-as-judge (dual-judge: Haiku + GPT-4o-mini)
+  └── analyze.py         Post-hoc analysis of summary_real.csv
+
+experiments_concurrency/ Concurrency & interruption harness (not in paper)
+  ├── run.py             CLI entry point
+  ├── harness.py         Trial runner with InlineJudge + UserInjector
+  ├── scenario_defs.py   cc1_n3, cc2_n5 scenario definitions
+  └── analyze.py         Post-hoc analysis
 
 results/                 Auto-generated — do not edit manually
   ├── PHASE1_RESULTS.md  Phase 1 analysis (60 trials)
@@ -113,9 +139,20 @@ results/                 Auto-generated — do not edit manually
   ├── llm_judge_phase3_s8.csv   Judge validation data for s8
   └── *.jsonl            Per-trial full context-window logs
 
+results_real_agent_haiku/  Phase 4 judge results (primary)
+  ├── summary_real.csv            Aggregated metrics (40 trials)
+  ├── judge_results_ra1_n3_*.csv  Dual-judge evaluations for ra1_n3
+  └── judge_results_ra2_n5_*.csv  Dual-judge evaluations for ra2_n5
+
+results_concurrency/     Concurrency experiment results
+  ├── CONCURRENCY_RESULTS.md  Full analysis (44 trials)
+  ├── concurrency_summary.csv Aggregated metrics
+  └── *.jsonl                 Per-trial logs
+
 paper/
-  ├── draft_v2.tex       Full paper (3 phases, all results)
-  ├── main.tex           Phase 1 only version
+  ├── draft_v3.tex       Full paper (Phases 1–4, all results) ← active submission
+  ├── draft_v2.tex       Phase 1–3 only version (superseded)
+  ├── main.tex           Phase 1 only version (superseded)
   ├── refs.bib           Bibliography
   └── figures/           Paper figures (PNG)
 
@@ -125,7 +162,8 @@ notes/
 
 docs/
   ├── architecture.md        System architecture diagram
-  └── interfaces.md          Component interface specifications
+  ├── interfaces.md          Component interface specifications
+  └── real_agent_experiment_architecture.md  Phase 4 design spec
 
 requirements.txt           Python dependencies
 ```
@@ -142,9 +180,12 @@ cd agent-focus-mode
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Set your API key (the paper used MiniMax-M2.7 via an Anthropic-compatible endpoint)
+# MiniMax (used for Phases 1–3 synthetic experiments)
 export MINIMAX_API_KEY=<your-key>
 export DACS_MODEL=MiniMax-M2.7   # optional — this is the default
+
+# OpenRouter (used for Phase 4 real-agent experiments, Claude Haiku 4.5)
+export OPENROUTER_API_KEY=<your-key>
 ```
 
 ### Reproduce Phase 1 (N ∈ {3, 5, 10}, 60 trials)
@@ -166,6 +207,14 @@ python -m experiments.llm_judge_phase3  # runs LLM-as-judge validation
 python -m experiments.plot_phase2_phase3
 ```
 
+### Reproduce Phase 4 (real-agent validation, 40 trials)
+```bash
+# Requires OPENROUTER_API_KEY
+python -m experiments_real_agent.run --api openrouter --mode both --trials 10 --scenario ra1_n3
+python -m experiments_real_agent.run --api openrouter --mode both --trials 10 --scenario ra2_n5
+python -m experiments_real_agent.judge  # dual-judge evaluation (Haiku + GPT-4o-mini)
+```
+
 ### Quick smoke test (1 trial per condition, ~10 min)
 ```bash
 python -m experiments.run_experiment --scenario s1_n3 --mode both --trials 1
@@ -173,7 +222,7 @@ python -m experiments.run_experiment --scenario s1_n3 --mode both --trials 1
 
 Results are written to `results/summary.csv` (one row per trial) and `results/<run_id>.jsonl` (full context-window log for every LLM call in that trial).
 
-> **Reproducibility note:** All paper results were produced at git tag `phase-3-final`. Check out that tag to guarantee identical code.
+> **Reproducibility note:** Phases 1–3 results produced at git tag `phase-3-final`. Phase 4 real-agent results are in `results_real_agent_haiku/`.
 
 ---
 
@@ -193,12 +242,26 @@ Results are written to `results/summary.csv` (one row per trial) and `results/<r
 | Phase 1 | ✅ Complete | s1 (N=3), s2 (N=5), s3 (N=10) | 60 | Does DACS accuracy scale with N? |
 | Phase 2 | ✅ Complete | s4 (homogeneous), s5 (crossfire), s6 (cascade) | 60 | Does advantage hold across agent diversity? |
 | Phase 3 | ✅ Complete | s7 (N=5, D=8), s8 (N=3, D=15) | 40 | Does advantage grow with decision density? |
+| Phase 4 | ✅ Complete | ra1\_n3 (N=3), ra2\_n5 (N=5) | 40 | Does advantage hold with real LLM agents? |
+| Concurrency | ✅ Complete (supplementary, not in paper) | cc1\_n3, cc2\_n5 | 44 | Stress test: simultaneous HIGH-urgency + user injections |
 
 ---
 
 ## Paper
 
-The submission paper is `paper/draft_v2.tex` (3 phases, all results, LLM-as-judge validation). Closest related work: AFM and AOI — see `notes/literature-review.md` for precise distinctions.
+The submission paper is `paper/draft_v3.tex` (Phases 1–4, 200 trials, dual-judge validation for Phase 4). Closest related work: AFM ([2511.12712](https://arxiv.org/abs/2511.12712)) and AOI ([2512.13956](https://arxiv.org/abs/2512.13956)) — see `notes/literature-review.md` for precise distinctions.
+
+---
+
+## Supplementary: Concurrency & Interruption Experiment
+
+Not included in the paper submission. 44 trials across two scenarios (cc1\_n3, cc2\_n5) stress-testing DACS under simultaneous HIGH-urgency requests, INTERRUPT preemption events, and mid-trial user message injections. DACS accuracy degrades ≤2 pp under stressors; baseline degrades 8–9 pp. Full analysis in `results_concurrency/CONCURRENCY_RESULTS.md`.
+
+**Structural differences from Phases 1–4:** uses an `InlineJudge` that scores responses live *during* the trial (not post-hoc), a `UserInjector` that fires timed user messages mid-FOCUS session, and a `TrackedQueue` that forwards questions to the judge in real time.
+
+```bash
+python -m experiments_concurrency.run --scenario cc1_n3 cc2_n5 --mode both --trials 5
+```
 
 ---
 
