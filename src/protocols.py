@@ -111,6 +111,7 @@ class SteeringRequestQueue:
             "agent_id": request.agent_id,
             "urgency": request.urgency.value,
             "blocking": request.blocking,
+            "question": request.question,
         })
 
     def peek(self) -> Optional[SteeringRequest]:

@@ -1,0 +1,66 @@
+scenario,run_id,condition,agent_id,rubric_index,rubric_topic,actual_question,keyword_score,judge_verdict,judge_reason,orchestrator_state,correct_keywords,response_text
+smoke_n1,smoke_n1_dacs_t01_068408,dacs,a1,0,traversal_order,"For a Binary Search Tree implementation, which traversal method should be the primary default—inorder, preorder, or postorder—and what is the rationale for this choice in typical BST use cases?",1,CORRECT,"The orchestrator correctly identifies inorder traversal as the primary default for BST implementation, provides accurate rationale (inorder yields sorted order, which is the defining characteristic of BST), and appropriately explains when alternatives are useful—all directly aligned with the rubric requirement.",FOCUS,"['inorder', 'in-order', 'in order', 'sorted order']","## Decision for Agent a1
+
+**Primary Default Traversal: INORDER**
+
+### Rationale
+
+1. **Natural BST Property**: Inorder traversal of a BST yields elements in **sorted (ascending) order**. This is the defining characteristic of BST traversal and the most commonly needed operation.
+
+2. **Typical Use Cases**:
+   - Retrieving all elements sorted
+   - Validating BST correctness
+   - Most real-world applications need ordered data
+
+3. **Implementation Priority**:
+   - Implement `inorder()` as the primary/default method
+   - Provide `preorder()` and `postorder()` as secondary options
+   - Document their specific use cases
+
+4. **When to Use Alternatives**:
+   - **Preorder**: Tree serialization/deserialization, copying
+   - **Postorder**: Tree deletion, post-processing children before parent
+
+### Recommendation for Your Implementation
+
+Make `inorder()` the default traversal and clearly document the three methods with use-case examples. This aligns agent a1's BST with standard data structure conventions."
+smoke_n1,smoke_n1_baseline_t01_4da61d,baseline,a1,0,traversal_order,"Should the default/primary traversal method for the BST be inorder (left-root-right), preorder (root-left-right), or postorder (left-right-root)? Which makes most sense for a general-purpose BST and why?",1,CORRECT,"The orchestrator correctly recommends inorder traversal as the primary method for a general-purpose BST, providing technically sound justification: inorder produces sorted order (the defining property of BSTs), is most commonly needed for typical applications, and follows standard convention across libraries and textbooks.",FLAT,"['inorder', 'in-order', 'in order', 'sorted order']","## Steering Decision for a1
+
+**Primary Traversal Method: Inorder (left-root-right)**
+
+### Rationale:
+
+1. **Natural Ordering**: Inorder traversal of a BST produces elements in **sorted order** — this is the defining property of BSTs and the most commonly needed operation.
+
+2. **General-Purpose Use**: Most applications using BSTs need sorted iteration (e.g., range queries, reporting, validations). Inorder is the default expectation.
+
+3. **Standard Convention**: Inorder is the conventional choice for BSTs across libraries and textbooks.
+
+### Secondary Considerations:
+
+- **Preorder**: Useful for tree reconstruction/cloning; make available but secondary.
+- **Postorder**: Useful for deletion/cleanup; make available but secondary.
+
+### Implementation Approach:
+
+- Implement `inorder()` as the primary method
+- Provide `preorder()` and `postorder()` as additional methods
+- Consider a generic `traverse(order_type)` parameter for flexibility
+
+**Proceed with inorder as default; document why in code comments.**"
+smoke_n1,smoke_n1_dacs_t01_17e82b,dacs,a1,0,traversal_order,"Which traversal method (inorder, preorder, or postorder) should be the primary default traversal for this BST implementation, and what is the reasoning for this choice?",1,CORRECT,"The orchestrator correctly recommends inorder traversal as the primary default, provides sound technical reasoning (sorted output is the defining BST property and most common use case), and aligns perfectly with the rubric's expectation that inorder is the appropriate choice for a BST implementation.",FOCUS,"['inorder', 'in-order', 'in order', 'sorted order']","**DECISION for Agent a1:**
+
+**Primary default traversal: Inorder**
+
+**Reasoning:**
+1. **Natural ordering**: Inorder traversal of a BST yields nodes in sorted (ascending) order—the defining property that makes BST useful. This is the most practical default.
+2. **Common use case**: Most BST applications need sorted output (e.g., range queries, sorted iteration), making inorder the most frequently needed traversal.
+3. **Intuitive expectation**: Users expect a BST to produce sorted results by default; inorder matches this expectation.
+
+**Secondary traversals**: Provide preorder and postorder as alternative methods (e.g., `traverse(method='inorder|preorder|postorder')`), since they're useful for specific tasks like tree serialization or tree copying.
+
+**Implementation approach:**
+- Default method: `def traverse(self, method='inorder'):`
+- Return sorted list by default; document alternatives.
+
+This choice balances utility with user expectations."
