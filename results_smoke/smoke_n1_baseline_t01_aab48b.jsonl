@@ -1,0 +1,15 @@
+{"event": "RUN_START", "run_id": "smoke_n1_baseline_t01_aab48b", "condition": "baseline", "scenario": "smoke_n1", "n_agents": 1, "focus_mode": false, "model": "anthropic/claude-haiku-4-5", "token_budget": 204800, "harness": "real_agent", "ts": "2026-04-06T12:52:45.714Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 19, "ts": "2026-04-06T12:52:50.416Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 16, "ts": "2026-04-06T12:52:52.237Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:52:53.565Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:52:55.059Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:52:56.662Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:09.606Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:11.085Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:13.045Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:14.918Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:17.039Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:18.538Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "RUNNING", "urgency": "LOW", "summary_tokens": 3, "ts": "2026-04-06T12:53:20.024Z"}
+{"event": "REGISTRY_UPDATE", "agent_id": "a1", "status": "COMPLETE", "urgency": "LOW", "summary_tokens": 2, "ts": "2026-04-06T12:53:20.025Z"}
+{"event": "RUN_END", "run_id": "smoke_n1_baseline_t01_aab48b", "ts": "2026-04-06T12:53:20.034Z"}

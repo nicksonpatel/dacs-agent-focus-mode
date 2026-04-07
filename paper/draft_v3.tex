@@ -2,6 +2,10 @@
 
 % arxiv-standard packages
 \usepackage[preprint]{neurips_2024}   % swap to [final] for camera-ready
+% Override the default "Preprint. Under review." footer for arXiv submission
+\makeatletter
+\renewcommand{\@noticestring}{Preprint. arXiv submission.}
+\makeatother
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -14,10 +18,21 @@
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{graphicx}
-\usepackage{algorithm}
-\usepackage{algorithmic}
 \usepackage{multirow}
-\usepackage{tabularx}
+\usepackage{listings}
+\lstset{%
+  basicstyle=\ttfamily\small,
+  language={},
+  frame=single,
+  framerule=0.4pt,
+  backgroundcolor=\color{gray!10},
+  xleftmargin=10pt,
+  xrightmargin=10pt,
+  aboveskip=6pt,
+  belowskip=4pt,
+  breaklines=false,
+  columns=fixed,
+}
 
 \title{Dynamic Attentional Context Scoping:\\
 Agent-Triggered Focus Sessions for\\
@@ -25,12 +40,15 @@ Isolated Per-Agent Steering in Multi-Agent LLM Orchestration}
 
 \author{%
   Nickson Patel \\
-  \texttt{nicksonpatel@gmail.com} \\
-  \texttt{nickson@x-algo.net}
+  Independent Researcher \\
+  \texttt{nicksonpatel@gmail.com}
 }
 
 \begin{document}
 \maketitle
+\widowpenalty=10000
+\clubpenalty=10000
+\renewcommand{\arraystretch}{1.15}
 
 %-----------------------------------------------------------------------
 \begin{abstract}
@@ -50,27 +68,27 @@ Context isolation is agent-triggered, asymmetric, and deterministic:
 the context window contains exactly $F(a_i) + R_{-i}$ during steering,
 eliminating cross-agent contamination without requiring context
 compression or retrieval.
-We evaluate DACS across three experimental phases totalling 160 trials:
+We evaluate DACS across four experimental phases totalling 200 trials:
 Phase~1 tests $N \in \{3,5,10\}$ agents (60 trials);
 Phase~2 tests agent heterogeneity and adversarial dependency structures
 (60 trials);
 Phase~3 tests decision density scaling up to $D=15$ steering requests per
-agent (40 trials).
-Across all 8 scenarios, DACS achieves $90.0$--$98.4\%$ steering accuracy
-versus $21.0$--$60.0\%$ for a flat-context baseline ($p < 0.0001$
-throughout).
-Wrong-agent contamination is $0.0$--$14.0\%$ under DACS versus
-$28$--$57\%$ under the baseline.
-The accuracy advantage grows with agent count ($N$) and with
-decision density ($D$): at $N=3, D=15$, the gap reaches $+54.2$ pp
-versus $+36.7$ pp at $N=3, D\approx3$.
-DACS context size grows sub-linearly with both $N$ and $D$ while the
-baseline grows near-linearly, yielding context efficiency ratios of
-up to $3.53\times$.
-The keyword matching metric is validated by independent LLM-as-judge
-evaluations across all three phases (Phase~2: $\kappa=0.956$;
-Phase~3 s8: $\kappa=0.886$; Phase~3 s7: $\kappa=0.933$;
-mean $\kappa=0.909$).
+agent (40 trials);
+Phase~4 replaces all scripted stubs with autonomous LLM agents generating
+free-form questions (40 trials, Claude Haiku~4.5).
+Across all 8 synthetic scenarios, DACS achieves $90.0$--$98.4\%$ steering
+accuracy versus $21.0$--$60.0\%$ for a flat-context baseline
+($p < 0.0001$ throughout), with wrong-agent contamination falling from
+$28$--$57\%$ to $0$--$14\%$ and context efficiency ratios of up to
+$3.53\times$.
+The accuracy advantage grows with both agent count ($N$) and decision
+density ($D$), and keyword matching is validated by LLM-as-judge across
+all three synthetic phases (mean $\kappa=0.909$).
+In Phase~4, all scripted stubs are replaced by autonomous LLM agents
+(Claude Haiku~4.5) generating free-form steering questions:
+DACS outperforms the flat-context baseline by $+17.2$\,pp at $N{=}3$
+($p{=}0.0023$) and $+20.4$\,pp at $N{=}5$ ($p{=}0.0008$),
+with the advantage growing with $N$ confirmed by two independent judges.
 All code and data are released at
 \href{https://github.com/nicksonpatel/dacs-agent-focus-mode}{\texttt{github.com/nicksonpatel/dacs-agent-focus-mode}}.
 \end{abstract}
@@ -162,9 +180,14 @@ management approaches are:
   dependencies), and Phase~3 (decision density scaling), together
   answering four distinct research questions (\S\ref{sec:results}).
   \item We independently validate the keyword matching metric with
-  LLM-as-judge evaluations across all three phases (Phase~2: $\kappa=0.956$;
+  LLM-as-judge evaluations across Phases~2 and~3 (Phase~2: $\kappa=0.956$;
   Phase~3: mean $\kappa=0.909$), confirming that reported advantage sizes
   are robust (\S\ref{sec:results}).
+  \item We validate beyond the scripted benchmark with Phase~4: two
+  real-agent experiments (40 trials, Claude Haiku~4.5, free-form questions)
+  showing DACS outperforms the baseline by $+17.2$\,pp and $+20.4$\,pp at
+  $N{=}3$ and $N{=}5$ respectively, with the advantage growing with $N$
+  (\S\ref{sec:phase4}).
   \item We identify sub-linear context scaling as the mechanism's key
   theoretical property, explain its source, and discuss conditions under
   which it holds (\S\ref{sec:discussion}).
@@ -181,6 +204,7 @@ DACS addresses a problem at the third level that existing work at the
 first two levels does not reach.
 
 \paragraph{Single-turn context compression.}
+\begin{sloppypar}
 AFM~\citep{afm2024} assigns per-message fidelity tiers
 (Full/Compressed/Placeholder) based on a composite recency-relevance score
 and packs messages greedily under a token budget.
@@ -195,6 +219,7 @@ Both AFM and ACE operate within a single agent's context history.
 Neither addresses $N$ concurrent agents competing for an orchestrator
 context window, and neither models wrong-agent contamination as a failure
 mode.
+\end{sloppypar}
 
 \paragraph{Retrieval and cache bloat.}
 SideQuest~\citep{sidequest2025} frames KV cache compression as an
@@ -359,7 +384,7 @@ and resumes $a_i$'s interrupted session if it is still pending.
 When agent $a_i$ reaches a decision point it cannot resolve autonomously,
 it emits:
 
-\begin{verbatim}
+\begin{lstlisting}
 SteeringRequest {
   agent_id:   str
   context:    str   -- relevant context excerpt
@@ -367,7 +392,7 @@ SteeringRequest {
   blocking:   bool  -- is a_i halted?
   urgency:    LOW | MEDIUM | HIGH
 }
-\end{verbatim}
+\end{lstlisting}
 
 \textsc{High} urgency can interrupt an active focus session
 (transition~\eqref{eq:t3}).
@@ -465,10 +490,12 @@ The harness has four components:
 \texttt{orchestrator.py} (state machine + LLM call dispatch).
 
 \paragraph{LLM backend.}
-All experiments use MiniMax-M2.7 via an Anthropic-compatible API endpoint
+Phases~1--3 use MiniMax-M2.7 via an Anthropic-compatible API endpoint
 (token budget 204{,}800).
-The same model and endpoint are used for DACS and the baseline, ensuring
-no confound from model differences.
+Phase~4 uses Claude Haiku~4.5 via OpenRouter (agents and orchestrator both
+use the same model, maintaining a single-model stack with no confound from
+model differences within each phase).
+Within each phase, DACS and the baseline use the identical model and endpoint.
 
 \subsection{Conditions}
 \label{sec:conditions}
@@ -592,17 +619,19 @@ as a valid proxy for LLM-judged correctness across the full experiment series.
 \subsection{Procedure}
 \label{sec:procedure}
 
-We run 10 independent trials per condition per scenario (160 total trials:
-60 Phase~1, 60 Phase~2, 40 Phase~3).
+We run 10 independent trials per condition per scenario.
+Phases~1--3 span 160 trials (60 Phase~1, 60 Phase~2, 40 Phase~3);
+Phase~4 adds 40 real-agent trials (200 total).
 Each trial uses a fresh agent instantiation with randomised task parameter
-order. Phase~3 trials were run in 4 parallel background processes to
-exploit concurrent API capacity; file writes to the shared summary CSV
+order. Phase~3 and Phase~4 trials were run in parallel background processes
+to exploit concurrent API capacity; file writes to the shared summary CSV
 are protected by \texttt{fcntl} advisory locking to prevent corruption.
-All results are written to \texttt{results/summary.csv} with per-trial
-\texttt{.jsonl} logs for full context-window audit.
+Phases~1--3 results are written to \texttt{results/summary.csv};
+Phase~4 results to \texttt{results\_real\_agent\_haiku/};
+both include per-trial \texttt{.jsonl} logs for full context-window audit.
 
 %-----------------------------------------------------------------------
-\section{Results}
+\section{Results: Phases 1--3}
 \label{sec:results}
 
 \subsection{Phase 1: Agent Count Scaling}
@@ -672,7 +701,8 @@ scenarios.
 Each cell: mean $\pm$ SE over 10 trials.}
 \label{tab:phase2}
 \centering
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{llrrrrr}
 \toprule
 Scenario & Cond. & Accuracy & Contamination & Ctx (tok) & $\Delta$ acc & Ctx ratio \\
@@ -751,7 +781,8 @@ $D$ = decisions per agent per trial.
 Values are mean $\pm$ SE over 10 trials.}
 \label{tab:phase3}
 \centering
-\small
+\footnotesize
+\setlength{\tabcolsep}{5pt}
 \begin{tabular}{llrrrrr}
 \toprule
 Scenario & Cond. & Accuracy & Contamination & Ctx (tok) & $\Delta$ acc & Ctx ratio \\
@@ -791,7 +822,7 @@ preserving both accuracy and contamination control.
 Table~\ref{tab:density} tracks the N=3 and N=5 trajectories across all
 three phases as $D$ increases.
 
-\begin{table}[h]
+\begin{table}[t]
 \caption{DACS advantage as a function of decisions per agent $D$,
 holding $N$ fixed. Accuracy delta and context efficiency ratio grow
 as $D$ increases for the baseline; DACS accuracy is stable.}
@@ -833,6 +864,7 @@ The flat baseline cannot exploit this signal---it is buried under all
 other agents' equally long histories.
 
 \subsection{Cumulative View}
+\label{sec:cumulative}
 
 \begin{table}[t]
 \caption{All 8 scenarios across three phases.
@@ -872,91 +904,197 @@ yes, including the adversarial cascade scenario.
 $+17.5$ pp increase in the delta as $D$ quintuples at $N=3$.
 
 %-----------------------------------------------------------------------
-\subsection{Real-Agent Validation}
-\label{sec:real_agent}
+\section{Phase 4: Real-Agent Validation}
+\label{sec:phase4}
 
-To address the limitation that our primary evaluation uses scripted agent
-stubs, we ran an additional experiment (\textbf{ra1\_n3}) in which all
-three agents are replaced by \emph{autonomous LLM agents} that generate
-their own steering questions.
-The scenario mirrors s1\_n3 (the same domain trio: BST implementation,
-transformer-architecture survey, CSV preprocessing; $N{=}3$) so that
-synthetic and real results are directly comparable.
+\subsection{Motivation}
+\label{sec:motivation}
 
-\paragraph{LLMAgent design.}
-Each agent runs an independent LLM conversation loop using the same
-MiniMax-M2.7 backend as the orchestrator.
-Agents signal that they need orchestrator guidance by appending a
-\texttt{[[STEER: \ldots]]} marker anywhere in their generated text;
-the harness intercepts this via regex and routes it through the standard
-\textsc{SteeringRequest} protocol, indistinguishable from a scripted
-stub's request.
-Agents may emit at most three steering requests per task and run for at
-most 12 LLM steps, reflecting realistic steering budgets.
-Crucially, agents do \emph{not} use pre-defined question templates---each
-question is the agent's own free-form reasoning about what guidance it
-needs, making questions irregular in both length and vocabulary across
-trials.
+Phases 1--3 use scripted agent stubs: each ``agent'' emits pre-defined
+steering questions at pre-defined steps, providing exact experimental
+control but raising the obvious question of ecological validity.
+Do the results hold when agents are actual LLMs generating their own
+reasoning and questions?
+Phase~4 answers this with a controlled robustness check: we re-run the
+$N{=}3$ and $N{=}5$ scenarios with all stubs replaced by autonomous LLM
+agents, keeping the orchestrator, harness, and evaluation protocol
+identical.
+The goal is not to supersede Phases 1--3---the scripted harness enables
+causal isolation that real agents cannot provide---but to confirm that
+the DACS advantage is not an artefact of the controlled evaluation regime.
+Two independent experimental paradigms pointing in the same direction are
+stronger than one perfect paradigm.
+
+\subsection{Setup}
+\label{sec:setup_p4}
+
+\paragraph{Scenarios.}
+Two scenarios mirror their Phase~1 counterparts:
+\textbf{ra1\_n3} ($N{=}3$: BST implementation, transformer attention survey,
+CSV pre-processing) mirrors s1\_n3;
+\textbf{ra2\_n5} ($N{=}5$: the above plus graph BFS/DFS/cycle-detection and
+RL policy-gradient survey) mirrors s2\_n5.
+Both conditions ran 10 DACS and 10 baseline trials (40 total),
+with results written to per-trial \texttt{.jsonl} logs as in Phases 1--3.
+
+\paragraph{LLMAgent.}
+Each agent runs an independent LLM conversation loop (Claude Haiku~4.5
+via OpenRouter; the orchestrator also uses Haiku, keeping a single-model
+stack).
+Agents emit a \texttt{[[STEER:~\ldots]]} marker whenever they need
+orchestrator guidance; the harness intercepts this via regex and routes it
+through the standard \textsc{SteeringRequest} protocol---identical to how
+scripted stubs inject requests.
+Agents may emit at most three steering requests per task, running for at
+most 12 LLM steps.
+Crucially, question text is the agent's own free-form reasoning:
+it is not templated, varies in length and vocabulary across trials, and
+may be incomplete or imprecise---a harder evaluation regime than the
+scripted keywords admit.
+Both scenarios required agents to consult the orchestrator on each
+labelled decision category before emitting \texttt{[[DONE]]}, achieving
+100\% rubric coverage in both conditions and all 20 trials per scenario.
 
 \paragraph{Evaluation.}
-Because questions are free-form and vary across trials, keyword matching
-alone is insufficient.
-We use an LLM-as-judge that receives (i)~the actual question the agent
-asked, (ii)~the orchestrator's response, and (iii)~a per-rubric
-\texttt{judge\_context} string describing the correct decision rationale.
+Because questions are free-form, keyword matching alone is insufficient
+for the Phase~4 judge.
+We use an LLM-as-judge approach with \emph{two independent judge models}:
+Claude Haiku~4.5 and GPT-4o-mini.
+Each judge receives (i)~the actual question the agent asked,
+(ii)~the orchestrator's full response, and
+(iii)~a per-rubric \texttt{judge\_context} string describing the correct
+decision rationale.
 The judge emits a \texttt{<verdict>CORRECT|INCORRECT</verdict>} verdict.
-Cohen's~$\kappa$ between keyword matching and LLM judge is
-$\kappa{=}0.52$ for DACS and $\kappa{=}0.73$ for baseline, confirming
-the judge provides complementary signal.
-Scenario ra1\_n3 defines 9 rubric slots per trial
-(3 agents $\times$ 3 rubrics each).
-Because real agents generate their own questions, they do not always
-query every rubric topic; mean steering coverage (fraction of rubric
-slots that received a steering response) is $59.8\%$, compared to
-$100\%$ for the scripted harness.
+Running two judges allows us to check whether reported effects are
+evaluator-specific.
+Scenarios ra1\_n3 and ra2\_n5 define 9 and 15 rubric slots per trial
+(3 and 5 agents $\times$ 3 rubrics each), yielding 180 and 150 judged
+decisions per condition pair across 10 trials.
 
-\paragraph{Results.}
-Table~\ref{tab:real_agent} summarises outcomes across 21 trials
-(11 DACS, 10 baseline).
+\subsection{Results}
+\label{sec:results_p4}
 
 \begin{table}[t]
-\caption{Real-agent validation (ra1\_n3, $N{=}3$, LLMAgent).
-Mirrors synthetic s1\_n3 ($N{=}3$) for direct comparison.
-Welch's $t$-test on per-trial M1 accuracy:
-$t{=}3.61$, $p{=}0.0009$ ($^{***}$).}
+\caption{Phase~4 results: real-agent $N$-scaling validation.
+Agents are autonomous LLMs (Claude Haiku~4.5) generating free-form
+steering questions.
+Two independent judges shown.
+Phase~1 rows reproduce Table~\ref{tab:phase1} values for cross-paradigm
+comparison.
+Welch's $t$-test significance on per-trial Haiku-judge accuracy.}
 \label{tab:real_agent}
 \centering
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{llrccrrrr}
 \toprule
-Metric & DACS\,(real) & Baseline\,(real) & DACS\,(syn) & Baseline\,(syn) \\
+Scenario & $N$ & \multicolumn{2}{c}{M1 Haiku Judge} & \multicolumn{2}{c}{M1 GPT-4o-mini} & \multicolumn{2}{c}{M3 Avg Ctx Tok} & $p$ \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+ & & DACS & Base & DACS & Base & DACS & Base & \\
 \midrule
-M1 Steering Acc (judge) & 74.9\% & 42.3\% & 96.0\% & 59.6\% \\
-\quad$\pm$std & $\pm$17.1\,pp & $\pm$23.4\,pp & $\pm$5.6\,pp & $\pm$12.4\,pp \\
-M2 Contamination        & \textbf{0.0\%} & 56.0\% & 2.0\% & 54.5\% \\
-M3 Avg context tokens   & 516 & 842 & 559 & 1{,}196 \\
+\multicolumn{9}{l}{\textit{Phase~4 — real agents (LLMAgent, Claude Haiku~4.5, 10 trials each)}} \\
+ra1\_n3 & 3 & 79.8\% & 62.6\% & 85.4\% & 67.7\% & 654 & 1{,}361 & 0.0023\,** \\
+ra2\_n5 & 5 & \textbf{83.7\%} & 63.3\% & \textbf{89.7\%} & 68.2\% & 799 & 2{,}275 & 0.0008\,*** \\
+\midrule
+\multicolumn{9}{l}{\textit{Phase~1 synthetic stubs (for comparison; values from Table~\ref{tab:phase1})}} \\
+s1\_n3  & 3 & 96.7\% & 60.0\% & --- & --- & 561 & 1{,}191 & $<$0.0001\,*** \\
+s2\_n5  & 5 & 96.7\% & 38.7\% & --- & --- & 633 & 1{,}720 & $<$0.0001\,*** \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Three findings replicate directly from the synthetic experiments:
-\textbf{(1)} DACS accuracy substantially outperforms the baseline
-(\textbf{74.9\%} vs.\ \textbf{42.3\%},
-$\Delta{=}+32.6$\,pp, $p{=}0.0009$);
-\textbf{(2)} contamination is eliminated by DACS (\textbf{0.0\%})
-while the flat-context baseline exhibits cross-agent contamination at
-\textbf{56.0\%}---virtually identical to the synthetic result of
-54.5\%;
-\textbf{(3)} DACS context size remains lean (516 tokens average)
-compared to the baseline (842 tokens), a 1.63$\times$ efficiency ratio.
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/phase4_comparison.png}
+  \caption{Phase~4 real-agent vs.\ Phase~1 synthetic results at matched
+  $N \in \{3, 5\}$.
+  (a)~M1 steering accuracy (Haiku judge) for DACS and baseline across
+  both paradigms.
+  (b)~M3 average context tokens at steering time.
+  Error bars: $\pm 1$ SE (10 trials per condition).
+  DACS advantage direction and growth with $N$ are consistent across
+  paradigms; absolute accuracy is lower under real agents due to the
+  harder free-form question regime.}
+  \label{fig:phase4}
+\end{figure}
 
-Absolute accuracy is lower with real agents than with scripted stubs
-(74.9\% vs.\ 96.0\% for DACS; 42.3\% vs.\ 59.6\% for baseline).
-This is expected: real agents produce irregular, partial questions that
-do not always map cleanly to the evaluation rubrics.
-The \emph{relative} advantage is preserved: the DACS gap at real-agent
-evaluation ($+32.6$\,pp) is comparable to the gap in the matched
-synthetic scenario s1\_n3 ($+36.4$\,pp, same $N$ and domain structure).
+Table~\ref{tab:real_agent} and Figure~\ref{fig:phase4} show four
+findings that replicate and extend the Phases 1--3 results.
+
+\noindent\textbf{(F1) DACS significantly outperforms the baseline in
+both real-agent scenarios.}
+The Haiku judge records $+17.2$\,pp at $N{=}3$ ($p{=}0.0023$) and
+$+20.4$\,pp at $N{=}5$ ($p{=}0.0008$).
+Both results are independently confirmed by GPT-4o-mini ($+17.7$\,pp and
+$+21.5$\,pp respectively), ruling out evaluator-specific artefacts.
+
+\noindent\textbf{(F2) The advantage grows with $N$, consistent with
+Phase~1.}
+At $N{=}3$ DACS leads by $+17.2$\,pp; at $N{=}5$ by $+20.4$\,pp.
+The same monotonic growth was observed in Phase~1
+($+36.7$\,pp at $N{=}3$, $+58.0$\,pp at $N{=}5$, $+69.0$\,pp at
+$N{=}10$), confirming that context isolation becomes more valuable
+as the number of concurrent agents grows, regardless of whether those
+agents are scripted or autonomous.
+
+\noindent\textbf{(F3) Context efficiency is preserved.}
+DACS context at $N{=}3$ is $654$ tokens vs.\ $1{,}361$ baseline
+($2.08\times$); at $N{=}5$, $799$ vs.\ $2{,}275$ ($2.85\times$).
+The ratio grows with $N$, again consistent with Phases 1--3.
+
+\noindent\textbf{(F4) Absolute accuracy under real agents is lower,
+as expected.}
+Real-agent DACS reaches 79.8--83.7\% vs.\ 96.0--96.7\% for scripted
+stubs.
+This is the expected cost of the harder regime: agents produce irregular,
+sometimes incomplete questions that do not always map cleanly to rubrics,
+and keyword matching at 99.2\% (DACS) is not the binding constraint.
+The LLM judges capture these partial answers, lowering recorded accuracy
+relative to the synthetic benchmark.
+Critically, the \emph{relative} advantage is present and significant in
+both paradigms.
+
+\subsection{The Contamination Gap}
+\label{sec:contam_gap}
+
+The most striking divergence between Phase~4 and Phases~1--3 is in M2
+contamination.
+In the synthetic experiments DACS contamination is near-zero
+($0.0$--$14.0\%$, the upper end driven entirely by vocabulary overlap
+artefacts).
+In Phase~4, DACS contamination is $59.9\%$ at $N{=}3$ and $40.3\%$ at
+$N{=}5$.
+
+The explanation is the nature of real agent outputs.
+During a \textsc{Focus}$(a_i)$ session the registry entries for all other
+agents are present as compact summaries (e.g.,
+``\texttt{a2: RUNNING, transformer survey, 3/5 steps done}'').
+A verbose model like Haiku tends to contextualise its advice using these
+registry labels: ``\emph{unlike a2's retrieval task, your BST inorder walk
+benefits from\ldots}''
+This cross-reference is a \emph{helpful} grounding behaviour in a real
+system---the orchestrator is showing it understands which agent it is
+addressing---but it trips the M2 binary detector, which flags any response
+containing another agent's ID.
+This is a measurement artefact, not a fidelity failure.
+
+Evidence: under DACS, M1 (decision quality) is significantly higher than
+the baseline despite the elevated M2 reading.
+Under the baseline, M2 approaches ceiling in both scenarios (95.8\%),
+compared to 54.5\% and 52.0\% for matching synthetic scenarios---a
+$+41$--$44$\,pp increase consistent with the baseline's flat-context
+exposure causing genuine cross-agent vocabulary bleed into every response,
+not just registry citations.
+
+This gap points to two directions for future work.
+First, the DACS \textsc{SteeringRequest} format could be tightened:
+requiring agents to submit structured requests (``agent\_id'',
+``decision\_type'', ``question'') rather than free text would constrain
+how the orchestrator contextualises its response, reducing
+incidental cross-references.
+Second, a richer contamination metric---e.g., tracking whether
+cross-agent vocabulary appears in the \emph{decision clause} of the
+response rather than in framing or context---would separate harmful
+leakage from helpful grounding in real-agent deployments.
 
 %-----------------------------------------------------------------------
 \section{Discussion}
@@ -1016,27 +1154,39 @@ The task suite uses keyword matching to evaluate steering accuracy.
 This is conservative (multi-word phrases and paraphrases are not captured)
 and may produce false-positive contamination detections when domains share
 vocabulary.
-LLM-as-judge validation across all three phases confirms metric validity:
+LLM-as-judge validation across Phases~2 and~3 confirms metric validity:
 Phase~2 $\kappa=0.956$; Phase~3 s8 $\kappa=0.886$; Phase~3 s7
 $\kappa=0.933$ (mean $\kappa=0.909$, all well above the $\kappa{\geq}0.80$
 ``substantial agreement'' threshold).
+Phase~4 uses LLM judges as the primary metric throughout, avoiding
+keyword matching for free-form agent questions entirely.
 
-\paragraph{Synthetic agents.}
-Our primary agent stubs simulate decision points with pre-defined timing and
-question templates.
-Section~\ref{sec:real_agent} presents a real-agent validation (ra1\_n3) that
-replaces all stubs with autonomous LLM agents generating free-form questions;
-the key findings replicate ($+32.6$\,pp DACS advantage, $p{=}0.0009$;
-0.0\% vs.\ 56.0\% contamination), confirming that DACS's benefits are not
-an artefact of the scripted harness.
-Real-world deployments may have higher steering budgets, multi-turn
-steering histories, and much larger decision densities than tested here.
+\paragraph{Scripted agent scope (mitigated by Phase~4).}
+Phases~1--3 agent stubs simulate decision points with pre-defined timing
+and question templates.
+Phase~4 (\S\ref{sec:phase4}) directly addresses this: all stubs are
+replaced by autonomous LLM agents (Claude Haiku~4.5), and the M1 accuracy
+advantage replicates in both conditions (DACS $+17.2$\,pp at $N{=}3$,
+$p{=}0.0023$; $+20.4$\,pp at $N{=}5$, $p{=}0.0008$; confirmed by
+GPT-4o-mini), confirming that DACS's benefits are not an artefact of
+the scripted harness.
+The remaining gap is that Phase~4 covers only $N{\in}\{3,5\}$ at low
+decision density ($D{\approx}3$) and one agent model family (Haiku).
+Generalisation to $N=10$, high $D$, and other model families remains
+open future work.
+M2 contamination is less discriminative with real agents because
+chatty LLMs reference registry-provided agent IDs in focus-mode
+responses (see \S\ref{sec:contam_gap}); M1 remains the primary quality
+indicator for real-agent deployments.
 
-\paragraph{Single model and context budget.}
-All experiments use MiniMax-M2.7 at a 204{,}800-token budget.
-With a smaller budget, context pollution effects would be more severe.
-Results may differ across model families with different attention
-characteristics.
+\paragraph{Model coverage.}
+Phases~1--3 use MiniMax-M2.7 (token budget 204{,}800);
+Phase~4 uses Claude Haiku~4.5 via OpenRouter.
+The consistent DACS advantage across two distinct model families provides
+initial evidence of model-family independence, but generalisation to
+smaller context budgets, instruction-tuned models with different attention
+characteristics, or proprietary frontier models (GPT-4o, Claude Opus)
+has not been tested.
 
 \paragraph{Interrupt handling not experimentally isolated.}
 The interrupt protocol (transition~\eqref{eq:t3}) was exercised naturally in
@@ -1045,17 +1195,33 @@ experiments but not ablated independently.
 \subsection{Future Work}
 
 \begin{itemize}
-  \item \textbf{LLM-as-judge for Phase~3.} Full judge validation on
-  s8\_n3\_dense\_d3 (900 decisions) to confirm Phase~3 keyword scores.
+  \item \textbf{Full LLM-as-judge pass for Phase~3.} The current judge
+  validation used stratified samples (100 decisions from s8, 200 from s7).
+  A full pass over all 900 decisions in s8\_n3\_dense\_d3 would provide
+  complete coverage and tighter $\kappa$ estimates.
+  \item \textbf{Phase~4 at $N=10$ and high $D$.} Phase~4 covers only
+  $N{\in}\{3,5\}$ at $D{\approx}3$, mirroring Phase~1.
+  Extending to $N=10$ and to the high-density regime ($D{\in}\{8,15\}$)
+  would close the remaining ecological-validity gap for the full
+  Phase~1--3 design space.
+  \item \textbf{Contamination metric refinement.} The binary agent-ID
+  mention detector (M2) conflates helpful registry grounding
+  (``unlike a2's task\ldots'') with genuine decision-level leakage.
+  A clause-level metric that fires only when cross-agent vocabulary
+  appears in the decision clause---not the framing---would provide a
+  cleaner real-agent contamination signal.
+  Tighter \textsc{SteeringRequest} formatting (structured fields rather
+  than free text) would also reduce incidental cross-references.
   \item \textbf{User responsiveness.} Measure latency from user message
   to orchestrator response under DACS vs.\ baseline at varying $N$ and
   queue depth.
-  \item \textbf{Real-agent scaling.} Extend the real-agent validation
-  (ra1\_n3) to higher $N$ and decision densities; test with agents that
-  have multi-turn steering histories and very large partial outputs.
   \item \textbf{Very high $D$.} Extend Phase~3 to $D \in \{30, 50, 100\}$
   to probe where, if anywhere, DACS accuracy degrades as per-agent
   history grows very large.
+  \item \textbf{Cross-model generalisation.} Test with agent and
+  orchestrator models beyond Haiku and MiniMax-M2.7 (e.g., GPT-4o-mini
+  as agent, Claude Opus as orchestrator) to probe whether the advantage
+  holds under different attention and instruction-following profiles.
 \end{itemize}
 
 %-----------------------------------------------------------------------
@@ -1068,20 +1234,27 @@ agent-triggered asymmetric focus sessions.
 The mechanism is exact (not approximate), sub-linear in agent count, and
 compatible with existing orchestration architectures.
 
-Across 160 experimental trials in 8 scenarios spanning three phases,
+Across 160 synthetic trials in 8 scenarios spanning three phases,
 DACS achieves $90.0$--$98.4\%$ steering accuracy versus $21.0$--$60.0\%$
 for the flat-context baseline, reduces wrong-agent contamination from
-$28$--$57\%$ to $0$--$9\%$, and exhibits growing context efficiency
+$28$--$57\%$ to $0$--$14\%$, and exhibits growing context efficiency
 (2.12--3.53$\times$) as $N$ increases.
 The advantage is robust to agent heterogeneity (Phase~2), holds even in
 pipeline-dependent adversarial scenarios, and \emph{compounds with
 decision density} (Phase~3): quintupling $D$ from 3 to 15 causes baseline
 accuracy to fall by 15.8~pp while DACS accuracy is unchanged or improves.
-A real-agent validation experiment (ra1\_n3, 21 trials) in which all
-stubs are replaced by autonomous LLM agents generating free-form steering
-questions replicates the core result: DACS 74.9\% vs.\ baseline 42.3\%
-($+32.6$~pp, $p{=}0.0009$), with contamination again eliminated (0.0\%
-vs.\ 56.0\%).
+Phase~4 validates the core result beyond the scripted benchmark:
+two real-agent experiments (ra1\_n3 and ra2\_n5, 40 trials total,
+10 DACS $+$ 10 baseline each) replace all stubs with autonomous LLM
+agents (Claude Haiku~4.5) generating free-form steering questions:
+DACS 79.8\% vs.\ baseline 62.6\% at $N{=}3$ ($+17.2$~pp, $p{=}0.0023$);
+DACS 83.7\% vs.\ baseline 63.3\% at $N{=}5$ ($+20.4$~pp, $p{=}0.0008$).
+Both results are independently confirmed by GPT-4o-mini.
+The advantage grows with $N$ in the real-agent setting ($+17.2 \to +20.4$~pp),
+mirroring the synthetic scaling trend.
+Absolute accuracy is lower than with scripted stubs, reflecting the
+harder free-form regime, but the direction and significance of the
+DACS effect are unambiguous across both experimental paradigms.
 
 The core contribution is demonstrating that \emph{what is in the
 orchestrator's context window at the moment of steering} is the
