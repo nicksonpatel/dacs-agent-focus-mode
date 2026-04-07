@@ -116,6 +116,7 @@ experiments/             Synthetic agent harness (Phases 1–3)
   ├── metrics.py         Steering accuracy, contamination, context size
   ├── llm_judge_phase3.py  LLM-as-judge validation for Phase 3 (s7, s8)
   ├── llm_judge_s8.py    Focused judge pass for s8_n3_dense_d3
+  ├── gen_phase4_fig.py  Phase 4 comparison figure (paper/figures/phase4_comparison.png)
   ├── plot_phase1.py     Phase 1 figures
   └── plot_phase2_phase3.py  Phase 2 & 3 figures
 
@@ -123,7 +124,9 @@ experiments_real_agent/  Phase 4 real-agent harness
   ├── run.py             CLI entry point (OpenRouter or MiniMax backend)
   ├── scenario_defs.py   ra1_n3 and ra2_n5 scenario definitions + rubrics
   ├── judge.py           Offline LLM-as-judge (dual-judge: Haiku + GPT-4o-mini)
-  └── analyze.py         Post-hoc analysis of summary_real.csv
+  ├── analyze.py         Post-hoc analysis of summary_real.csv
+  ├── run_both.py        Convenience chain runner: ra1_n3 → ra2_n5 sequentially
+  └── _smoke_test.py     Quick 1-trial smoke test
 
 experiments_concurrency/ Concurrency & interruption harness (not in paper)
   ├── run.py             CLI entry point
@@ -212,7 +215,17 @@ python -m experiments.plot_phase2_phase3
 # Requires OPENROUTER_API_KEY
 python -m experiments_real_agent.run --api openrouter --mode both --trials 10 --scenario ra1_n3
 python -m experiments_real_agent.run --api openrouter --mode both --trials 10 --scenario ra2_n5
-python -m experiments_real_agent.judge  # dual-judge evaluation (Haiku + GPT-4o-mini)
+
+# Dual-judge evaluation (Haiku + GPT-4o-mini) — requires OPENROUTER_API_KEY for both models
+python -m experiments_real_agent.judge \
+    --models anthropic/claude-haiku-4-5 openai/gpt-4o-mini \
+    --results-dir results_real_agent_haiku
+
+# Aggregate metrics
+python -m experiments_real_agent.analyze --results-dir results_real_agent_haiku
+
+# Regenerate Phase 4 paper figure
+python -m experiments.gen_phase4_fig
 ```
 
 ### Quick smoke test (1 trial per condition, ~10 min)
