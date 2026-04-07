@@ -2,7 +2,7 @@
 
 > **Research prototype & arxiv preprint**  
 > Active paper: `paper/draft_v3.tex` — Phases 1–4 (200 trials).  
-> Tag [`phase-3-final`](../../releases/tag/phase-3-final) — Phases 1–3 synthetic results reproducible from this tag.
+> Tag [`phase-4-final`](../../releases/tag/phase-4-final) — all 4 phases (200 trials) reproducible from this tag.
 
 ---
 
@@ -222,7 +222,7 @@ python -m experiments.run_experiment --scenario s1_n3 --mode both --trials 1
 
 Results are written to `results/summary.csv` (one row per trial) and `results/<run_id>.jsonl` (full context-window log for every LLM call in that trial).
 
-> **Reproducibility note:** Phases 1–3 results produced at git tag `phase-3-final`. Phase 4 real-agent results are in `results_real_agent_haiku/`.
+> **Reproducibility note:** All 200 trials (Phases 1–4) reproducible at git tag `phase-4-final`. Phases 1–3 synthetic-only results also available at `phase-3-final`.
 
 ---
 
