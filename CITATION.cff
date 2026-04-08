@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+type: software
+title: "DACS: Dynamic Attentional Context Scoping"
+abstract: >
+  Research prototype and preprint for Dynamic Attentional Context Scoping (DACS),
+  a mechanism where a multi-agent orchestrator enters agent-triggered focus sessions
+  to isolate per-agent context during steering interactions. Evaluated across 4 phases
+  and 200 trials; DACS achieves 90-98% steering accuracy versus 21-60% for a flat-context
+  baseline.
+authors:
+  - family-names: Patel
+    given-names: Nickson
+    email: nicksonpatel@gmail.com
+repository-code: "https://github.com/nickson-patel/agent-focus-mode"
+license: MIT
+date-released: 2026-04-07
+preferred-citation:
+  type: article
+  title: >
+    Dynamic Attentional Context Scoping: Agent-Triggered Focus Sessions for
+    Isolated Per-Agent Steering in Multi-Agent LLM Orchestration
+  authors:
+    - family-names: Patel
+      given-names: Nickson
+      email: nicksonpatel@gmail.com
+  year: 2026
+  url: "https://arxiv.org/abs/XXXX.XXXXX"
+  notes: "Replace XXXX.XXXXX with the arXiv ID after submission."

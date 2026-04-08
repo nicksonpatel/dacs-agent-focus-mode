@@ -137,7 +137,7 @@ DACS introduces two orchestrator modes:
 
 \begin{itemize}
   \item \textbf{\textsc{Registry} mode.} The orchestrator holds only the
-  registry $R = \{r_1, \ldots, r_N\}$—one compact status summary per
+  registry $R = \{r_1, \ldots, r_N\}$, one compact status summary per
   agent ($\leq 200$ tokens each).
   It monitors all agents, responds to the user, and queues incoming
   steering requests.
@@ -159,7 +159,7 @@ management approaches are:
   \item \textbf{Asymmetric.} The steered agent gets full fidelity;
   all others get compressed summaries.
   \item \textbf{Exact, not approximate.} No scoring function, no fidelity
-  tiering~\citep{afm2024,lemon2025}, no probabilistic compression—the
+  tiering~\citep{afm2024,lemon2025}, no probabilistic compression: the
   context is deterministically constructed as $F(a_i) + R_{-i}$.
   \item \textbf{Sub-linear in $N$ and $D$.} Focus context size is
   independent of the number of other agents; only the compressed registry
@@ -253,7 +253,7 @@ AOI~\citep{aoi2024} introduces a three-layer memory architecture for
 multi-agent IT operations, with a central Context Compressor transforming
 raw agent outputs into a compressed cache.
 Its Observer agent always holds a compressed aggregate of \emph{all}
-agent activity simultaneously—there is no per-agent isolation.
+agent activity simultaneously; there is no per-agent isolation.
 Agents execute and report results; they cannot signal the orchestrator
 for steering attention, and wrong-agent contamination is not modelled
 (AOI's failure mode is information loss from operational data volume).
@@ -317,7 +317,7 @@ Let $O$ denote the orchestrator LLM, $A = \{a_1, \ldots, a_N\}$ the set
 of $N$ concurrently running agents, and $T$ the context window token
 budget.
 Each agent $a_i$ has an associated \emph{focus context}
-$F(a_i)$—the full set of information the orchestrator needs to steer
+$F(a_i)$, the full set of information the orchestrator needs to steer
 $a_i$: task description, previous steering exchanges between $O$ and
 $a_i$, and $a_i$'s current partial output summary.
 
@@ -439,7 +439,7 @@ of $N$) and $|r|$ the average registry entry size ($\leq 200$ tokens).
 
 \paragraph{\textsc{Registry} mode context size.}
 $|C_{\text{reg}}| = N \cdot |r|$, growing linearly in $N$.
-However, this mode is lightweight—the orchestrator makes no costly
+However, this mode is lightweight: the orchestrator makes no costly
 steering decisions here, only monitoring and routing.
 
 \paragraph{\textsc{Focus}$(a_i)$ mode context size.}
@@ -456,7 +456,7 @@ empirically confirmed: 561 tokens at $N=3$, 633 at $N=5$, 816 at $N=10$
 
 In Phase~3 (high decision density, $D=15$), $|F|$ grows with the
 accumulated steering history, yielding $|C_{\text{focus}}| \approx 2{,}755$
-tokens—higher than Phase~1 in absolute terms, but isolated to exactly
+tokens, higher than Phase~1 in absolute terms, but isolated to exactly
 $a_i$'s history.
 The flat baseline accumulates \emph{all} agents' histories simultaneously,
 reaching 6{,}573 tokens (2.39$\times$ ratio).
@@ -480,7 +480,7 @@ We implement a minimal Python orchestration harness ($\sim$300 lines
 across \texttt{src/}) with full context observability: \emph{every} token
 entering each LLM call is logged to a \texttt{.jsonl} trial file.
 This is the central experimental variable.
-We use no external orchestration framework (LangGraph, CrewAI, etc.)—
+We use no external orchestration framework (LangGraph, CrewAI, etc.);
 their context assembly internals would add uncontrolled noise.
 
 The harness has four components:
@@ -519,7 +519,7 @@ Correctness is evaluated by keyword matching: a steering response scores
 correct if it contains $\geq 1$ expected ground-truth keyword for agent
 $a_i$'s current decision point.
 Each agent's correct-answer keywords are domain-specific and orthogonal
-to all other agents—cross-agent vocabulary leakage is unambiguous.
+to all other agents; cross-agent vocabulary leakage is unambiguous.
 
 \paragraph{Phase~1 — Agent count scaling (RQ1, RQ2).}
 Three canonical scenarios vary $N \in \{3, 5, 10\}$ with $D \approx 3$
@@ -548,7 +548,7 @@ agent heterogeneity structures, including an adversarial case.
   \item \textbf{s4\_n3\_homogeneous} ($N=3, D=4$): Three agents from the
   same domain (algorithm coding: red-black tree, open-addressing hash
   table, directed weighted graph).
-  Minimal-contamination case—DACS must help even when domains share
+  Minimal-contamination case: DACS must help even when domains share
   vocabulary.
 
   \item \textbf{s5\_n5\_crossfire} ($N=5, D=4$): Five maximally diverse
@@ -569,13 +569,13 @@ DACS advantage compounds with decision history depth.
 
 \begin{itemize}
   \item \textbf{s7\_n5\_dense\_d2} ($N=5, D=8$, 40 total steering
-  interactions): Five diverse agents—async web scraper, federated
+  interactions): Five diverse agents: async web scraper, federated
   learning survey, fraud detection pipeline, flaky-test debugger,
   distributed cache TDD.
   Doubles Phase 1's $D$ at fixed $N=5$.
 
   \item \textbf{s8\_n3\_dense\_d3} ($N=3, D=15$, 45 total steering
-  interactions): Three agents—BERT legal-text classifier training loop,
+  interactions): Three agents: BERT legal-text classifier training loop,
   clinical trial hypothesis testing, post-quantum cryptography
   whitepaper.
   Quintuples Phase 1's $D$ at fixed $N=3$, the most decision-history-
@@ -750,7 +750,7 @@ The cascade scenario is designed to challenge DACS: agents produce
 outputs that downstream agents depend on, so the flat baseline might
 benefit from knowing all agents' histories.
 DACS wins by $+37.3$ pp despite this. The flat context does not
-help the baseline orchestrator—it still conflates agent contexts at
+help the baseline orchestrator; it still conflates agent contexts at
 steering time.
 DACS contamination in s6 (7.3\%) is elevated relative to other
 scenarios: the legitimate cross-agent references in a pipeline
@@ -845,14 +845,14 @@ Phase & Scenario & $N$ & $D$ & DACS acc & Baseline acc & $\Delta$ & Ctx ratio \\
 \end{table}
 
 At $N=3$, pushing $D$ from 3 to 15 drops baseline accuracy from 60.0\%
-to 44.2\%---a 15.8 pp decline---while DACS accuracy rises slightly
+to 44.2\%, a 15.8 pp decline, while DACS accuracy rises slightly
 (96.7\% $\to$ 98.4\%).
 The accuracy delta jumps from $+36.7$ pp to $+54.2$ pp, a 17.5 pp
 increase attributable entirely to decision history depth.
 At $N=5$, baseline accuracy falls moderately (38.7\% $\to$ 34.8\% as
 $D$ doubles), while DACS stays near 94--96\%.
-The context efficiency ratio reaches $3.24\times$ for s7---the highest
-recorded for $N=5$---confirming that flat-context token costs grow with
+The context efficiency ratio reaches $3.24\times$ for s7, the highest
+recorded for $N=5$, confirming that flat-context token costs grow with
 accumulated steering history while DACS costs only reflect the current
 agent's history.
 
@@ -860,7 +860,7 @@ DACS's accuracy improvement with depth (98.4\% at $D=15$ vs.\ 96.7\%
 at $D=3$) is consistent with the mechanism design: at high $D$, the
 focus context contains a richer per-agent history, giving the
 orchestrator more signal to make accurate steering decisions.
-The flat baseline cannot exploit this signal---it is buried under all
+The flat baseline cannot exploit this signal; it is buried under all
 other agents' equally long histories.
 
 \subsection{Cumulative View}
@@ -919,8 +919,8 @@ Phase~4 answers this with a controlled robustness check: we re-run the
 $N{=}3$ and $N{=}5$ scenarios with all stubs replaced by autonomous LLM
 agents, keeping the orchestrator, harness, and evaluation protocol
 identical.
-The goal is not to supersede Phases 1--3---the scripted harness enables
-causal isolation that real agents cannot provide---but to confirm that
+The goal is not to supersede Phases 1--3 (the scripted harness enables
+causal isolation that real agents cannot provide), but to confirm that
 the DACS advantage is not an artefact of the controlled evaluation regime.
 Two independent experimental paradigms pointing in the same direction are
 stronger than one perfect paradigm.
@@ -943,13 +943,13 @@ via OpenRouter; the orchestrator also uses Haiku, keeping a single-model
 stack).
 Agents emit a \texttt{[[STEER:~\ldots]]} marker whenever they need
 orchestrator guidance; the harness intercepts this via regex and routes it
-through the standard \textsc{SteeringRequest} protocol---identical to how
+through the standard \textsc{SteeringRequest} protocol, identical to how
 scripted stubs inject requests.
 Agents may emit at most three steering requests per task, running for at
 most 12 LLM steps.
 Crucially, question text is the agent's own free-form reasoning:
 it is not templated, varies in length and vocabulary across trials, and
-may be incomplete or imprecise---a harder evaluation regime than the
+may be incomplete or imprecise, a harder evaluation regime than the
 scripted keywords admit.
 Both scenarios required agents to consult the orchestrator on each
 labelled decision category before emitting \texttt{[[DONE]]}, achieving
@@ -1072,15 +1072,15 @@ A verbose model like Haiku tends to contextualise its advice using these
 registry labels: ``\emph{unlike a2's retrieval task, your BST inorder walk
 benefits from\ldots}''
 This cross-reference is a \emph{helpful} grounding behaviour in a real
-system---the orchestrator is showing it understands which agent it is
-addressing---but it trips the M2 binary detector, which flags any response
+system: the orchestrator is showing it understands which agent it is
+addressing, but it trips the M2 binary detector, which flags any response
 containing another agent's ID.
 This is a measurement artefact, not a fidelity failure.
 
 Evidence: under DACS, M1 (decision quality) is significantly higher than
 the baseline despite the elevated M2 reading.
 Under the baseline, M2 approaches ceiling in both scenarios (95.8\%),
-compared to 54.5\% and 52.0\% for matching synthetic scenarios---a
+compared to 54.5\% and 52.0\% for matching synthetic scenarios, a
 $+41$--$44$\,pp increase consistent with the baseline's flat-context
 exposure causing genuine cross-agent vocabulary bleed into every response,
 not just registry citations.
@@ -1091,9 +1091,9 @@ requiring agents to submit structured requests (``agent\_id'',
 ``decision\_type'', ``question'') rather than free text would constrain
 how the orchestrator contextualises its response, reducing
 incidental cross-references.
-Second, a richer contamination metric---e.g., tracking whether
+Second, a richer contamination metric (e.g., tracking whether
 cross-agent vocabulary appears in the \emph{decision clause} of the
-response rather than in framing or context---would separate harmful
+response rather than in framing or context) would separate harmful
 leakage from helpful grounding in real-agent deployments.
 
 %-----------------------------------------------------------------------
@@ -1111,7 +1111,7 @@ data processor's CSV encoding problem, containing domain keywords
 (``attention'', ``heads'', ``encoding'', ``UTF-8'') that have nothing to
 do with the correct answer.
 The LLM anchors its response to whichever content pattern captures its
-attention—an effect we measure as both inaccuracy and contamination.
+attention, an effect we measure as both inaccuracy and contamination.
 
 DACS removes this anchor competition entirely.
 In \textsc{Focus}$(a_i)$ mode, the context contains $a_i$'s task
@@ -1128,7 +1128,7 @@ At $D=15$, a 3-agent flat context holds 45 steering interaction pairs,
 each injecting domain vocabulary that drowns out the signal for the
 current decision.
 DACS's focus context at $D=15$ holds only $a_i$'s 15-interaction
-history---precisely the relevant signal---plus three compact registry
+history (precisely the relevant signal) plus three compact registry
 lines for the other agents.
 The result is that DACS accuracy at $D=15$ (98.4\%) \emph{exceeds} its
 accuracy at $D\approx 3$ (96.7\%): more history in the focus
@@ -1208,7 +1208,7 @@ experiments but not ablated independently.
   mention detector (M2) conflates helpful registry grounding
   (``unlike a2's task\ldots'') with genuine decision-level leakage.
   A clause-level metric that fires only when cross-agent vocabulary
-  appears in the decision clause---not the framing---would provide a
+  appears in the decision clause, not the framing, would provide a
   cleaner real-agent contamination signal.
   Tighter \textsc{SteeringRequest} formatting (structured fields rather
   than free text) would also reduce incidental cross-references.
@@ -1258,8 +1258,8 @@ DACS effect are unambiguous across both experimental paradigms.
 
 The core contribution is demonstrating that \emph{what is in the
 orchestrator's context window at the moment of steering} is the
-dominant variable for multi-agent steering accuracy---not model size,
-not topology, not memory compression---and that a simple, deterministic
+dominant variable for multi-agent steering accuracy, not model size,
+not topology, not memory compression, and that a simple, deterministic
 mode-switch mechanism suffices to control it effectively across a
 wide range of agent counts, diversity structures, and decision densities.
 
