@@ -6,6 +6,8 @@
 \makeatletter
 \renewcommand{\@noticestring}{Preprint. arXiv submission.}
 \makeatother
+\widowpenalty=10000
+\clubpenalty=10000
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -46,8 +48,6 @@ Isolated Per-Agent Steering in Multi-Agent LLM Orchestration}
 
 \begin{document}
 \maketitle
-\widowpenalty=10000
-\clubpenalty=10000
 \renewcommand{\arraystretch}{1.15}
 
 %-----------------------------------------------------------------------
@@ -968,7 +968,7 @@ The judge emits a \texttt{<verdict>CORRECT|INCORRECT</verdict>} verdict.
 Running two judges allows us to check whether reported effects are
 evaluator-specific.
 Scenarios ra1\_n3 and ra2\_n5 define 9 and 15 rubric slots per trial
-(3 and 5 agents $\times$ 3 rubrics each), yielding 180 and 150 judged
+(3 and 5 agents $\times$ 3 rubrics each), yielding 180 and 300 judged
 decisions per condition pair across 10 trials.
 
 \subsection{Results}
