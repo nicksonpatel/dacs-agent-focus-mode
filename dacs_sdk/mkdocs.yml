@@ -1,0 +1,99 @@
+site_name: DACS — Dynamic Attentional Context Scoping
+site_description: Agent-triggered focus sessions for isolated per-agent steering in multi-agent LLM systems
+site_url: https://dacs-agent.readthedocs.io
+repo_url: https://github.com/nickspeelman/agent-focus-mode
+repo_name: dacs-agent
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+  font:
+    text: Inter
+    code: JetBrains Mono
+  logo: assets/logo.svg
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            show_signature_annotations: true
+            members_order: source
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: quickstart.md
+    - Core Concepts: concepts.md
+  - Tutorials:
+    - "1. Hello, DACS": tutorials/01_hello_dacs.md
+    - "2. Three Concurrent Agents": tutorials/02_three_agents.md
+    - "3. Custom Agents": tutorials/03_custom_agents.md
+    - "4. Custom Endpoints": tutorials/04_custom_endpoints.md
+  - API Reference:
+    - DACSRuntime: api/runtime.md
+    - BaseAgent & StepAgent: api/agent.md
+    - Orchestrator: api/orchestrator.md
+    - RegistryManager: api/registry.md
+    - ContextBuilder: api/context_builder.md
+    - Protocols: api/protocols.md
+    - Logger: api/logger.md
+    - TerminalMonitor: api/monitor.md
+  - Research:
+    - Paper Overview: research/overview.md
+    - Benchmark Results: research/benchmarks.md
+  - CHANGELOG: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nickspeelman/agent-focus-mode
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/dacs-agent/
