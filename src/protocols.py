@@ -87,7 +87,7 @@ class FocusContext:
     task_description: str
     steering_history: list[dict]    # [{"request": {...}, "response": {...}}], capped at K=10
     recent_output: str              # from SteeringRequest.relevant_context
-    current_request: SteeringRequest
+    current_request: Optional[SteeringRequest]  # None for OIF (no agent SteeringRequest)
 
 
 # ---------------------------------------------------------------------------

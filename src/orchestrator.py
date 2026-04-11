@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 import time
 from enum import Enum
 from typing import TYPE_CHECKING
@@ -61,6 +62,7 @@ class Orchestrator:
         self._focus_mode     = focus_mode
         self._focus_timeout  = focus_timeout
         self._logger         = logger or Logger(log_path)
+        self._oif_mode       = False   # enabled externally via enable_oif()
 
         self._state: OrchestratorState   = OrchestratorState.REGISTRY
         self._focus_agent_id: str | None = None
@@ -78,6 +80,10 @@ class Orchestrator:
     def register_agent(self, agent: BaseAgent) -> None:
         self._agents[agent.agent_id] = agent
         self._steering_history[agent.agent_id] = []
+
+    def enable_oif(self) -> None:
+        """Enable Orchestrator-Initiated Focus (T5 user-query routing)."""
+        self._oif_mode = True
 
     # ------------------------------------------------------------------
     # Main event loop
@@ -101,9 +107,21 @@ class Orchestrator:
     # ------------------------------------------------------------------
 
     async def handle_user_message(self, message: str) -> str:
-        """Always handled. If in FOCUS, saves state, responds, then resumes."""
+        """Always handled. If in FOCUS, saves state, responds, then resumes.
+
+        With OIF enabled (focus_mode=True and oif_mode=True), implements T5:
+        if the user query semantically matches a specific agent's registry entry,
+        the orchestrator enters Focus(aᵢ) before responding.
+        """
         saved_state = self._state
         saved_focus = self._focus_agent_id
+
+        if self._focus_mode and self._oif_mode:
+            matched = self._match_query_to_agent(message)
+            if matched:
+                # T5: _handle_oif_t5 handles its own REGISTRY→FOCUS→REGISTRY transitions
+                return await self._handle_oif_t5(message, matched)
+
         self._transition(OrchestratorState.USER_INTERACT, None, "user_message")
         context = self._cb.build_registry_context(self._registry.get_all())
         prompt = f"{context}\n\nUser message: {message}"
@@ -111,6 +129,59 @@ class Orchestrator:
             context=prompt, state_label="USER_INTERACT", agent_id=None
         )
         self._transition(saved_state, saved_focus, "user_response_sent")
+        return response_text
+
+    def _match_query_to_agent(self, message: str) -> str | None:
+        """T5 routing: return agent_id if message references a specific agent.
+
+        Matching criteria (in order):
+          1. Explicit agent_id token in the message.
+          2. ≥2 task-description content words overlap with message words,
+             using prefix-stem matching so 'implement' matches 'implementation'.
+        Returns the first match found; None if no match.
+        """
+        msg_clean = re.sub(r"[^\w\s]", " ", message.lower())
+        msg_words = set(msg_clean.split())
+        for entry in self._registry.get_all():
+            if entry.agent_id.lower() in msg_words:
+                return entry.agent_id
+            task_clean = re.sub(r"[^\w\s]", " ", entry.task_description.lower())
+            task_words = {w for w in task_clean.split() if len(w) > 3}
+            # Prefix-stem hit: task word is prefix of a message word or vice versa
+            stem_hits = sum(
+                1 for tw in task_words
+                if any(mw.startswith(tw) or tw.startswith(mw)
+                       for mw in msg_words if len(mw) > 3)
+            )
+            if stem_hits >= 2:
+                return entry.agent_id
+        return None
+
+    async def _handle_oif_t5(self, message: str, agent_id: str) -> str:
+        """T5: Enter Focus(aᵢ) before responding to a user query about aᵢ."""
+        self._transition(OrchestratorState.FOCUS, agent_id, "OIF_T5_user_query")
+        entry = self._registry.get(agent_id)
+        focus = FocusContext(
+            agent_id=agent_id,
+            task_description=entry.task_description,
+            steering_history=list(self._steering_history.get(agent_id, [])),
+            recent_output=entry.last_output_summary or "",
+            current_request=None,
+        )
+        context = self._cb.build_focus_context(focus, self._registry.get_all())
+        prompt  = f"{context}\n\nUser query (about {agent_id}): {message}"
+        response_text, ctx_tokens, _, _ = await self._llm_call(
+            context=prompt, state_label="FOCUS_OIF_T5", agent_id=agent_id
+        )
+        self._logger.log({
+            "event":              "OIF_USER_QUERY",
+            "agent_id":           agent_id,
+            "trigger":            "T5",
+            "context_size":       ctx_tokens,
+            "message":            message,
+            "response_text":      response_text,
+        })
+        self._transition(OrchestratorState.REGISTRY, None, "OIF_T5_complete")
         return response_text
 
     # ------------------------------------------------------------------

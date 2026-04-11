@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 
 # Match [[STEER: ...]] — non-greedy, multi-line question text allowed
 _STEER_RE = re.compile(r"\[\[STEER:\s*(.*?)\]\]", re.IGNORECASE | re.DOTALL)
-_DONE_RE  = re.compile(r"\[\[DONE\]\]", re.IGNORECASE)
+_DONE_RE  = re.compile(r"\[\[DONE(?::\s*(.*?))?\]\]", re.IGNORECASE | re.DOTALL)
 
 # Maximum question length forwarded to the orchestrator (chars → stays well under
 # the ≤100-token guidance; ≈400 chars ≈ 100 tokens for typical prose)
@@ -168,8 +168,12 @@ class LLMAgent(BaseAgent):
             # Append assistant turn before any branching
             conversation.append({"role": "assistant", "content": text})
 
-            # Termination check
-            if _DONE_RE.search(text):
+            # Termination check — capture optional [[DONE: summary]] text
+            done_match = _DONE_RE.search(text)
+            if done_match:
+                done_summary = (done_match.group(1) or "").strip()
+                if done_summary:
+                    self._push_update(AgentStatus.COMPLETE, done_summary[:100], UrgencyLevel.LOW)
                 break
 
             # Steering check

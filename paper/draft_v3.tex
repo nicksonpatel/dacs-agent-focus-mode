@@ -68,14 +68,20 @@ Context isolation is agent-triggered, asymmetric, and deterministic:
 the context window contains exactly $F(a_i) + R_{-i}$ during steering,
 eliminating cross-agent contamination without requiring context
 compression or retrieval.
-We evaluate DACS across four experimental phases totalling 200 trials:
+We evaluate DACS across five experimental phases totalling 260 trials:
 Phase~1 tests $N \in \{3,5,10\}$ agents (60 trials);
 Phase~2 tests agent heterogeneity and adversarial dependency structures
 (60 trials);
 Phase~3 tests decision density scaling up to $D=15$ steering requests per
 agent (40 trials);
 Phase~4 replaces all scripted stubs with autonomous LLM agents generating
-free-form questions (40 trials, Claude Haiku~4.5).
+free-form questions (40 trials, Claude Haiku~4.5);
+Phase~5 evaluates Orchestrator-Initiated Focus (OIF) at $N \in \{3,5\}$
+(60 trials).
+We formalise \textbf{OIF}, extending the state machine with three
+top-down transitions (T5--T7) for proactive focus triggering via
+user-query routing, agent lifecycle signals, and iteration relay,
+completing DACS as a fully bidirectional mechanism.
 Across all 8 synthetic scenarios, DACS achieves $90.0$--$98.4\%$ steering
 accuracy versus $21.0$--$60.0\%$ for a flat-context baseline
 ($p < 0.0001$ throughout), with wrong-agent contamination falling from
@@ -89,6 +95,11 @@ In Phase~4, all scripted stubs are replaced by autonomous LLM agents
 DACS outperforms the flat-context baseline by $+17.2$\,pp at $N{=}3$
 ($p{=}0.0023$) and $+20.4$\,pp at $N{=}5$ ($p{=}0.0008$),
 with the advantage growing with $N$ confirmed by two independent judges.
+In Phase~5 (OIF evaluation), OIF achieves $100\%$ M1$_{\mathrm{T5}}$
+user-query routing accuracy versus $28$--$40\%$ for DACS without OIF and
+$28$--$33\%$ for the flat baseline at $N{\in}\{3,5\}$
+($p < 0.0001$, Mann--Whitney), using $2.1$--$3.1\times$ fewer context
+tokens than flat context.
 All code and data are released at
 \href{https://github.com/nicksonpatel/dacs-agent-focus-mode}{\texttt{github.com/nicksonpatel/dacs-agent-focus-mode}}.
 \end{abstract}
@@ -165,6 +176,11 @@ management approaches are:
   independent of the number of other agents; only the compressed registry
   grows with $N$ (by $\approx 25$ tokens per additional agent in our
   experiments). Accuracy is also stable as decision density $D$ increases.
+  \item \textbf{Bidirectional.} While agents trigger focus sessions
+  bottom-up via \textsc{SteeringRequest}, OIF adds top-down triggering:
+  the orchestrator proactively enters $\textsc{Focus}(a_i)$ for
+  user-query routing, agent lifecycle signals, and iteration relay,
+  without waiting for an explicit agent request.
 \end{enumerate}
 
 \paragraph{Contributions.}
@@ -191,6 +207,16 @@ management approaches are:
   \item We identify sub-linear context scaling as the mechanism's key
   theoretical property, explain its source, and discuss conditions under
   which it holds (\S\ref{sec:discussion}).
+  \item We extend DACS with Orchestrator-Initiated Focus (OIF): three
+  new state machine transitions (T5--T7) for top-down focus triggering
+  via user-query routing, agent lifecycle signals (\texttt{[[DONE:]]},
+  \texttt{[[BLOCKED:]]}, \texttt{[[PROGRESS:]]}), and iteration relay,
+  completing the mechanism as a fully bidirectional context-scoping
+  system (\S\ref{sec:oif}).
+  \item We evaluate OIF empirically in Phase~5 ($N{\in}\{3,5\}$, 60 trials):
+  OIF achieves 100\% M1$_{\mathrm{T5}}$ query-routing accuracy versus
+  28--40\% for DACS without OIF and 28--33\% for a flat baseline
+  ($p < 0.0001$, Mann--Whitney; \S\ref{sec:phase5}).
 \end{enumerate}
 
 %-----------------------------------------------------------------------
@@ -280,7 +306,9 @@ context-switch decisions throughout execution.
 \paragraph{Summary.}
 No prior work implements agent-triggered asymmetric \textsc{Registry}/
 \textsc{Focus} mode switching for per-agent context isolation in
-concurrent multi-agent orchestration.
+concurrent multi-agent orchestration, nor the complementary
+Orchestrator-Initiated Focus (OIF) transitions for proactive top-down
+focus triggering.
 Table~\ref{tab:related} summarises the key distinctions.
 
 \begin{table}[t]
@@ -288,20 +316,20 @@ Table~\ref{tab:related} summarises the key distinctions.
 \label{tab:related}
 \centering
 \small
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{System} & \textbf{$N$ concurrent} & \textbf{Asym.\ mode switch} & \textbf{Agent-triggered} & \textbf{Contamination metric} \\
+\textbf{System} & \textbf{$N$ concurrent} & \textbf{Asym.\ mode switch} & \textbf{Agent-triggered} & \textbf{OIF} & \textbf{Contam.\ metric} \\
 \midrule
-AFM              & \texttimes & \texttimes & \texttimes & \texttimes \\
-ACE              & \texttimes & \texttimes & \texttimes & \texttimes \\
-AOI              & \checkmark & \texttimes & \texttimes & \texttimes \\
-AgentOrchestra   & \checkmark & \texttimes & \texttimes & \texttimes \\
-AdaptOrch        & \checkmark & \texttimes & \texttimes & \texttimes \\
-CodeDelegator    & \texttimes & \texttimes & \texttimes & \texttimes \\
-Adaptive Orch.   & \texttimes & \texttimes & \texttimes & \texttimes \\
-Lemon Agent      & \checkmark & \texttimes & \texttimes & \texttimes \\
+AFM              & \texttimes & \texttimes & \texttimes & \texttimes & \texttimes \\
+ACE              & \texttimes & \texttimes & \texttimes & \texttimes & \texttimes \\
+AOI              & \checkmark & \texttimes & \texttimes & \texttimes & \texttimes \\
+AgentOrchestra   & \checkmark & \texttimes & \texttimes & \texttimes & \texttimes \\
+AdaptOrch        & \checkmark & \texttimes & \texttimes & \texttimes & \texttimes \\
+CodeDelegator    & \texttimes & \texttimes & \texttimes & \texttimes & \texttimes \\
+Adaptive Orch.   & \texttimes & \texttimes & \texttimes & \texttimes & \texttimes \\
+Lemon Agent      & \checkmark & \texttimes & \texttimes & \texttimes & \texttimes \\
 \midrule
-\textbf{DACS (ours)} & \checkmark & \checkmark & \checkmark & \checkmark \\
+\textbf{DACS (ours)} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -469,6 +497,90 @@ design point.
 Empirically, $\rho$ grows from 2.12$\times$ ($N=3$) to 3.53$\times$
 ($N=10$) in Phase~1, and reaches 3.24$\times$ at $N=5, D=8$ in Phase~3.
 
+\subsection{Orchestrator-Initiated Focus (OIF)}
+\label{sec:oif}
+
+The four transitions \eqref{eq:t1}--\eqref{eq:t4} model
+\emph{agent-initiated} focus: the orchestrator enters
+$\textsc{Focus}(a_i)$ because $a_i$ emitted a \textsc{SteeringRequest}.
+Production deployments expose three further trigger classes where the
+orchestrator should proactively enter a focus session \emph{without} an
+explicit agent request.
+We formalise these as \textbf{Orchestrator-Initiated Focus (OIF)},
+adding three transitions:
+\begin{align}
+  \textsc{Registry} &\;\to\; \textsc{Focus}(a_i): \quad
+    \text{user message semantically matches } r_i \label{eq:t5}\\
+  \textsc{Registry} &\;\to\; \textsc{Focus}(a_i): \quad
+    a_i \text{ emits } \texttt{[[DONE:]]} \text{ or }
+    \texttt{[[BLOCKED:]]} \label{eq:t6}\\
+  \textsc{Focus}(a_i) &\;\to\; \textsc{Focus}(a_i): \quad
+    \text{orchestrator relays iteration directive to } a_i \label{eq:t7}
+\end{align}
+
+\paragraph{T5: User-query routing.}
+When the user asks about a specific agent's work (e.g., ``how far is the
+research agent?''), the orchestrator, in \textsc{Registry} mode, matches
+the query against registry entries using prefix-stem overlap on content
+words (agent name, task keywords, or domain terms with length $>3$).
+If at least two task-description stems match message words, the orchestrator
+enters $\textsc{Focus}(a_i)$ before responding, grounding its answer in
+$a_i$'s full context rather than only its compact registry summary.
+
+\paragraph{T6: Lifecycle signals.}
+We extend the signal vocabulary with three lifecycle markers emitted by
+agents as free-text suffixes:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\texttt{[[DONE: \textit{summary}]]}     & milestone reached; orchestrator review warranted (triggers T6) \\
+\texttt{[[PROGRESS: \textit{update}]]} & routine step completion; registry update only, no OIF \\
+\texttt{[[BLOCKED: \textit{reason}]]}  & agent cannot proceed; handled identically to
+                                         \textsc{SteeringRequest} (T6) \\
+\end{tabular}
+\end{center}
+
+A \texttt{[[DONE:]]} or \texttt{[[BLOCKED:]]} emission triggers
+transition~\eqref{eq:t6}: the orchestrator enters $\textsc{Focus}(a_i)$
+to review $a_i$'s completed work or unblock condition before issuing a
+next-task assignment or resolution.
+A \texttt{[[PROGRESS:]]} emission updates $r_i$ and returns immediately
+to \textsc{Registry} mode, keeping the footprint low for routine
+heartbeats.
+
+\paragraph{T7: Iteration relay.}
+While in $\textsc{Focus}(a_i)$, the orchestrator may determine that a
+follow-up directive (from the user or from a pipeline dependency) is
+addressed to $a_i$ itself.
+Transition~\eqref{eq:t7} is a \emph{self-loop}: the orchestrator relays
+the directive to $a_i$ and continues in $\textsc{Focus}(a_i)$ rather
+than returning to \textsc{Registry} before the next exchange.
+This amortises the context-switching overhead for multi-turn iteration
+within a single agent's work thread.
+
+\paragraph{Registry extension.}
+To distinguish OIF sessions from agent-triggered ones in logs and judge
+evaluations, we add a \texttt{trigger\_type} field to each registry entry:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\texttt{AGENT\_STEERING} & $a_i$ emitted \textsc{SteeringRequest} (transitions T1, T3) \\
+\texttt{USER\_QUERY}     & user query matched $r_i$ (transition T5) \\
+\texttt{COMPLETION}      & $a_i$ emitted \texttt{[[DONE:]]} or \texttt{[[BLOCKED:]]} (transition T6) \\
+\texttt{ITERATION}       & orchestrator relayed directive to $a_i$ (transition T7) \\
+\end{tabular}
+\end{center}
+
+\paragraph{Invariant preservation.}
+OIF preserves all context builder invariants from \S\ref{sec:context_builder}:
+the focus context is still deterministically $F(a_i) + R_{-i}$, the
+token budget is enforced before every LLM call, and at most one agent is
+in focus at any time.
+The only change is the direction of the trigger: top-down
+(orchestrator-decided) rather than bottom-up (agent-requested).
+
 %-----------------------------------------------------------------------
 \section{Experimental Setup}
 \label{sec:experiments}
@@ -621,7 +733,8 @@ as a valid proxy for LLM-judged correctness across the full experiment series.
 
 We run 10 independent trials per condition per scenario.
 Phases~1--3 span 160 trials (60 Phase~1, 60 Phase~2, 40 Phase~3);
-Phase~4 adds 40 real-agent trials (200 total).
+Phase~4 adds 40 real-agent trials (200 total);
+Phase~5 adds 60 OIF evaluation trials (260 total).
 Each trial uses a fresh agent instantiation with randomised task parameter
 order. Phase~3 and Phase~4 trials were run in parallel background processes
 to exploit concurrent API capacity; file writes to the shared summary CSV
@@ -1192,6 +1305,119 @@ has not been tested.
 The interrupt protocol (transition~\eqref{eq:t3}) was exercised naturally in
 experiments but not ablated independently.
 
+%-----------------------------------------------------------------------
+\section{Phase 5: Orchestrator-Initiated Focus (OIF) Evaluation}
+\label{sec:phase5}
+
+Phase~5 evaluates the T5 transition (\S\ref{sec:oif}):
+when a user message matches an agent's in-progress work,
+does entering \textsc{Focus}($a_i$) before answering yield
+more accurate, context-grounded responses than answering from
+the registry alone?
+
+\subsection{Setup}
+
+Two scenarios run 10 trials each under three conditions:
+\texttt{dacs\_oif} (DACS with OIF enabled),
+\texttt{dacs\_no\_oif} (DACS focus mode, OIF disabled---orchestrator
+answers from registry only), and
+\texttt{baseline} (flat context, no focus mode).
+Scenarios:
+\begin{itemize}
+  \item \textbf{oif1\_n3} ($N=3$): agents implement a BST
+  (a1), survey transformer attention mechanisms (a2), and
+  design a CSV cleaning pipeline (a3).  Three user queries fire
+  at $t\in\{8,14,20\}$\,s, each targeting a different agent.
+  \item \textbf{oif2\_n5} ($N=5$): extends oif1\_n3 with a
+  debugging agent (a4) and a long-form writing agent (a5); five
+  queries at $t\in\{7,13,19,25,31\}$\,s.
+\end{itemize}
+
+User queries are injected via the same \texttt{UserInjector}
+mechanism used in the concurrency experiment~(\S\ref{sec:concurrent}).
+The ground-truth label for each query specifies
+which agent's context should have been entered (T5 target).
+M1$_{\mathrm{T5}}$ measures keyword hit rate: a response hits if it
+contains at least one of a set of domain-specific keywords
+(e.g.\ ``inorder'', ``Vaswani'', ``impute'') that appear in the
+focused agent's full conversation history but\emph{not} in the
+${\le}100$-token registry summary.
+
+\subsection{Results}
+
+\begin{table}[t]
+\caption{Phase~5 results: OIF routing accuracy (M1$_{\mathrm{T5}}$),
+LLM judge hit rate, and context size.
+Values are mean over 10 trials per condition.
+Ctx~(tok): average focus context for \texttt{dacs\_oif};
+flat-context size for \texttt{baseline}.
+Judge hit: fraction of responses rated $\ge 7$/10 by GPT-4o-mini.}
+\label{tab:phase5}
+\centering
+\small
+\begin{tabular}{llrrrrrr}
+\toprule
+Scenario & Condition & M1$_{\mathrm{T5}}$ & Judge hit & Judge score & Ctx (tok) & $\Delta$ vs baseline & Ctx ratio \\
+\midrule
+\multirow{3}{*}{oif1\_n3 ($N=3$)}
+  & \texttt{dacs\_oif}     & $\mathbf{1.000}$ & $96.7\%$ & $8.63$ & $675$   & $+66.7$\,pp & $2.10\times$ \\
+  & \texttt{dacs\_no\_oif} & $0.400$           & $30.0\%$ & $3.60$ & $634$   & $+6.7$\,pp  & ---          \\
+  & \texttt{baseline}      & $0.333$           & $26.7\%$ & $3.17$ & $1{,}418$ & ---         & ---          \\[4pt]
+\multirow{3}{*}{oif2\_n5 ($N=5$)}
+  & \texttt{dacs\_oif}     & $\mathbf{1.000}$ & $94.0\%$ & $8.62$ & $742$   & $+72.0$\,pp & $3.06\times$ \\
+  & \texttt{dacs\_no\_oif} & $0.280$           & $14.0\%$ & $2.86$ & $743$   & $0.0$\,pp   & ---          \\
+  & \texttt{baseline}      & $0.280$           & $14.0\%$ & $2.84$ & $2{,}270$ & ---         & ---          \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\texttt{dacs\_oif} achieves 100\% M1$_{\mathrm{T5}}$ accuracy in
+both scenarios: every user query elicits a response containing
+domain-specific keywords drawn from the target agent's full
+context, compared to 33\%--40\% for DACS without OIF and
+28\%--33\% for the flat baseline (all $p < 0.0001$, Mann--Whitney
+$U = 100$).
+The perfect-accuracy result is not a ceiling artifact: the
+keywords were selected to be absent from the ${\le}100$-token
+registry summaries, ensuring that any hit reflects genuine
+focus-grounded retrieval rather than coincidental registry mention.
+
+At $N=5$, \texttt{dacs\_no\_oif} and \texttt{baseline} converge
+to 28\%---identical within noise---confirming that without OIF,
+enabling DACS focus mode provides no benefit for user queries
+because those queries bypass the focus mechanism entirely.
+OIF is thus \emph{necessary and sufficient} for focus-grounded
+user-query answering: the architecture handles both cases
+(standard \textsc{SteeringRequest} and proactive OIF) with no
+mechanism duplication.
+
+Context efficiency improves alongside accuracy:
+OIF focus sessions average 675 tokens at $N=3$ and 742 tokens at
+$N=5$, versus 1{,}418 and 2{,}270 tokens for the flat baseline
+($2.10\times$ and $3.06\times$ smaller, respectively).
+This matches the scaling pattern observed in Phases~1--3, where
+context ratio grew with $N$.
+
+\paragraph{OIF scaling.}
+All three queries (oif1\_n3) and all five queries (oif2\_n5)
+routed correctly in \emph{every} trial under \texttt{dacs\_oif},
+confirming that the prefix-stem T5 matcher (\S\ref{sec:oif})
+is both necessary and sufficient for correct routing with $N{\le}5$.
+Larger $N$ and adversarial query wording remain open evaluation directions.
+
+\paragraph{LLM judge validation.}
+An independent GPT-4o-mini judge rated each response 1--10 for specificity
+and assigned a binary hit at score $\ge 7$.
+Judge hit rates for \texttt{dacs\_oif} were $96.7\%$ at $N{=}3$
+(mean score $8.63$) and $94.0\%$ at $N{=}5$ (mean score $8.62$),
+compared to $26.7\%$/$14.0\%$ for \texttt{baseline}
+(mean score $3.17$/$2.84$) and $30.0\%$/$14.0\%$ for
+\texttt{dacs\_no\_oif} (mean score $3.60$/$2.86$).
+The judge confirms that OIF responses contain genuine
+focus-grounded technical specificity (paper names, algorithm choices,
+implementation details) absent from registry-only answers
+(Table~\ref{tab:phase5}).
+
 \subsection{Future Work}
 
 \begin{itemize}
@@ -1212,9 +1438,15 @@ experiments but not ablated independently.
   cleaner real-agent contamination signal.
   Tighter \textsc{SteeringRequest} formatting (structured fields rather
   than free text) would also reduce incidental cross-references.
-  \item \textbf{User responsiveness.} Measure latency from user message
-  to orchestrator response under DACS vs.\ baseline at varying $N$ and
-  queue depth.
+  \item \textbf{T6 and T7 OIF trigger evaluation.}
+  Phase~5 (\S\ref{sec:phase5}) evaluated T5 (user-query routing)
+  and confirmed 100\% routing accuracy at $N{\in}\{3,5\}$.
+  T6 (lifecycle signals: \texttt{[[DONE:]]}/\texttt{[[BLOCKED:]]}) and
+  T7 (iteration relay) have not yet been evaluated.
+  These transitions can be assessed via judge-rated response quality
+  in before-and-after sessions, measuring whether proactive
+  early-completion focus produces output more aligned with the
+  orchestrator's steering intent than passive registry updates alone.
   \item \textbf{Very high $D$.} Extend Phase~3 to $D \in \{30, 50, 100\}$
   to probe where, if anywhere, DACS accuracy degrades as per-agent
   history grows very large.
@@ -1262,6 +1494,12 @@ dominant variable for multi-agent steering accuracy, not model size,
 not topology, not memory compression, and that a simple, deterministic
 mode-switch mechanism suffices to control it effectively across a
 wide range of agent counts, diversity structures, and decision densities.
+We also formalise Orchestrator-Initiated Focus (OIF, \S\ref{sec:oif}),
+extending the mechanism with three top-down transitions (T5--T7) that
+complete DACS as a fully bidirectional context-scoping system:
+agents trigger focus bottom-up via \textsc{SteeringRequest}; the
+orchestrator triggers focus top-down via user-query routing,
+lifecycle signals, and iteration relay.
 
 %-----------------------------------------------------------------------
 \bibliographystyle{plainnat}

@@ -183,8 +183,11 @@ def _serialize_focus(focus: FocusContext) -> str:
     if focus.recent_output:
         lines.append(f"Recent output:\n{focus.recent_output}")
         lines.append("")
-    req = focus.current_request
-    lines.append(f"Current request [{req.urgency.value}]:")
-    lines.append(f"Context: {req.relevant_context}")
-    lines.append(f"Question: {req.question}")
+    if focus.current_request is not None:
+        req = focus.current_request
+        lines.append(f"Current request [{req.urgency.value}]:")
+        lines.append(f"Context: {req.relevant_context}")
+        lines.append(f"Question: {req.question}")
+    else:
+        lines.append("[OIF session — orchestrator-initiated focus, no pending SteeringRequest]")
     return "\n".join(lines)
