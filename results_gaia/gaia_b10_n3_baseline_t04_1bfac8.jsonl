@@ -1,0 +1,1 @@
+{"event": "RUN_START", "run_id": "gaia_b10_n3_baseline_t04_1bfac8", "condition": "baseline", "scenario": "gaia_b10_n3", "n_agents": 3, "focus_mode": false, "model": "anthropic/claude-haiku-4-5", "token_budget": 204800, "harness": "gaia", "ts": "2026-04-10T16:27:49.991Z"}

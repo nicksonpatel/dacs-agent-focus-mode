@@ -3079,3 +3079,616 @@ SCENARIOS: dict[str, ScenarioSpec] = {
         ],
     ),
 }
+
+
+# ---------------------------------------------------------------------------
+# Additional agents for N=15 and N=20 scaling experiments
+# ---------------------------------------------------------------------------
+
+_EXTRA_AGENTS_11_15: list[AgentSpec] = [
+    # a11: REST API design
+    AgentSpec(
+        agent_id="a11",
+        agent_type="generic",
+        task_description="design REST API for social media feed with pagination and rate limiting",
+        decision_points=[
+            DecisionPoint(
+                "REST vs GraphQL for social media feed API",
+                ["rest", "restful", "resource"],
+            ),
+            DecisionPoint(
+                "pagination strategy for feed endpoint",
+                ["cursor", "cursor-based", "keyset"],
+            ),
+            DecisionPoint(
+                "rate limiting algorithm for API",
+                ["token bucket", "sliding window", "leaky bucket"],
+            ),
+        ],
+        steps=[
+            {"summary": "Analyzing API requirements: feed retrieval, post creation, follow graph queries", "urgency": "LOW"},
+            {
+                "summary": "Evaluating query patterns to choose between REST and GraphQL",
+                "urgency": "MEDIUM",
+                "question": (
+                    "Should this social media feed API use REST vs GraphQL for social media feed API? "
+                    "REST is simpler with predictable caching via HTTP; GraphQL allows flexible nested queries "
+                    "but complicates caching and rate limiting. Feed is the primary read pattern."
+                ),
+            },
+            {"summary": "REST chosen; designing feed endpoint with pagination", "urgency": "LOW"},
+            {
+                "summary": "Feed can grow unbounded; need pagination strategy for feed endpoint",
+                "urgency": "HIGH",
+                "question": (
+                    "For pagination strategy for feed endpoint: "
+                    "offset-based (simple but skips/dupes on inserts), "
+                    "cursor-based/keyset (consistent, uses last-seen ID), "
+                    "or time-based windowing? Feed is append-heavy with frequent new posts."
+                ),
+            },
+            {"summary": "Cursor pagination implemented; designing abuse prevention", "urgency": "LOW"},
+            {
+                "summary": "API exposed publicly; need rate limiting algorithm for API",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For rate limiting algorithm for API: "
+                    "token bucket (allows bursts up to bucket size), "
+                    "sliding window log (precise but memory-heavy), "
+                    "or fixed window counter (simple but boundary spikes)? "
+                    "Token bucket handles typical social media bursty access patterns well."
+                ),
+            },
+            {"summary": "Rate limiting integrated; API design finalized with OpenAPI spec", "urgency": "LOW"},
+        ],
+    ),
+    # a12: Database schema migration
+    AgentSpec(
+        agent_id="a12",
+        agent_type="generic",
+        task_description="migrate relational database schema to support multi-tenant SaaS",
+        decision_points=[
+            DecisionPoint(
+                "multi-tenant isolation strategy for database",
+                ["row-level", "shared schema", "row level security"],
+            ),
+            DecisionPoint(
+                "handling schema migrations with zero downtime",
+                ["expand-contract", "expand contract", "dual write", "blue-green"],
+            ),
+            DecisionPoint(
+                "tenant data partitioning strategy",
+                ["hash", "range", "list", "partition"],
+            ),
+        ],
+        steps=[
+            {"summary": "Auditing current single-tenant schema: 47 tables, 12 FK chains", "urgency": "LOW"},
+            {
+                "summary": "Must choose multi-tenant isolation strategy for database",
+                "urgency": "HIGH",
+                "question": (
+                    "For multi-tenant isolation strategy for database: "
+                    "schema-per-tenant (strong isolation but migration overhead), "
+                    "row-level security with tenant_id column (shared schema, simpler ops), "
+                    "or database-per-tenant (strongest isolation, highest cost)? "
+                    "Expected 500+ tenants makes database-per-tenant impractical."
+                ),
+            },
+            {"summary": "Row-level security chosen; adding tenant_id to all tables", "urgency": "LOW"},
+            {
+                "summary": "Production database cannot tolerate downtime during migration",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For handling schema migrations with zero downtime: "
+                    "expand-contract pattern (add new columns, backfill, drop old), "
+                    "blue-green database swap, "
+                    "or dual-write with shadow reads? "
+                    "Expand-contract is standard for online schema changes in PostgreSQL."
+                ),
+            },
+            {"summary": "Expand-contract plan drafted; considering table partitioning for performance", "urgency": "LOW"},
+            {
+                "summary": "Large tables need partitioning for tenant query performance",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For tenant data partitioning strategy: "
+                    "hash partition by tenant_id (even distribution), "
+                    "range partition by creation date (time-series queries), "
+                    "or list partition by tenant tier (co-locate similar tenants)? "
+                    "Hash partitioning ensures even distribution across partitions."
+                ),
+            },
+            {"summary": "Migration plan finalized; testing with shadow traffic on staging", "urgency": "LOW"},
+        ],
+    ),
+    # a13: Medical image classification
+    AgentSpec(
+        agent_id="a13",
+        agent_type="generic",
+        task_description="build image classification pipeline for medical X-ray abnormality detection",
+        decision_points=[
+            DecisionPoint(
+                "base architecture for medical image classification",
+                ["resnet", "densenet", "efficientnet"],
+            ),
+            DecisionPoint(
+                "handling limited labeled medical data",
+                ["transfer learning", "pretrained", "fine-tune", "imagenet"],
+            ),
+            DecisionPoint(
+                "evaluation metric for imbalanced medical classification",
+                ["auc", "auroc", "sensitivity", "recall"],
+            ),
+        ],
+        steps=[
+            {"summary": "Loading CheXpert-format X-ray dataset; analyzing label distribution", "urgency": "LOW"},
+            {
+                "summary": "Choosing backbone CNN architecture for detection task",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For base architecture for medical image classification: "
+                    "ResNet-50 (well-studied, moderate depth), "
+                    "DenseNet-121 (feature reuse, popular in radiology), "
+                    "or EfficientNet-B4 (best accuracy/compute tradeoff)? "
+                    "DenseNet-121 is the most cited architecture for CheXpert-style tasks."
+                ),
+            },
+            {"summary": "DenseNet-121 selected; dataset has only 2,400 labeled images", "urgency": "LOW"},
+            {
+                "summary": "Insufficient labeled data for training from scratch",
+                "urgency": "HIGH",
+                "question": (
+                    "For handling limited labeled medical data with only 2,400 labeled X-rays: "
+                    "transfer learning from ImageNet pretrained weights (standard practice), "
+                    "self-supervised pretraining on unlabeled X-rays, "
+                    "or data augmentation only? "
+                    "Transfer learning with ImageNet pretrained weights is the standard approach for medical imaging."
+                ),
+            },
+            {"summary": "Fine-tuning pretrained DenseNet-121; class distribution is 85/15", "urgency": "LOW"},
+            {
+                "summary": "Highly imbalanced classes — accuracy is misleading metric",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For evaluation metric for imbalanced medical classification (85/15 split): "
+                    "AUROC (threshold-independent, standard in radiology), "
+                    "F1-score (balances precision and recall), "
+                    "or sensitivity at fixed specificity (clinically meaningful operating point)? "
+                    "AUROC is the standard primary metric in medical imaging literature."
+                ),
+            },
+            {"summary": "Pipeline complete; AUROC 0.89 on held-out test set", "urgency": "LOW"},
+        ],
+    ),
+    # a14: Compiler optimization pass
+    AgentSpec(
+        agent_id="a14",
+        agent_type="generic",
+        task_description="implement compiler optimization pass for dead code elimination and constant folding",
+        decision_points=[
+            DecisionPoint(
+                "IR representation for compiler optimization pass",
+                ["ssa", "static single assignment", "cfg"],
+            ),
+            DecisionPoint(
+                "dead code elimination algorithm",
+                ["liveness", "liveness analysis", "mark-sweep", "reachability"],
+            ),
+            DecisionPoint(
+                "constant folding scope for expressions",
+                ["intraprocedural", "constant propagation", "arithmetic"],
+            ),
+        ],
+        steps=[
+            {"summary": "Analyzing source language AST; designing intermediate representation", "urgency": "LOW"},
+            {
+                "summary": "Must choose IR form before implementing optimization passes",
+                "urgency": "HIGH",
+                "question": (
+                    "For IR representation for compiler optimization pass: "
+                    "SSA form (static single assignment — simplifies def-use chains, enables efficient optimizations), "
+                    "three-address code without SSA (simpler but harder to optimize), "
+                    "or stack-based IR (compact but poor for analysis)? "
+                    "SSA is the standard IR for modern compilers enabling efficient dead code elimination."
+                ),
+            },
+            {"summary": "SSA-based IR implemented with phi nodes; beginning optimization passes", "urgency": "LOW"},
+            {
+                "summary": "Implementing dead code elimination — choosing analysis approach",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For dead code elimination algorithm: "
+                    "liveness analysis (backward dataflow, marks live variables, removes dead defs), "
+                    "mark-sweep from program outputs (marks reachable defs, sweeps unreachable), "
+                    "or simple unused-variable removal (conservative, misses complex dead paths)? "
+                    "Liveness analysis is the standard approach for SSA-based dead code elimination."
+                ),
+            },
+            {"summary": "DCE working; implementing constant folding pass", "urgency": "LOW"},
+            {
+                "summary": "Deciding scope of constant folding optimization",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For constant folding scope for expressions: "
+                    "intraprocedural only (fold constants within each function, safe and efficient), "
+                    "interprocedural with constant propagation (more powerful but requires call graph), "
+                    "or arithmetic expressions only (most conservative)? "
+                    "Intraprocedural constant folding with propagation is the standard first pass."
+                ),
+            },
+            {"summary": "Both passes complete; 23% IR instruction reduction on test suite", "urgency": "LOW"},
+        ],
+    ),
+    # a15: Music recommendation engine
+    AgentSpec(
+        agent_id="a15",
+        agent_type="generic",
+        task_description="build collaborative filtering recommendation engine for music streaming",
+        decision_points=[
+            DecisionPoint(
+                "collaborative filtering approach for music recommendation",
+                ["matrix factorization", "svd", "als"],
+            ),
+            DecisionPoint(
+                "cold start problem for new users in recommendation",
+                ["content-based", "hybrid", "popularity"],
+            ),
+            DecisionPoint(
+                "evaluation metric for recommendation quality",
+                ["ndcg", "map", "precision", "mrr"],
+            ),
+        ],
+        steps=[
+            {"summary": "Loading user-track interaction matrix: 50K users × 200K tracks", "urgency": "LOW"},
+            {
+                "summary": "Choosing core recommendation algorithm for collaborative filtering",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For collaborative filtering approach for music recommendation: "
+                    "matrix factorization via SVD/ALS (scalable, captures latent factors), "
+                    "user-based kNN (interpretable but doesn't scale), "
+                    "or neural collaborative filtering (flexible but needs more data)? "
+                    "Matrix factorization via ALS is the standard scalable approach for implicit feedback."
+                ),
+            },
+            {"summary": "ALS matrix factorization implemented; handling new user onboarding", "urgency": "LOW"},
+            {
+                "summary": "New users have no listening history — cold start degrades experience",
+                "urgency": "HIGH",
+                "question": (
+                    "For cold start problem for new users in recommendation: "
+                    "content-based fallback using audio features and metadata, "
+                    "hybrid model combining collaborative and content signals, "
+                    "or popularity-based recommendations until sufficient history? "
+                    "Hybrid approach is standard: popularity for first sessions, content-based bridge to CF."
+                ),
+            },
+            {"summary": "Hybrid cold-start strategy implemented; designing offline evaluation", "urgency": "LOW"},
+            {
+                "summary": "Need to choose evaluation protocol for recommendation quality",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For evaluation metric for recommendation quality: "
+                    "NDCG@K (position-aware, rewards relevant items ranked higher), "
+                    "MAP (mean average precision, good for binary relevance), "
+                    "or MRR (mean reciprocal rank, best for single-item retrieval)? "
+                    "NDCG@K is the standard metric for music recommendation with graded relevance."
+                ),
+            },
+            {"summary": "Recommendation engine complete; NDCG@10 = 0.34 on held-out test split", "urgency": "LOW"},
+        ],
+    ),
+]
+
+_EXTRA_AGENTS_16_20: list[AgentSpec] = [
+    # a16: Network protocol implementation
+    AgentSpec(
+        agent_id="a16",
+        agent_type="generic",
+        task_description="implement reliable data transfer protocol over UDP with congestion control",
+        decision_points=[
+            DecisionPoint(
+                "reliability mechanism for UDP data transfer protocol",
+                ["selective ack", "ack", "acknowledgment", "arq"],
+            ),
+            DecisionPoint(
+                "congestion control algorithm for protocol",
+                ["aimd", "cubic", "bbr", "tcp-friendly"],
+            ),
+            DecisionPoint(
+                "packet reordering strategy for reliable delivery",
+                ["sequence number", "reorder buffer", "in-order"],
+            ),
+        ],
+        steps=[
+            {"summary": "Defining protocol header format: sequence numbers, flags, checksum", "urgency": "LOW"},
+            {
+                "summary": "Must choose reliability mechanism over unreliable UDP",
+                "urgency": "HIGH",
+                "question": (
+                    "For reliability mechanism for UDP data transfer protocol: "
+                    "stop-and-wait ARQ (simple but low throughput), "
+                    "go-back-N (pipeline but retransmits excessively), "
+                    "or selective ACK/repeat (efficient, acknowledges individual packets)? "
+                    "Selective ACK is the standard for high-throughput reliable UDP protocols."
+                ),
+            },
+            {"summary": "Selective ACK implemented; need to prevent network congestion", "urgency": "LOW"},
+            {
+                "summary": "Unrestricted sending rate will cause congestion collapse",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For congestion control algorithm for protocol: "
+                    "AIMD (additive increase multiplicative decrease — classic TCP-friendly), "
+                    "CUBIC (default in Linux, aggressive window growth), "
+                    "or BBR (bandwidth-based, model-driven)? "
+                    "AIMD is the simplest TCP-friendly approach suitable for a custom protocol."
+                ),
+            },
+            {"summary": "AIMD congestion control integrated; handling out-of-order packets", "urgency": "LOW"},
+            {
+                "summary": "Network reordering causes packets to arrive out of sequence",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For packet reordering strategy for reliable delivery: "
+                    "reorder buffer with sequence numbers (hold out-of-order, deliver in-order), "
+                    "deliver immediately and let application sort, "
+                    "or timeout-based reordering (wait fixed interval)? "
+                    "Reorder buffer with sequence numbers is the standard approach for in-order delivery."
+                ),
+            },
+            {"summary": "Protocol complete; achieving 94% goodput vs raw UDP on lossy link test", "urgency": "LOW"},
+        ],
+    ),
+    # a17: Robot path planning
+    AgentSpec(
+        agent_id="a17",
+        agent_type="generic",
+        task_description="implement path planning for autonomous robot navigation in dynamic environment",
+        decision_points=[
+            DecisionPoint(
+                "path planning algorithm for dynamic obstacles",
+                ["d* lite", "rrt", "a*", "rrt*"],
+            ),
+            DecisionPoint(
+                "map representation for obstacle detection",
+                ["occupancy grid", "grid", "voxel", "quadtree"],
+            ),
+            DecisionPoint(
+                "replanning strategy when obstacles move",
+                ["incremental", "d* lite", "local", "replan"],
+            ),
+        ],
+        steps=[
+            {"summary": "Defining robot workspace: 2D grid, LIDAR sensor, 10Hz update rate", "urgency": "LOW"},
+            {
+                "summary": "Choosing global path planning algorithm for environment with moving obstacles",
+                "urgency": "HIGH",
+                "question": (
+                    "For path planning algorithm for dynamic obstacles: "
+                    "A* (optimal but replans from scratch), "
+                    "D* Lite (incremental, efficient replanning when map changes), "
+                    "or RRT* (sampling-based, good for high-dimensional but suboptimal)? "
+                    "D* Lite is the standard for dynamic environments with incremental map updates."
+                ),
+            },
+            {"summary": "D* Lite selected; need to represent environment for sensor fusion", "urgency": "LOW"},
+            {
+                "summary": "LIDAR data must be integrated into spatial representation",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For map representation for obstacle detection: "
+                    "occupancy grid (fixed resolution, simple, fast updates), "
+                    "quadtree (adaptive resolution, memory efficient for sparse environments), "
+                    "or point cloud (raw sensor data, no discretization)? "
+                    "Occupancy grid is the standard for 2D robot navigation with LIDAR."
+                ),
+            },
+            {"summary": "Occupancy grid maintained; handling dynamic obstacle movement", "urgency": "LOW"},
+            {
+                "summary": "Obstacles move between planning cycles — need replanning strategy",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For replanning strategy when obstacles move: "
+                    "incremental D* Lite update (only recompute affected cells, very efficient), "
+                    "full A* replan each cycle (simple but expensive at 10Hz), "
+                    "or local DWA avoidance with global plan fallback? "
+                    "Incremental D* Lite replanning is the efficient standard for dynamic grid changes."
+                ),
+            },
+            {"summary": "Navigation stack complete; robot reaches goal in 95% of dynamic test scenarios", "urgency": "LOW"},
+        ],
+    ),
+    # a18: Portfolio optimization
+    AgentSpec(
+        agent_id="a18",
+        agent_type="generic",
+        task_description="implement portfolio optimization engine with risk-adjusted returns and constraints",
+        decision_points=[
+            DecisionPoint(
+                "risk model for portfolio optimization",
+                ["mean-variance", "markowitz", "cvar"],
+            ),
+            DecisionPoint(
+                "optimization solver for portfolio constraints",
+                ["quadratic programming", "qp", "cvxpy", "scipy"],
+            ),
+            DecisionPoint(
+                "rebalancing frequency strategy for portfolio",
+                ["threshold", "drift", "tolerance band"],
+            ),
+        ],
+        steps=[
+            {"summary": "Loading 10-year returns data for 500 assets; computing covariance matrix", "urgency": "LOW"},
+            {
+                "summary": "Must choose risk model framework for optimization objective",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For risk model for portfolio optimization: "
+                    "mean-variance / Markowitz (classic, minimizes variance for target return), "
+                    "CVaR (conditional value-at-risk, better tail-risk capture), "
+                    "or Black-Litterman (incorporates investor views with market equilibrium)? "
+                    "Mean-variance is the standard starting point; CVaR is better for non-normal returns."
+                ),
+            },
+            {"summary": "Mean-variance model formulated; adding position limits and sector constraints", "urgency": "LOW"},
+            {
+                "summary": "Constraints make this a constrained quadratic program",
+                "urgency": "HIGH",
+                "question": (
+                    "For optimization solver for portfolio constraints with long-only, sector caps, and turnover limits: "
+                    "CVXPY with ECOS solver (convex modeling DSL, handles QP natively), "
+                    "scipy.optimize.minimize with SLSQP (general-purpose, harder to specify constraints), "
+                    "or commercial solver like Gurobi (fastest but licensed)? "
+                    "CVXPY with quadratic programming is the standard for constrained portfolio optimization."
+                ),
+            },
+            {"summary": "Optimizer producing efficient frontier; designing rebalancing trigger", "urgency": "LOW"},
+            {
+                "summary": "Portfolio weights drift over time — need rebalancing policy",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For rebalancing frequency strategy for portfolio: "
+                    "threshold-based / tolerance band (rebalance when any weight drifts beyond band), "
+                    "calendar-based (quarterly/monthly fixed schedule), "
+                    "or hybrid (calendar check + threshold trigger)? "
+                    "Threshold-based with tolerance bands minimizes unnecessary trading costs."
+                ),
+            },
+            {"summary": "Engine complete; backtested Sharpe ratio 1.34 vs benchmark 0.89", "urgency": "LOW"},
+        ],
+    ),
+    # a19: Text summarization
+    AgentSpec(
+        agent_id="a19",
+        agent_type="generic",
+        task_description="build extractive text summarization system for news articles",
+        decision_points=[
+            DecisionPoint(
+                "sentence scoring method for extractive summarization",
+                ["textrank", "graph-based", "tf-idf", "centrality"],
+            ),
+            DecisionPoint(
+                "summary length determination strategy",
+                ["ratio", "percentage", "budget", "fixed"],
+            ),
+            DecisionPoint(
+                "redundancy removal between selected sentences",
+                ["mmr", "maximal marginal relevance", "diversity"],
+            ),
+        ],
+        steps=[
+            {"summary": "Parsing news article corpus; sentence segmentation and tokenization", "urgency": "LOW"},
+            {
+                "summary": "Need to score sentences for importance and relevance",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For sentence scoring method for extractive summarization: "
+                    "TextRank (graph-based, unsupervised, no training needed), "
+                    "TF-IDF centroid (simple bag-of-words similarity to document centroid), "
+                    "or BERT-based sentence embeddings (semantic similarity, requires GPU)? "
+                    "TextRank is the standard unsupervised approach for extractive summarization."
+                ),
+            },
+            {"summary": "TextRank scoring implemented; determining how many sentences to extract", "urgency": "LOW"},
+            {
+                "summary": "Must decide output length strategy for summaries",
+                "urgency": "HIGH",
+                "question": (
+                    "For summary length determination strategy: "
+                    "fixed ratio of original (e.g., 30% of sentences), "
+                    "token/word budget (fixed maximum regardless of input length), "
+                    "or adaptive based on information density? "
+                    "Fixed ratio is the simplest and most standard approach for news summarization."
+                ),
+            },
+            {"summary": "30% ratio summaries generated; some contain redundant information", "urgency": "LOW"},
+            {
+                "summary": "Top-ranked sentences often convey overlapping information",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For redundancy removal between selected sentences: "
+                    "MMR (maximal marginal relevance — balances relevance and diversity), "
+                    "cosine similarity threshold (skip sentences too similar to already selected), "
+                    "or clustering-based selection (one sentence per topic cluster)? "
+                    "MMR is the standard approach for diverse, non-redundant extractive summarization."
+                ),
+            },
+            {"summary": "Summarizer complete; ROUGE-L F1 = 0.41 on CNN/DailyMail test split", "urgency": "LOW"},
+        ],
+    ),
+    # a20: Real-time task scheduler
+    AgentSpec(
+        agent_id="a20",
+        agent_type="generic",
+        task_description="implement real-time task scheduler with priority preemption and deadlines",
+        decision_points=[
+            DecisionPoint(
+                "scheduling algorithm for real-time tasks",
+                ["edf", "earliest deadline first", "rate-monotonic"],
+            ),
+            DecisionPoint(
+                "priority inversion prevention mechanism",
+                ["priority inheritance", "priority ceiling", "pip"],
+            ),
+            DecisionPoint(
+                "overload handling when deadlines cannot be met",
+                ["admission control", "rejection", "graceful"],
+            ),
+        ],
+        steps=[
+            {"summary": "Defining task model: periodic tasks with deadlines, priorities, execution times", "urgency": "LOW"},
+            {
+                "summary": "Must select core scheduling algorithm for hard real-time tasks",
+                "urgency": "HIGH",
+                "question": (
+                    "For scheduling algorithm for real-time tasks: "
+                    "EDF (earliest deadline first — optimal for uniprocessor, dynamic priority), "
+                    "rate-monotonic scheduling (static priority, simpler analysis but suboptimal), "
+                    "or fixed-priority with deadline-monotonic assignment? "
+                    "EDF is optimal for uniprocessor preemptive scheduling of independent tasks."
+                ),
+            },
+            {"summary": "EDF scheduler implemented; testing with shared resource access patterns", "urgency": "LOW"},
+            {
+                "summary": "Low-priority task holding mutex blocks high-priority task — priority inversion",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For priority inversion prevention mechanism: "
+                    "priority inheritance protocol (temporarily boost holder to waiter's priority), "
+                    "priority ceiling protocol (set mutex ceiling to highest accessor priority), "
+                    "or lock-free data structures (eliminate mutexes entirely)? "
+                    "Priority inheritance is the standard practical solution for real-time systems."
+                ),
+            },
+            {"summary": "Priority inheritance added; analyzing system under overload conditions", "urgency": "LOW"},
+            {
+                "summary": "Total utilization exceeds 100% in stress test — deadlines missed",
+                "urgency": "MEDIUM",
+                "question": (
+                    "For overload handling when deadlines cannot be met: "
+                    "admission control (reject new tasks when utilization approaches threshold), "
+                    "graceful degradation (skip lowest-priority instances), "
+                    "or elastic task model (stretch periods to reduce utilization)? "
+                    "Admission control with utilization bound checking is the standard real-time approach."
+                ),
+            },
+            {"summary": "Scheduler complete; meets all deadlines at 92% utilization in stress test", "urgency": "LOW"},
+        ],
+    ),
+]
+
+
+# ---------------------------------------------------------------------------
+# Compose N=15 and N=20 scenarios from existing s3_n10 + extra agents
+# ---------------------------------------------------------------------------
+
+SCENARIOS["s9_n15"] = ScenarioSpec(
+    scenario_id="s9_n15",
+    agents=SCENARIOS["s3_n10"].agents + _EXTRA_AGENTS_11_15,
+)
+
+SCENARIOS["s10_n20"] = ScenarioSpec(
+    scenario_id="s10_n20",
+    agents=SCENARIOS["s3_n10"].agents + _EXTRA_AGENTS_11_15 + _EXTRA_AGENTS_16_20,
+)

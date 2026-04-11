@@ -1,0 +1,120 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bahdanau et~al.(2015)Bahdanau, Cho, and Bengio]{bahdanau2015attention}
+Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio.
+\newblock Neural machine translation by jointly learning to align and
+  translate.
+\newblock \emph{Proceedings of the 3rd International Conference on Learning
+  Representations (ICLR)}, 2015.
+
+\bibitem[Bai et~al.(2024)Bai, Luo, Ni, Ge, Shi, Zhang, Gu, Han, Bao,
+  et~al.]{aoi2024}
+Zishan Bai, Jing Luo, Ziyi Ni, Enze Ge, Jiacheng Shi, Yichao Zhang, Jiayi Gu,
+  Zhimo Han, Riyang Bao, et~al.
+\newblock {AOI}: Context-aware multi-agent operations via dynamic scheduling
+  and hierarchical memory compression.
+\newblock \emph{arXiv preprint arXiv:2512.13956}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2512.13956}.
+
+\bibitem[Cover and Thomas(2006)]{cover2006elements}
+Thomas~M. Cover and Joy~A. Thomas.
+\newblock \emph{Elements of Information Theory}.
+\newblock Wiley-Interscience, 2nd edition, 2006.
+
+\bibitem[Cruz(2024)]{afm2024}
+Christopher Cruz.
+\newblock Adaptive focus memory for language models.
+\newblock \emph{arXiv preprint arXiv:2511.12712}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2511.12712}.
+
+\bibitem[Fei et~al.(2025)Fei, Chen, Pan, Zheng, and Song]{codedelegator2025}
+Tianxiang Fei, Cheng Chen, Yue Pan, Mao Zheng, and Mingyang Song.
+\newblock {CodeDelegator}: Mitigating context pollution via role separation in
+  code-as-action agents.
+\newblock \emph{arXiv preprint arXiv:2601.14914}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2601.14914}.
+
+\bibitem[Jiang et~al.(2025)Jiang, Ren, Yin, Sun, Gan, Lv, He, Wang, Yin, Pan,
+  et~al.]{lemon2025}
+Haipeng Jiang, Kailong Ren, Zimo Yin, Zhetao Sun, Xin Gan, Guangyi Lv, Ming He,
+  Peng Wang, Congli Yin, Hong Pan, et~al.
+\newblock Lemon agent technical report.
+\newblock \emph{arXiv preprint arXiv:2602.07092}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2602.07092}.
+
+\bibitem[Kariyappa and Suh(2025)]{sidequest2025}
+Sanjay Kariyappa and G.~Edward Suh.
+\newblock {SideQuest}: Model-driven {KV} cache management for long-horizon
+  agentic reasoning.
+\newblock \emph{arXiv preprint arXiv:2602.22603}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2602.22603}.
+
+\bibitem[Mialon et~al.(2023)Mialon, Dess{\`i}, Lomeli, Nalmpantis, Raileanu,
+  Roziere, Schick, Dwivedi-Yu, Celikyilmaz, Grave, LeCun, and
+  Scialom]{gaia2023}
+Gr{\'e}goire Mialon, Roberto Dess{\`i}, Maria Lomeli, Christoforos Nalmpantis,
+  Roberta Raileanu, Baptiste Roziere, Timo Schick, Jane Dwivedi-Yu, Asli
+  Celikyilmaz, Edouard Grave, Yann LeCun, and Thomas Scialom.
+\newblock {GAIA}: A benchmark for general {AI} assistants.
+\newblock \emph{arXiv preprint arXiv:2311.12983}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2311.12983}.
+
+\bibitem[Sampath and Baskaran(2025)]{adaptorch2025}
+Sathish Sampath and Anuradha Baskaran.
+\newblock Adaptive orchestration: Scalable self-evolving multi-agent systems.
+\newblock \emph{arXiv preprint arXiv:2601.09742}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2601.09742}.
+
+\bibitem[Shannon(1948)]{shannon1948mathematical}
+Claude~E. Shannon.
+\newblock A mathematical theory of communication.
+\newblock \emph{The Bell System Technical Journal}, 27\penalty0 (3):\penalty0
+  379--423, 1948.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
+  Kaiser, and Polosukhin]{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock \emph{Advances in Neural Information Processing Systems}, 30, 2017.
+
+\bibitem[Xu et~al.(2015)Xu, Ba, Kiros, Cho, Courville, Salakhutdinov, Zemel,
+  and Bengio]{xu2015show}
+Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan
+  Salakhutdinov, Richard Zemel, and Yoshua Bengio.
+\newblock Show, attend and tell: Neural image caption generation with visual
+  attention.
+\newblock In \emph{Proceedings of the 32nd International Conference on Machine
+  Learning (ICML)}, pages 2048--2057, 2015.
+
+\bibitem[Yu(2025)]{adaptorch2025b}
+Geunbin Yu.
+\newblock {AdaptOrch}: Task-adaptive multi-agent orchestration in the era of
+  {LLM} performance convergence.
+\newblock \emph{arXiv preprint arXiv:2602.16873}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2602.16873}.
+
+\bibitem[Zhang et~al.(2026)Zhang, Hu, Upasani, Ma, Hong, Kamanuru, Rainton, Wu,
+  et~al.]{ace2026}
+Qizheng Zhang, Changran Hu, Shubhangi Upasani, Boyuan Ma, Fenglu Hong,
+  Vamsidhar Kamanuru, Jay Rainton, Chen Wu, et~al.
+\newblock {ACE}: Agentic context engineering: Evolving contexts for
+  self-improving language models.
+\newblock \emph{arXiv preprint arXiv:2510.04618}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2510.04618}.
+
+\bibitem[Zhang et~al.(2025)Zhang, Zeng, Xiao, Li, Cui, Zhao, Hu, Liu, Zhou,
+  et~al.]{agentorchestra2025}
+Wentao Zhang, Liang Zeng, Yuzhen Xiao, Yongcong Li, Ce~Cui, Yilei Zhao, Rui Hu,
+  Yang Liu, Yahui Zhou, et~al.
+\newblock {AgentOrchestra}: Orchestrating multi-agent intelligence with the
+  tool-environment-agent ({TEA}) protocol.
+\newblock \emph{arXiv preprint arXiv:2506.12508}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2506.12508}.
+
+\end{thebibliography}

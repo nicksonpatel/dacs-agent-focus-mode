@@ -1,0 +1,601 @@
+run_id,batch_id,condition,agent_id,domain,question,gold,answer,exact_match,llm_corrected
+gaia_b01_n3_baseline_t01_1871e6,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t01_1871e6,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t01_1871e6,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t01_21bf73,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t01_21bf73,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t01_21bf73,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t01_d5b3ef,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t01_d5b3ef,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t01_d5b3ef,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t02_018738,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t02_018738,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t02_018738,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t02_a45506,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t02_a45506,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t02_a45506,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t03_097afd,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t03_097afd,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t03_097afd,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t03_987523,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1816,False,False
+gaia_b01_n3_baseline_t03_987523,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t03_987523,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t04_045491,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t04_045491,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t04_045491,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t04_371127,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t04_371127,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t04_371127,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t05_1c5126,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t05_1c5126,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t05_1c5126,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_baseline_t05_7f4b7f,gaia_b01_n3,baseline,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_baseline_t05_7f4b7f,gaia_b01_n3,baseline,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_baseline_t05_7f4b7f,gaia_b01_n3,baseline,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t01_606a28,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t01_606a28,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t01_606a28,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t01_f06253,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t01_f06253,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t01_f06253,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t01_fda5a3,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t01_fda5a3,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t01_fda5a3,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t02_2e95d0,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t02_2e95d0,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t02_2e95d0,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t02_a5e6cd,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t02_a5e6cd,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t02_a5e6cd,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t03_0997c8,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t03_0997c8,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t03_0997c8,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t03_90dec6,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t03_90dec6,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t03_90dec6,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t04_c38f9a,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t04_c38f9a,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t04_c38f9a,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t04_e0083a,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t04_e0083a,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t04_e0083a,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t05_91c8b2,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t05_91c8b2,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t05_91c8b2,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b01_n3_dacs_t05_a92ac4,gaia_b01_n3,dacs,a1,history,In what year was Napoleon Bonaparte exiled to the island of Saint Helena for the final time?,1815,1815,True,False
+gaia_b01_n3_dacs_t05_a92ac4,gaia_b01_n3,dacs,a2,science,What is the chemical symbol of the element with atomic number 79?,au,Au,True,False
+gaia_b01_n3_dacs_t05_a92ac4,gaia_b01_n3,dacs,a3,maths,What is the smallest prime number greater than 50?,53,53,True,False
+gaia_b02_n3_baseline_t01_e61225,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t01_e61225,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t01_e61225,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,36,False,False
+gaia_b02_n3_baseline_t01_e9ac01,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t01_e9ac01,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t01_e9ac01,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t02_5ed8e2,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t02_5ed8e2,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t02_5ed8e2,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t02_70fd67,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t02_70fd67,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t02_70fd67,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t03_2c31a0,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t03_2c31a0,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t03_2c31a0,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t03_4909ba,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t03_4909ba,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t03_4909ba,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t04_4490a3,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t04_4490a3,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t04_4490a3,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t04_f73a0c,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t04_f73a0c,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t04_f73a0c,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,33,False,False
+gaia_b02_n3_baseline_t05_06875a,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t05_06875a,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t05_06875a,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_baseline_t05_1c8019,gaia_b02_n3,baseline,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_baseline_t05_1c8019,gaia_b02_n3,baseline,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_baseline_t05_1c8019,gaia_b02_n3,baseline,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,46,False,False
+gaia_b02_n3_dacs_t01_0c9759,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t01_0c9759,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t01_0c9759,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_dacs_t01_b25eb5,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t01_b25eb5,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t01_b25eb5,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,46,False,False
+gaia_b02_n3_dacs_t02_53626b,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t02_53626b,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t02_53626b,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,46,False,False
+gaia_b02_n3_dacs_t02_690e4d,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t02_690e4d,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t02_690e4d,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,25,False,False
+gaia_b02_n3_dacs_t03_54f4ca,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t03_54f4ca,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t03_54f4ca,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_dacs_t03_8bd652,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t03_8bd652,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t03_8bd652,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,25,False,False
+gaia_b02_n3_dacs_t04_e44c4a,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t04_e44c4a,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t04_e44c4a,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_dacs_t04_f5fea3,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t04_f5fea3,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t04_f5fea3,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,39,True,False
+gaia_b02_n3_dacs_t05_449dd5,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t05_449dd5,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t05_449dd5,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,46,False,False
+gaia_b02_n3_dacs_t05_d5f11a,gaia_b02_n3,dacs,a1,geography,What is the capital city of Australia?,canberra,Canberra,True,False
+gaia_b02_n3_dacs_t05_d5f11a,gaia_b02_n3,dacs,a2,literature,Who wrote the novel '1984'?,george orwell,George Orwell,True,False
+gaia_b02_n3_dacs_t05_d5f11a,gaia_b02_n3,dacs,a3,sport,How many gold medals did the United States win at the 2020 Summer Olympics held in Tokyo?,39,46,False,False
+gaia_b03_n3_baseline_t01_38c4b5,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t01_38c4b5,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t01_38c4b5,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t01_f56db7,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t01_f56db7,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t01_f56db7,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t02_44c7be,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t02_44c7be,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t02_44c7be,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t02_7fc75a,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t02_7fc75a,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t02_7fc75a,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t03_011438,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t03_011438,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t03_011438,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t03_29cab8,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t03_29cab8,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t03_29cab8,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t04_e3738e,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee (with Robert Cailliau as co-developer),True,False
+gaia_b03_n3_baseline_t04_e3738e,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t04_e3738e,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t04_eb20fa,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t04_eb20fa,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t04_eb20fa,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t05_9d1cbf,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_baseline_t05_9d1cbf,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t05_9d1cbf,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_baseline_t05_c2055c,gaia_b03_n3,baseline,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee (with Robert Cailliau),True,False
+gaia_b03_n3_baseline_t05_c2055c,gaia_b03_n3,baseline,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_baseline_t05_c2055c,gaia_b03_n3,baseline,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t01_71048e,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t01_71048e,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t01_71048e,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t01_b21e7d,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t01_b21e7d,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t01_b21e7d,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t02_2a8c95,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t02_2a8c95,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t02_2a8c95,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t02_cebb67,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t02_cebb67,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t02_cebb67,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t03_c2bd7a,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t03_c2bd7a,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t03_c2bd7a,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t03_d0aa0f,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t03_d0aa0f,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t03_d0aa0f,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1994,False,False
+gaia_b03_n3_dacs_t04_2cab93,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t04_2cab93,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t04_2cab93,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t04_d49b67,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t04_d49b67,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t04_d49b67,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t05_4157e3,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee,True,False
+gaia_b03_n3_dacs_t05_4157e3,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t05_4157e3,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b03_n3_dacs_t05_bd165b,gaia_b03_n3,dacs,a1,technology,Who invented the World Wide Web?,tim berners-lee,Tim Berners-Lee (1989),True,False
+gaia_b03_n3_dacs_t05_bd165b,gaia_b03_n3,dacs,a2,music,Which composer wrote the Four Seasons violin concertos?,antonio vivaldi,Antonio Vivaldi,True,False
+gaia_b03_n3_dacs_t05_bd165b,gaia_b03_n3,dacs,a3,film,In what year was the film 'Schindler's List' released?,1993,1993,True,False
+gaia_b04_n3_baseline_t01_5ba969,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t01_5ba969,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t01_5ba969,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t01_799df7,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t01_799df7,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t01_799df7,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t02_9ebb39,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t02_9ebb39,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t02_9ebb39,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t02_cd867e,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t02_cd867e,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t02_cd867e,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t03_148f4e,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t03_148f4e,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t03_148f4e,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t03_e07c73,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t03_e07c73,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t03_e07c73,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t04_890d27,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t04_890d27,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t04_890d27,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t04_f121fc,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t04_f121fc,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t04_f121fc,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t05_29ff3a,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t05_29ff3a,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t05_29ff3a,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_baseline_t05_5e9669,gaia_b04_n3,baseline,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_baseline_t05_5e9669,gaia_b04_n3,baseline,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_baseline_t05_5e9669,gaia_b04_n3,baseline,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t01_2cc274,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t01_2cc274,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t01_2cc274,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t01_d78c45,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t01_d78c45,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t01_d78c45,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t02_5580c2,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t02_5580c2,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t02_5580c2,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t02_94142a,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t02_94142a,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t02_94142a,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t03_008bc2,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t03_008bc2,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t03_008bc2,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t03_ac6274,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t03_ac6274,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t03_ac6274,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,5040,True,False
+gaia_b04_n3_dacs_t04_6eb7ea,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t04_6eb7ea,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t04_6eb7ea,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t04_fe7977,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t04_fe7977,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t04_fe7977,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t05_2b1bdd,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t05_2b1bdd,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t05_2b1bdd,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b04_n3_dacs_t05_fd9866,gaia_b04_n3,dacs,a1,history,"What treaty formally ended World War I, signed in 1919?",treaty of versailles,Treaty of Versailles,True,False
+gaia_b04_n3_dacs_t05_fd9866,gaia_b04_n3,dacs,a2,geography,The Amazon River flows primarily through which country before reaching the Atlantic Ocean?,brazil,Brazil,True,False
+gaia_b04_n3_dacs_t05_fd9866,gaia_b04_n3,dacs,a3,maths,What is the value of 7 factorial (7!)?,5040,"5,040",False,False
+gaia_b05_n3_baseline_t01_722b21,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t01_722b21,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,King Hamlet,True,False
+gaia_b05_n3_baseline_t01_722b21,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t01_97d5a3,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t01_97d5a3,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost (or King Hamlet),True,False
+gaia_b05_n3_baseline_t01_97d5a3,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t02_1fce88,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 metres per second",False,False
+gaia_b05_n3_baseline_t02_1fce88,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The ghost has no specific name; he is referred to as ""the Ghost"" or ""the King""",False,False
+gaia_b05_n3_baseline_t02_1fce88,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t02_6c1041,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t02_6c1041,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost,False,False
+gaia_b05_n3_baseline_t02_6c1041,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t03_231aca,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t03_231aca,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,King Hamlet,True,False
+gaia_b05_n3_baseline_t03_231aca,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t03_43a43f,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 metres per second",False,False
+gaia_b05_n3_baseline_t03_43a43f,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"King Hamlet (or ""the Ghost"" — no separate personal name is given)",True,False
+gaia_b05_n3_baseline_t03_43a43f,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t04_492fcb,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t04_492fcb,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,King Hamlet,True,False
+gaia_b05_n3_baseline_t04_492fcb,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t04_6eaa9b,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t04_6eaa9b,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"King Hamlet (or ""the Ghost"")",True,False
+gaia_b05_n3_baseline_t04_6eaa9b,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t05_14bab8,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t05_14bab8,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The ghost has no proper name; he is called ""the Ghost"" or ""King Hamlet""",True,False
+gaia_b05_n3_baseline_t05_14bab8,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_baseline_t05_191a3b,gaia_b05_n3,baseline,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_baseline_t05_191a3b,gaia_b05_n3,baseline,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost (or King Hamlet),True,False
+gaia_b05_n3_baseline_t05_191a3b,gaia_b05_n3,baseline,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t01_7e1036,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 metres per second",False,False
+gaia_b05_n3_dacs_t01_7e1036,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The ghost has no distinct name; he is simply called ""the Ghost"" or referred to as King Hamlet",True,False
+gaia_b05_n3_dacs_t01_7e1036,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t01_7fc93e,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t01_7fc93e,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost (or King Hamlet),True,False
+gaia_b05_n3_dacs_t01_7fc93e,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t02_59b020,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t02_59b020,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost,False,False
+gaia_b05_n3_dacs_t02_59b020,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t02_f75de7,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t02_f75de7,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,King Hamlet,True,False
+gaia_b05_n3_dacs_t02_f75de7,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t03_141589,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t03_141589,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The Ghost (or King Hamlet by title, but no distinct proper name is given)",True,False
+gaia_b05_n3_dacs_t03_141589,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t03_8d508e,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t03_8d508e,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost (no specific proper name is given in the play),False,False
+gaia_b05_n3_dacs_t03_8d508e,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t04_1d3db6,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 metres per second",False,False
+gaia_b05_n3_dacs_t04_1d3db6,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The ghost has no specific name; it is called ""the Ghost"" or ""King Hamlet""",True,False
+gaia_b05_n3_dacs_t04_1d3db6,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t04_8e488a,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t04_8e488a,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,"The ghost has no specific personal name; he is referred to as ""King Hamlet"" by title or simply ""the Ghost""",True,False
+gaia_b05_n3_dacs_t04_8e488a,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t05_426e61,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 m/s",False,False
+gaia_b05_n3_dacs_t05_426e61,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost,False,False
+gaia_b05_n3_dacs_t05_426e61,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b05_n3_dacs_t05_e2cb47,gaia_b05_n3,dacs,a1,science,"What is the speed of light in a vacuum, in metres per second? Give the exact SI value.",299792458,"299,792,458 metres per second",False,False
+gaia_b05_n3_dacs_t05_e2cb47,gaia_b05_n3,dacs,a2,literature,"In Shakespeare's 'Hamlet', what is the name of Hamlet's father's ghost?",king hamlet,The Ghost (or King Hamlet),True,False
+gaia_b05_n3_dacs_t05_e2cb47,gaia_b05_n3,dacs,a3,technology,What programming language was created by Guido van Rossum and first released in 1991?,python,Python,True,False
+gaia_b06_n3_baseline_t01_63ab69,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t01_63ab69,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t01_63ab69,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t01_8f5783,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t01_8f5783,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t01_8f5783,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t02_f0c8ff,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t02_f0c8ff,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t02_f0c8ff,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t02_fed7cf,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t02_fed7cf,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t02_fed7cf,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t03_ca5b52,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t03_ca5b52,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t03_ca5b52,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t03_d7a1a5,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t03_d7a1a5,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t03_d7a1a5,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t04_a2dbb4,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t04_a2dbb4,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t04_a2dbb4,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Stanley,False,False
+gaia_b06_n3_baseline_t04_dd4130,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t04_dd4130,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t04_dd4130,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t05_429322,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t05_429322,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t05_429322,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_baseline_t05_548675,gaia_b06_n3,baseline,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_baseline_t05_548675,gaia_b06_n3,baseline,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_baseline_t05_548675,gaia_b06_n3,baseline,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t01_523197,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t01_523197,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t01_523197,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t01_56e8d1,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t01_56e8d1,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t01_56e8d1,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t02_013e1d,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t02_013e1d,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t02_013e1d,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t02_4b4e24,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t02_4b4e24,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t02_4b4e24,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t03_4ff3ea,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t03_4ff3ea,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t03_4ff3ea,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t03_62ebae,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t03_62ebae,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t03_62ebae,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t04_267f16,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t04_267f16,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t04_267f16,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t04_304b4e,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t04_304b4e,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t04_304b4e,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t05_2c619f,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t05_2c619f,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t05_2c619f,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b06_n3_dacs_t05_3bda44,gaia_b06_n3,dacs,a1,sport,How many Grand Slam singles titles did Serena Williams win in her professional career?,23,23,True,False
+gaia_b06_n3_dacs_t05_3bda44,gaia_b06_n3,dacs,a2,music,Which British rock band released the album 'Dark Side of the Moon' in 1973?,pink floyd,Pink Floyd,True,False
+gaia_b06_n3_dacs_t05_3bda44,gaia_b06_n3,dacs,a3,geography,What is the highest mountain in Africa?,mount kilimanjaro,Mount Kilimanjaro,True,False
+gaia_b07_n3_baseline_t01_a37a63,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t01_a37a63,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_baseline_t01_a37a63,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t01_f632e7,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t01_f632e7,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_baseline_t01_f632e7,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t02_003682,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t02_003682,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_baseline_t02_003682,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t02_3ee681,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t02_3ee681,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_baseline_t02_3ee681,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t03_0cf604,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t03_0cf604,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_baseline_t03_0cf604,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t03_89a745,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t03_89a745,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (approximately 78%),True,False
+gaia_b07_n3_baseline_t03_89a745,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t04_0d88cf,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t04_0d88cf,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_baseline_t04_0d88cf,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t04_7d574b,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t04_7d574b,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_baseline_t04_7d574b,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t05_625f37,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t05_625f37,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_baseline_t05_625f37,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_baseline_t05_66b5c8,gaia_b07_n3,baseline,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_baseline_t05_66b5c8,gaia_b07_n3,baseline,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_baseline_t05_66b5c8,gaia_b07_n3,baseline,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t01_5e148d,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t01_5e148d,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_dacs_t01_5e148d,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t01_6883d2,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t01_6883d2,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (N₂),True,False
+gaia_b07_n3_dacs_t01_6883d2,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t02_32d8a7,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t02_32d8a7,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (approximately 78%),True,False
+gaia_b07_n3_dacs_t02_32d8a7,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t02_88fe2b,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t02_88fe2b,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen,True,False
+gaia_b07_n3_dacs_t02_88fe2b,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t03_bc9982,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t03_bc9982,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (N₂),True,False
+gaia_b07_n3_dacs_t03_bc9982,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t03_bdcaed,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t03_bdcaed,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,"Nitrogen (N₂), approximately 78%",True,False
+gaia_b07_n3_dacs_t03_bdcaed,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t04_17f60c,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t04_17f60c,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (approximately 78%),True,False
+gaia_b07_n3_dacs_t04_17f60c,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t04_9df2c3,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t04_9df2c3,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (N₂) - approximately 78%,True,False
+gaia_b07_n3_dacs_t04_9df2c3,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t05_127702,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t05_127702,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (approximately 78%),True,False
+gaia_b07_n3_dacs_t05_127702,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b07_n3_dacs_t05_5c950f,gaia_b07_n3,dacs,a1,history,Who was the 16th President of the United States?,abraham lincoln,Abraham Lincoln,True,False
+gaia_b07_n3_dacs_t05_5c950f,gaia_b07_n3,dacs,a2,science,"What is the most abundant gas in Earth's atmosphere, by percentage?",nitrogen,Nitrogen (N₂),True,False
+gaia_b07_n3_dacs_t05_5c950f,gaia_b07_n3,dacs,a3,film,Who directed the 2010 film 'Inception'?,christopher nolan,Christopher Nolan,True,False
+gaia_b08_n3_baseline_t01_4c5d06,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t01_4c5d06,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t01_4c5d06,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t01_e45d62,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t01_e45d62,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t01_e45d62,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t02_796cbf,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t02_796cbf,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t02_796cbf,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t02_ca1bfa,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t02_ca1bfa,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t02_ca1bfa,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t03_31f872,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,30,False,False
+gaia_b08_n3_baseline_t03_31f872,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t03_31f872,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t03_83ca15,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t03_83ca15,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t03_83ca15,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t04_af4bd3,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t04_af4bd3,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t04_af4bd3,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t04_b18e83,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t04_b18e83,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t04_b18e83,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t05_f70770,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,30,False,False
+gaia_b08_n3_baseline_t05_f70770,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t05_f70770,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_baseline_t05_ffc88c,gaia_b08_n3,baseline,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_baseline_t05_ffc88c,gaia_b08_n3,baseline,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_baseline_t05_ffc88c,gaia_b08_n3,baseline,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t01_2deb8d,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t01_2deb8d,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t01_2deb8d,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t01_9f7d7d,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t01_9f7d7d,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t01_9f7d7d,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t02_640982,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t02_640982,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t02_640982,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t02_86be69,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t02_86be69,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t02_86be69,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t03_1f1192,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,30,False,False
+gaia_b08_n3_dacs_t03_1f1192,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t03_1f1192,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t03_277072,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t03_277072,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t03_277072,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t04_5fd4d8,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t04_5fd4d8,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t04_5fd4d8,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t04_8ba7a9,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t04_8ba7a9,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t04_8ba7a9,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t05_628f3a,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t05_628f3a,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t05_628f3a,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b08_n3_dacs_t05_e8f681,gaia_b08_n3,dacs,a1,maths,How many sides does a regular icosahedron have?,20,20,True,False
+gaia_b08_n3_dacs_t05_e8f681,gaia_b08_n3,dacs,a2,literature,Who wrote the novel 'War and Peace'?,leo tolstoy,Leo Tolstoy,True,False
+gaia_b08_n3_dacs_t05_e8f681,gaia_b08_n3,dacs,a3,geography,What is the deepest ocean on Earth?,pacific ocean,Pacific Ocean,True,False
+gaia_b09_n3_baseline_t01_533517,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t01_533517,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t01_533517,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t01_b9fded,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t01_b9fded,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t01_b9fded,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t02_8b1873,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t02_8b1873,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t02_8b1873,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t02_c801be,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t02_c801be,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t02_c801be,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t03_6b4389,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t03_6b4389,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t03_6b4389,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t03_ca6b97,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t03_ca6b97,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t03_ca6b97,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t04_7868ac,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t04_7868ac,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t04_7868ac,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t04_9a1ad6,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t04_9a1ad6,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t04_9a1ad6,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,deoxyribonucleic acid,True,False
+gaia_b09_n3_baseline_t05_754aea,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t05_754aea,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t05_754aea,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_baseline_t05_87cd81,gaia_b09_n3,baseline,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_baseline_t05_87cd81,gaia_b09_n3,baseline,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_baseline_t05_87cd81,gaia_b09_n3,baseline,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t01_75a11c,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t01_75a11c,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t01_75a11c,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t01_a6ed00,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t01_a6ed00,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t01_a6ed00,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t02_370536,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t02_370536,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t02_370536,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t02_a013cc,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t02_a013cc,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t02_a013cc,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t03_6e212f,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t03_6e212f,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t03_6e212f,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t03_859731,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t03_859731,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t03_859731,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t04_3efa0d,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t04_3efa0d,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t04_3efa0d,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t04_ac5718,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t04_ac5718,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t04_ac5718,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b09_n3_dacs_t05_0908e8,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t05_0908e8,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t05_0908e8,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic acid,True,False
+gaia_b09_n3_dacs_t05_6934c0,gaia_b09_n3,dacs,a1,technology,Who co-founded Apple Inc. along with Steve Jobs and Ronald Wayne in 1976?,steve wozniak,Steve Wozniak,True,False
+gaia_b09_n3_dacs_t05_6934c0,gaia_b09_n3,dacs,a2,sport,Which country won the FIFA World Cup in 2018?,france,France,True,False
+gaia_b09_n3_dacs_t05_6934c0,gaia_b09_n3,dacs,a3,science,What does DNA stand for?,deoxyribonucleic acid,Deoxyribonucleic Acid,True,False
+gaia_b10_n3_baseline_t01_3cb7d9,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t01_3cb7d9,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t01_3cb7d9,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t01_4435a9,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t01_4435a9,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t01_4435a9,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t01_c920d5,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t01_c920d5,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t01_c920d5,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t02_f490c3,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t02_f490c3,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t02_f490c3,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t03_6d9f10,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t03_6d9f10,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t03_6d9f10,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t03_91d325,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t03_91d325,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t03_91d325,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t04_f2392e,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t04_f2392e,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t04_f2392e,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_baseline_t05_f45b99,gaia_b10_n3,baseline,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_baseline_t05_f45b99,gaia_b10_n3,baseline,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_baseline_t05_f45b99,gaia_b10_n3,baseline,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t01_753648,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305-280 BCE,False,False
+gaia_b10_n3_dacs_t01_753648,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t01_753648,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t01_e13e14,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,300 BCE,False,False
+gaia_b10_n3_dacs_t01_e13e14,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t01_e13e14,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t02_07a08e,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_dacs_t02_07a08e,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t02_07a08e,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t02_208972,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE (or circa 300 BCE),False,False
+gaia_b10_n3_dacs_t02_208972,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t02_208972,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t03_2d71fc,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,300 BCE,False,False
+gaia_b10_n3_dacs_t03_2d71fc,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t03_2d71fc,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t03_df405b,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_dacs_t03_df405b,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t03_df405b,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t04_c30e0f,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_dacs_t04_c30e0f,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t04_c30e0f,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t04_e45a40,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,300 BCE,False,False
+gaia_b10_n3_dacs_t04_e45a40,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t04_e45a40,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t05_bfbc41,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_dacs_t05_bfbc41,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t05_bfbc41,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False
+gaia_b10_n3_dacs_t05_fcc4c9,gaia_b10_n3,dacs,a1,history,"In which year did the ancient Library of Alexandria, in Egypt, reportedly begin its construction under Ptolemy I?",295 bc,305 BCE,False,False
+gaia_b10_n3_dacs_t05_fcc4c9,gaia_b10_n3,dacs,a2,film,Which film won the Academy Award for Best Picture at the 2020 Oscar ceremony (held in February 2020)?,parasite,Parasite,True,False
+gaia_b10_n3_dacs_t05_fcc4c9,gaia_b10_n3,dacs,a3,maths,What is the square root of 1764?,42,42,True,False

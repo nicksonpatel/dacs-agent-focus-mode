@@ -72,6 +72,7 @@ async def run_trial(
     model: str,
     token_budget: int,
     run_id: str,
+    ablation_mode: str | None = None,
 ) -> dict[str, Any]:
     log_path = f"results/{run_id}.jsonl"
     logger   = Logger(log_path)
@@ -85,6 +86,7 @@ async def run_trial(
         "scenario":     scenario.scenario_id,
         "n_agents":     len(scenario.agents),
         "focus_mode":   focus_mode,
+        "ablation_mode": ablation_mode,
         "model":        model,
         "token_budget": token_budget,
     })
@@ -107,6 +109,7 @@ async def run_trial(
         token_budget=token_budget,
         focus_mode=focus_mode,
         logger=logger,
+        ablation_mode=ablation_mode,
     )
 
     agents: list[BaseAgent] = []
@@ -156,6 +159,7 @@ async def run_experiment(
     model: str,
     token_budget: int,
     parallel_trials: int,
+    ablation_mode: str | None = None,
 ) -> None:
     Path("results").mkdir(exist_ok=True)
     summary_path = "results/summary.csv"
@@ -181,11 +185,12 @@ async def run_experiment(
     async def _run_and_record(scenario_id: str, mode_name: str, trial: int) -> None:
         scenario = SCENARIOS[scenario_id]
         focus_mode = mode_name == "dacs"
-        run_id = f"{scenario_id}_{mode_name}_t{trial:02d}_{uuid.uuid4().hex[:6]}"
+        ablation_suffix = f"_{ablation_mode}" if ablation_mode else ""
+        run_id = f"{scenario_id}_{mode_name}{ablation_suffix}_t{trial:02d}_{uuid.uuid4().hex[:6]}"
 
         async with trial_semaphore:
             try:
-                metrics = await run_trial(scenario, focus_mode, model, token_budget, run_id)
+                metrics = await run_trial(scenario, focus_mode, model, token_budget, run_id, ablation_mode=ablation_mode)
             except Exception as exc:
                 from rich.console import Console as _Ce
                 _Ce().print(f"[red]Trial {run_id} failed: {exc}[/red]")
@@ -262,6 +267,13 @@ def main() -> None:
         default=1,
         help="Maximum number of trials to execute concurrently (default: 1)",
     )
+    parser.add_argument(
+        "--ablation",
+        choices=["no_registry", "random_focus", "flat_ordered"],
+        default=None,
+        help="Ablation mode: no_registry (DACS without registry), "
+             "random_focus (focus on random agent), flat_ordered (flat context, requesting agent first)",
+    )
     args = parser.parse_args()
 
     modes = ["dacs", "baseline"] if args.mode == "both" else [args.mode]
@@ -273,6 +285,7 @@ def main() -> None:
             model=args.model,
             token_budget=args.budget,
             parallel_trials=args.parallel_trials,
+            ablation_mode=args.ablation,
         )
     )
 

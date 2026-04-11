@@ -1,0 +1,335 @@
+[monitor] start — rows=2/40
+[cycle   1] rows= 2/40  alive=True  idle=3s
+[cycle   2] rows= 2/40  alive=True  idle=7s
+[cycle   3] rows= 2/40  alive=True  idle=2s
+[cycle   4] rows= 2/40  alive=True  idle=6s
+[cycle   5] rows= 2/40  alive=True  idle=6s
+[cycle   6] rows= 2/40  alive=True  idle=7s
+[cycle   7] rows= 2/40  alive=True  idle=9s
+[cycle   8] rows= 2/40  alive=True  idle=3s
+[cycle   9] rows= 2/40  alive=True  idle=1s
+[cycle  10] rows= 2/40  alive=True  idle=8s
+[cycle  11] rows= 2/40  alive=True  idle=2s
+[cycle  12] rows= 2/40  alive=True  idle=2s
+[cycle  13] rows= 4/40  alive=True  idle=3s
+[cycle  14] rows= 4/40  alive=True  idle=7s
+[cycle  15] rows= 4/40  alive=True  idle=1s
+[cycle  16] rows= 4/40  alive=True  idle=6s
+[cycle  17] rows= 4/40  alive=True  idle=1s
+[cycle  18] rows= 4/40  alive=True  idle=1s
+[cycle  19] rows= 4/40  alive=True  idle=2s
+[cycle  20] rows= 4/40  alive=True  idle=4s
+[cycle  21] rows= 4/40  alive=True  idle=5s
+[cycle  22] rows= 4/40  alive=True  idle=1s
+[cycle  23] rows= 4/40  alive=True  idle=1s
+[cycle  24] rows= 4/40  alive=True  idle=3s
+[cycle  25] rows= 4/40  alive=True  idle=6s
+[cycle  26] rows= 4/40  alive=True  idle=1s
+[cycle  27] rows= 4/40  alive=True  idle=6s
+[cycle  28] rows= 4/40  alive=True  idle=1s
+[cycle  29] rows= 4/40  alive=True  idle=6s
+[cycle  30] rows= 6/40  alive=True  idle=3s
+[cycle  31] rows= 6/40  alive=True  idle=0s
+[cycle  32] rows= 6/40  alive=True  idle=5s
+[cycle  33] rows= 6/40  alive=True  idle=9s
+[cycle  34] rows= 6/40  alive=True  idle=7s
+[cycle  35] rows= 6/40  alive=True  idle=6s
+[cycle  36] rows= 6/40  alive=True  idle=5s
+[cycle  37] rows= 6/40  alive=True  idle=1s
+[cycle  38] rows= 6/40  alive=True  idle=2s
+[cycle  39] rows= 6/40  alive=True  idle=4s
+[cycle  40] rows= 6/40  alive=True  idle=6s
+[cycle  41] rows= 6/40  alive=True  idle=0s
+[cycle  42] rows= 6/40  alive=True  idle=2s
+[cycle  43] rows= 6/40  alive=True  idle=1s
+[cycle  44] rows= 6/40  alive=True  idle=1s
+[cycle  45] rows= 6/40  alive=True  idle=5s
+[cycle  46] rows= 8/40  alive=True  idle=0s
+[cycle  47] rows= 8/40  alive=True  idle=6s
+[cycle  48] rows= 8/40  alive=True  idle=8s
+[cycle  49] rows= 8/40  alive=True  idle=1s
+[cycle  50] rows= 8/40  alive=True  idle=2s
+[cycle  51] rows= 8/40  alive=True  idle=5s
+[cycle  52] rows= 8/40  alive=True  idle=3s
+[cycle  53] rows= 8/40  alive=True  idle=4s
+[cycle  54] rows= 8/40  alive=True  idle=6s
+[cycle  55] rows= 8/40  alive=True  idle=5s
+[cycle  56] rows= 8/40  alive=True  idle=3s
+[cycle  57] rows= 8/40  alive=True  idle=2s
+[cycle  58] rows= 8/40  alive=True  idle=7s
+[cycle  59] rows= 8/40  alive=True  idle=8s
+[cycle  60] rows= 8/40  alive=True  idle=7s
+[cycle  61] rows= 9/40  alive=True  idle=5s
+[cycle  62] rows=10/40  alive=True  idle=2s
+[cycle  63] rows=10/40  alive=True  idle=5s
+[cycle  64] rows=10/40  alive=True  idle=2s
+[cycle  65] rows=10/40  alive=True  idle=1s
+[cycle  66] rows=10/40  alive=True  idle=9s
+[cycle  67] rows=10/40  alive=True  idle=8s
+[cycle  68] rows=10/40  alive=True  idle=4s
+[cycle  69] rows=10/40  alive=True  idle=1s
+[cycle  70] rows=10/40  alive=True  idle=5s
+[cycle  71] rows=10/40  alive=True  idle=4s
+[cycle  72] rows=10/40  alive=True  idle=3s
+[cycle  73] rows=10/40  alive=True  idle=2s
+[cycle  74] rows=10/40  alive=True  idle=1s
+[cycle  75] rows=10/40  alive=True  idle=4s
+[cycle  76] rows=11/40  alive=True  idle=0s
+[cycle  77] rows=12/40  alive=True  idle=1s
+[cycle  78] rows=12/40  alive=True  idle=9s
+[cycle  79] rows=12/40  alive=True  idle=0s
+[cycle  80] rows=12/40  alive=True  idle=5s
+[cycle  81] rows=12/40  alive=True  idle=3s
+[cycle  82] rows=12/40  alive=True  idle=3s
+[cycle  83] rows=12/40  alive=True  idle=8s
+[cycle  84] rows=12/40  alive=True  idle=4s
+[cycle  85] rows=12/40  alive=True  idle=4s
+[cycle  86] rows=12/40  alive=True  idle=1s
+[cycle  87] rows=12/40  alive=True  idle=1s
+[cycle  88] rows=12/40  alive=True  idle=0s
+[cycle  89] rows=12/40  alive=True  idle=1s
+[cycle  90] rows=12/40  alive=True  idle=3s
+[cycle  91] rows=13/40  alive=True  idle=4s
+[cycle  92] rows=14/40  alive=True  idle=0s
+[cycle  93] rows=14/40  alive=True  idle=2s
+[cycle  94] rows=14/40  alive=True  idle=1s
+[cycle  95] rows=14/40  alive=True  idle=1s
+[cycle  96] rows=14/40  alive=True  idle=0s
+[cycle  97] rows=14/40  alive=True  idle=0s
+[cycle  98] rows=14/40  alive=True  idle=6s
+[cycle  99] rows=14/40  alive=True  idle=2s
+[cycle 100] rows=14/40  alive=True  idle=6s
+[cycle 101] rows=14/40  alive=True  idle=3s
+[cycle 102] rows=14/40  alive=True  idle=7s
+[cycle 103] rows=14/40  alive=True  idle=6s
+[cycle 104] rows=14/40  alive=True  idle=5s
+[cycle 105] rows=14/40  alive=True  idle=2s
+[cycle 106] rows=14/40  alive=True  idle=5s
+[cycle 107] rows=16/40  alive=True  idle=2s
+[cycle 108] rows=16/40  alive=True  idle=7s
+[cycle 109] rows=16/40  alive=True  idle=2s
+[cycle 110] rows=16/40  alive=True  idle=2s
+[cycle 111] rows=16/40  alive=True  idle=1s
+[cycle 112] rows=16/40  alive=True  idle=1s
+[cycle 113] rows=16/40  alive=True  idle=7s
+[cycle 114] rows=16/40  alive=True  idle=5s
+[cycle 115] rows=16/40  alive=True  idle=0s
+[cycle 116] rows=16/40  alive=True  idle=4s
+[cycle 117] rows=16/40  alive=True  idle=3s
+[cycle 118] rows=16/40  alive=True  idle=10s
+[cycle 119] rows=16/40  alive=True  idle=8s
+[cycle 120] rows=16/40  alive=True  idle=8s
+[cycle 121] rows=16/40  alive=True  idle=6s
+[cycle 122] rows=16/40  alive=True  idle=3s
+[cycle 123] rows=16/40  alive=True  idle=3s
+[cycle 124] rows=16/40  alive=True  idle=2s
+[cycle 125] rows=17/40  alive=True  idle=8s
+[cycle 126] rows=18/40  alive=True  idle=3s
+[cycle 127] rows=18/40  alive=True  idle=6s
+[cycle 128] rows=18/40  alive=True  idle=0s
+[cycle 129] rows=18/40  alive=True  idle=7s
+[cycle 130] rows=18/40  alive=True  idle=6s
+[cycle 131] rows=18/40  alive=True  idle=6s
+[cycle 132] rows=18/40  alive=True  idle=1s
+[cycle 133] rows=18/40  alive=True  idle=4s
+[cycle 134] rows=18/40  alive=True  idle=4s
+[cycle 135] rows=18/40  alive=True  idle=1s
+[cycle 136] rows=18/40  alive=True  idle=1s
+[cycle 137] rows=18/40  alive=True  idle=3s
+[cycle 138] rows=18/40  alive=True  idle=1s
+[cycle 139] rows=18/40  alive=True  idle=4s
+[cycle 140] rows=18/40  alive=True  idle=7s
+[cycle 141] rows=18/40  alive=True  idle=5s
+[cycle 142] rows=19/40  alive=True  idle=2s
+[cycle 143] rows=19/40  alive=True  idle=0s
+[cycle 144] rows=20/40  alive=True  idle=8s
+[cycle 145] rows=20/40  alive=True  idle=1s
+[cycle 146] rows=20/40  alive=True  idle=2s
+[cycle 147] rows=20/40  alive=True  idle=8s
+[cycle 148] rows=20/40  alive=True  idle=2s
+[cycle 149] rows=20/40  alive=True  idle=3s
+[cycle 150] rows=20/40  alive=True  idle=5s
+[cycle 151] rows=20/40  alive=True  idle=4s
+[cycle 152] rows=20/40  alive=True  idle=6s
+[cycle 153] rows=20/40  alive=True  idle=1s
+[cycle 154] rows=20/40  alive=True  idle=1s
+[cycle 155] rows=20/40  alive=True  idle=1s
+[cycle 156] rows=20/40  alive=True  idle=4s
+[cycle 157] rows=20/40  alive=True  idle=6s
+[cycle 158] rows=20/40  alive=True  idle=7s
+[cycle 159] rows=20/40  alive=True  idle=4s
+[cycle 160] rows=20/40  alive=True  idle=2s
+[cycle 161] rows=20/40  alive=True  idle=9s
+[cycle 162] rows=20/40  alive=True  idle=0s
+[cycle 163] rows=20/40  alive=True  idle=10s
+[cycle 164] rows=20/40  alive=True  idle=1s
+[cycle 165] rows=22/40  alive=True  idle=6s
+[cycle 166] rows=22/40  alive=True  idle=1s
+[cycle 167] rows=22/40  alive=True  idle=7s
+[cycle 168] rows=22/40  alive=True  idle=11s
+[cycle 169] rows=22/40  alive=True  idle=10s
+[cycle 170] rows=22/40  alive=True  idle=2s
+[cycle 171] rows=22/40  alive=True  idle=4s
+[cycle 172] rows=22/40  alive=True  idle=5s
+[cycle 173] rows=22/40  alive=True  idle=6s
+[cycle 174] rows=22/40  alive=True  idle=8s
+[cycle 175] rows=22/40  alive=True  idle=4s
+[cycle 176] rows=22/40  alive=True  idle=5s
+[cycle 177] rows=22/40  alive=True  idle=2s
+[cycle 178] rows=22/40  alive=True  idle=5s
+[cycle 179] rows=22/40  alive=True  idle=3s
+[cycle 180] rows=22/40  alive=True  idle=9s
+[cycle 181] rows=22/40  alive=True  idle=6s
+[cycle 182] rows=22/40  alive=True  idle=3s
+[cycle 183] rows=22/40  alive=True  idle=3s
+[cycle 184] rows=22/40  alive=True  idle=3s
+[cycle 185] rows=22/40  alive=True  idle=10s
+[cycle 186] rows=22/40  alive=True  idle=5s
+[cycle 187] rows=22/40  alive=True  idle=6s
+[cycle 188] rows=23/40  alive=True  idle=5s
+[cycle 189] rows=24/40  alive=True  idle=5s
+[cycle 190] rows=24/40  alive=True  idle=9s
+[cycle 191] rows=24/40  alive=True  idle=5s
+[cycle 192] rows=24/40  alive=True  idle=10s
+[cycle 193] rows=24/40  alive=True  idle=5s
+[cycle 194] rows=24/40  alive=True  idle=5s
+[cycle 195] rows=24/40  alive=True  idle=5s
+[cycle 196] rows=24/40  alive=True  idle=4s
+[cycle 197] rows=24/40  alive=True  idle=9s
+[cycle 198] rows=24/40  alive=True  idle=2s
+[cycle 199] rows=24/40  alive=True  idle=10s
+[cycle 200] rows=24/40  alive=True  idle=2s
+[cycle 201] rows=24/40  alive=True  idle=1s
+[cycle 202] rows=24/40  alive=True  idle=5s
+[cycle 203] rows=24/40  alive=True  idle=1s
+[cycle 204] rows=24/40  alive=True  idle=0s
+[cycle 205] rows=24/40  alive=True  idle=1s
+[cycle 206] rows=24/40  alive=True  idle=3s
+[cycle 207] rows=24/40  alive=True  idle=9s
+[cycle 208] rows=24/40  alive=True  idle=2s
+[cycle 209] rows=24/40  alive=True  idle=6s
+[cycle 210] rows=25/40  alive=True  idle=5s
+[cycle 211] rows=25/40  alive=True  idle=6s
+[cycle 212] rows=26/40  alive=True  idle=1s
+[cycle 213] rows=26/40  alive=True  idle=2s
+[cycle 214] rows=26/40  alive=True  idle=3s
+[cycle 215] rows=26/40  alive=True  idle=3s
+[cycle 216] rows=26/40  alive=True  idle=2s
+[cycle 217] rows=26/40  alive=True  idle=8s
+[cycle 218] rows=26/40  alive=True  idle=3s
+[cycle 219] rows=26/40  alive=True  idle=5s
+[cycle 220] rows=26/40  alive=True  idle=1s
+[cycle 221] rows=26/40  alive=True  idle=3s
+[cycle 222] rows=26/40  alive=True  idle=8s
+[cycle 223] rows=26/40  alive=True  idle=1s
+[cycle 224] rows=26/40  alive=True  idle=3s
+[cycle 225] rows=26/40  alive=True  idle=9s
+[cycle 226] rows=26/40  alive=True  idle=4s
+[cycle 227] rows=26/40  alive=True  idle=5s
+[cycle 228] rows=26/40  alive=True  idle=0s
+[cycle 229] rows=26/40  alive=True  idle=2s
+[cycle 230] rows=26/40  alive=True  idle=10s
+[cycle 231] rows=26/40  alive=True  idle=3s
+[cycle 232] rows=26/40  alive=True  idle=2s
+[cycle 233] rows=26/40  alive=True  idle=0s
+[cycle 234] rows=27/40  alive=True  idle=1s
+[cycle 235] rows=27/40  alive=True  idle=11s
+[cycle 236] rows=28/40  alive=True  idle=14s
+[cycle 237] rows=28/40  alive=True  idle=11s[[cycle 238] rows=28/40  alive=True  idle=6s[[cycle 239] rows=28/40  alive=True  idle=6s[[cycle 240] rows=28/40  alive=True  idle=4s[[cycle 241] rows=28/40  alive=True  idle=2s[[cycle 242] rows=28/40  alive=True  idle=9s[[cycle 243] rows=28/40  alive=True  idle=1s[[cycle 244] rows=28/40  alive=True  idle=5s
+[cycle 245] rows=28/40  alive=True  idle=0s
+[cycle 246] rows=28/40  alive=True  idle=1s
+[cycle 247] rows=28/40  alive=True  idle=2s
+[cycle 248] rows=28/40  alive=True  idle=8s
+[cycle 249] rows=28/40  alive=True  idle=2s
+[cycle 250] rows=28/40  alive=True  idle=1s
+[cycle 251] rows=28/40  alive=True  idle=2s
+[cycle 252] rows=28/40  alive=True  idle=7s
+[cycle 253] rows=28/40  alive=True  idle=2s
+[cycle 254] rows=28/40  alive=True  idle=6s
+[cycle 255] rows=28/40  alive=True  idle=0s
+[cycle 256] rows=28/40  alive=True  idle=5s
+[cycle 257] rows=28/40  alive=True  idle=3s
+[cycle 258] rows=28/40  alive=True  idle=3s
+[cycle 259] rows=29/40  alive=True  idle=2s
+[cycle 260] rows=30/40  alive=True  idle=2s
+[cycle 261] rows=30/40  alive=True  idle=4s
+[cycle 262] rows=30/40  alive=True  idle=3s
+[cycle 263] rows=30/40  alive=True  idle=2s
+[cycle 264] rows=30/40  alive=True  idle=6s
+[cycle 265] rows=30/40  alive=True  idle=2s
+[cycle 266] rows=30/40  alive=True  idle=2s
+[cycle 267] rows=30/40  alive=True  idle=5s
+[cycle 268] rows=30/40  alive=True  idle=7s
+[cycle 269] rows=30/40  alive=True  idle=2s
+[cycle 270] rows=30/40  alive=True  idle=5s
+[cycle 271] rows=30/40  alive=True  idle=1s
+[cycle 272] rows=30/40  alive=True  idle=6s
+[cycle 273] rows=30/40  alive=True  idle=3s
+[cycle 274] rows=30/40  alive=True  idle=0s
+[cycle 275] rows=30/40  alive=True  idle=1s
+[cycle 276] rows=30/40  alive=True  idle=9s
+[cycle 277] rows=30/40  alive=True  idle=9s
+[cycle 278] rows=30/40  alive=True  idle=6s
+[cycle 279] rows=30/40  alive=True  idle=2s
+[cycle 280] rows=31/40  alive=True  idle=9s
+[cycle 281] rows=31/40  alive=True  idle=5s
+[cycle 282] rows=31/40  alive=True  idle=0s
+[cycle 283] rows=32/40  alive=True  idle=2s
+[cycle 284] rows=32/40  alive=True  idle=1s
+[cycle 285] rows=32/40  alive=True  idle=1s
+[cycle 286] rows=32/40  alive=True  idle=6s
+[cycle 287] rows=32/40  alive=True  idle=0s
+[cycle 288] rows=32/40  alive=True  idle=1s
+[cycle 289] rows=32/40  alive=True  idle=1s
+[cycle 290] rows=32/40  alive=True  idle=7s
+[cycle 291] rows=32/40  alive=True  idle=5s
+[cycle 292] rows=32/40  alive=True  idle=3s
+[cycle 293] rows=32/40  alive=True  idle=8s
+[cycle 294] rows=32/40  alive=True  idle=2s
+[cycle 295] rows=32/40  alive=True  idle=2s
+[cycle 296] rows=32/40  alive=True  idle=5s
+[cycle 297] rows=32/40  alive=True  idle=2s
+[cycle 298] rows=32/40  alive=True  idle=1s
+[cycle 299] rows=33/40  alive=True  idle=0s
+[cycle 300] rows=33/40  alive=True  idle=5s
+[cycle 301] rows=33/40  alive=True  idle=5s
+[cycle 302] rows=33/40  alive=True  idle=4s
+[cycle 303] rows=34/40  alive=True  idle=0s
+[cycle 304] rows=34/40  alive=True  idle=1s
+[cycle 305] rows=34/40  alive=True  idle=4s
+[cycle 306] rows=34/40  alive=True  idle=4s
+[cycle 307] rows=34/40  alive=True  idle=1s
+[cycle 308] rows=34/40  alive=True  idle=0s
+[cycle 309] rows=34/40  alive=True  idle=4s
+[cycle 310] rows=34/40  alive=True  idle=1s
+[cycle 311] rows=34/40  alive=True  idle=1s
+[cycle 312] rows=34/40  alive=True  idle=1s
+[cycle 313] rows=34/40  alive=True  idle=7s
+[cycle 314] rows=34/40  alive=True  idle=0s
+[cycle 315] rows=34/40  alive=True  idle=7s
+[cycle 316] rows=34/40  alive=True  idle=3s
+[cycle 317] rows=34/40  alive=True  idle=9s
+[cycle 318] rows=34/40  alive=True  idle=5s
+[cycle 319] rows=34/40  alive=True  idle=1s
+[cycle 320] rows=34/40  alive=True  idle=2s
+[cycle 321] rows=35/40  alive=True  idle=14s[[cycle 322] rows=35/40  alive=True  idle=5s[[cycle 323] rows=35/40  alive=True  idle=4s[[cycle 324] rows=36/40  alive=True  idle=3s[[cycle 325] rows=36/40  alive=True  idle=1s[[cycle 326] rows=36/40  alive=True  idle=8s[[cycle 327] rows=36/40  alive=True  idle=1s[[cycle 328] rows=36/40  alive=True  idle=0s[[cycle 329] rows=36/40  alive=True  idle=6s[[cycle 330] rows=36/40  alive=True  idle=2s[[cycle 331] rows=36/40  alive=True  idle=8s[[cycle 332] rows=36/40  alive=True  idle=2s[[cycle 333] rows=36/40  alive=True  idle=4s[[cycle 334] rows=36/40  alive=True  idle=1s[[cycle 335] rows=36/40  alive=True  idle=1s[[cycle 336] rows=36/40  alive=True  idle=5s[[cycle 337] rows=36/40  alive=True  idle=2s[[cycle 338] rows=36/40  alive=True  idle=1s[[cycle 339] rows=36/40  alive=True  idle=6s
+[cycle 340] rows=36/40  alive=True  idle=9s
+[cycle 341] rows=36/40  alive=True  idle=10s[[cycle 342] rows=36/40  alive=True  idle=2s[[cycle 343] rows=37/40  alive=True  idle=0s[[cycle 344] rows=37/40  alive=True  idle=5s[[cycle 345] rows=37/40  alive=True  idle=5s[[cycle 346] rows=38/40  alive=True  idle=1s[[cycle 347] rows=38/40  alive=True  idle=1s[[cycle 348] rows=38/40  alive=True  idle=4s[[cycle 349] rows=38/40  alive=True  idle=3s[[cycle 350] rows=38/40  alive=True  idle=8s
+[cycle 351] rows=38/40  alive=True  idle=1s
+[cycle 352] rows=38/40  alive=True  idle=2s
+[cycle 353] rows=38/40  alive=True  idle=4s
+[cycle 354] rows=38/40  alive=True  idle=5s
+[cycle 355] rows=38/40  alive=True  idle=2s
+[cycle 356] rows=38/40  alive=True  idle=3s
+[cycle 357] rows=38/40  alive=True  idle=2s
+[cycle 358] rows=38/40  alive=True  idle=2s
+[cycle 359] rows=38/40  alive=True  idle=2s
+[cycle 360] rows=38/40  alive=True  idle=5s
+[cycle 361] rows=38/40  alive=True  idle=1s
+[cycle 362] rows=38/40  alive=True  idle=0s
+[cycle 363] rows=38/40  alive=True  idle=0s
+[cycle 364] rows=38/40  alive=True  idle=8s
+[cycle 365] rows=39/40  alive=True  idle=5s
+[cycle 366] rows=39/40  alive=True  idle=6s
+[cycle 367] rows=40/40  alive=False  idle=6s[cycle 368] rows=40/40  alive=False  idle=27s
+[monitor] ✅ ALL 40 TRIALS COMPLETE

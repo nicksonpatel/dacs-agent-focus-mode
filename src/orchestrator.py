@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import random
 import time
 from enum import Enum
 from typing import TYPE_CHECKING
@@ -51,6 +52,7 @@ class Orchestrator:
         focus_timeout: int = 60,
         logger: Logger | None = None,
         log_path: str = "results/run.jsonl",
+        ablation_mode: str | None = None,
     ) -> None:
         self._registry       = registry
         self._queue          = queue
@@ -61,6 +63,7 @@ class Orchestrator:
         self._focus_mode     = focus_mode
         self._focus_timeout  = focus_timeout
         self._logger         = logger or Logger(log_path)
+        self._ablation_mode  = ablation_mode   # None | "no_registry" | "random_focus" | "flat_ordered"
 
         self._state: OrchestratorState   = OrchestratorState.REGISTRY
         self._focus_agent_id: str | None = None
@@ -119,22 +122,35 @@ class Orchestrator:
 
     async def _handle_steering(self, request: SteeringRequest) -> None:
         self._registry.mark_steering_pending(request.agent_id)
-        if self._focus_mode:
+        if self._ablation_mode == "flat_ordered":
+            await self._handle_flat_ordered(request)
+        elif self._focus_mode:
             await self._handle_focus(request)
         else:
             await self._handle_flat(request)
         self._registry.mark_steering_complete(request.agent_id)
 
     async def _handle_focus(self, request: SteeringRequest) -> None:
+        # Ablation: random_focus — focus on a random *other* agent's context
+        if self._ablation_mode == "random_focus":
+            other_ids = [aid for aid in self._agents if aid != request.agent_id]
+            focus_id = random.choice(other_ids) if other_ids else request.agent_id
+        else:
+            focus_id = request.agent_id
+
         self._transition(OrchestratorState.FOCUS, request.agent_id, "SteeringRequest")
         focus = FocusContext(
-            agent_id=request.agent_id,
-            task_description=self._registry.get(request.agent_id).task_description,
-            steering_history=list(self._steering_history[request.agent_id]),
-            recent_output=request.relevant_context,
+            agent_id=focus_id,
+            task_description=self._registry.get(focus_id).task_description,
+            steering_history=list(self._steering_history.get(focus_id, [])),
+            recent_output=request.relevant_context if focus_id == request.agent_id else (
+                self._registry.get(focus_id).last_output_summary
+            ),
             current_request=request,
         )
-        context = self._cb.build_focus_context(focus, self._registry.get_all())
+        # Ablation: no_registry — omit compressed registry from focus context
+        include_registry = self._ablation_mode != "no_registry"
+        context = self._cb.build_focus_context(focus, self._registry.get_all(), include_registry=include_registry)
         start = time.monotonic()
         response_text = ""
         context_tokens = 0
@@ -247,6 +263,61 @@ class Orchestrator:
             "agent_id": request.agent_id,
             "context_size_at_time": p_tok,
             "orchestrator_state": "FLAT",
+            "response_text": response_text,
+        })
+        self._steering_history[request.agent_id].append({
+            "request": {"question": request.question, "urgency": request.urgency.value},
+            "response": {"response_text": response_text},
+        })
+        await self._deliver(steering_resp)
+
+    async def _handle_flat_ordered(self, request: SteeringRequest) -> None:
+        """Ablation: flat context with requesting agent's context placed first."""
+        self._agent_contexts[request.agent_id] = FocusContext(
+            agent_id=request.agent_id,
+            task_description=self._registry.get(request.agent_id).task_description,
+            steering_history=list(self._steering_history[request.agent_id]),
+            recent_output=request.relevant_context,
+            current_request=request,
+        )
+        all_contexts: list[FocusContext] = []
+        for aid in self._agents:
+            if aid in self._agent_contexts:
+                all_contexts.append(self._agent_contexts[aid])
+            else:
+                entry = self._registry.get(aid)
+                placeholder = SteeringRequest(
+                    agent_id=aid,
+                    relevant_context="",
+                    question="(no steering request submitted yet)",
+                    blocking=False,
+                    urgency=UrgencyLevel.LOW,
+                )
+                all_contexts.append(FocusContext(
+                    agent_id=aid,
+                    task_description=entry.task_description,
+                    steering_history=self._steering_history.get(aid, []),
+                    recent_output=entry.last_output_summary,
+                    current_request=placeholder,
+                ))
+
+        context = self._cb.build_flat_ordered_context(all_contexts, request)
+        response_text, p_tok, r_tok, ms = await self._llm_call(
+            context=context, state_label="FLAT_ORDERED", agent_id=request.agent_id
+        )
+        steering_resp = SteeringResponse(
+            request_id=request.request_id,
+            agent_id=request.agent_id,
+            response_text=response_text,
+            context_size_at_time=p_tok,
+            orchestrator_state="FLAT_ORDERED",
+        )
+        self._logger.log({
+            "event": "STEERING_RESPONSE",
+            "request_id": request.request_id,
+            "agent_id": request.agent_id,
+            "context_size_at_time": p_tok,
+            "orchestrator_state": "FLAT_ORDERED",
             "response_text": response_text,
         })
         self._steering_history[request.agent_id].append({

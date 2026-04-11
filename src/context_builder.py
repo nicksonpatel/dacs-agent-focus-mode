@@ -66,8 +66,13 @@ class ContextBuilder:
         self,
         focus: FocusContext,
         registry: list[RegistryEntry],
+        include_registry: bool = True,
     ) -> str:
         """Assemble F(aᵢ) + compressed registry (excluding aᵢ). DACS mode only.
+
+        If *include_registry* is False (``no_registry`` ablation), the
+        compressed registry section is omitted entirely — only F(aᵢ) is
+        returned.
 
         Compression priority when over budget:
           1. Drop COMPLETE/FAILED entries to 1-line tombstone
@@ -84,22 +89,61 @@ class ContextBuilder:
             raise ContextBudgetError(
                 f"F({focus.agent_id}) alone is {focus_tokens} tokens, exceeds budget {self._budget}"
             )
-        others = [e for e in registry if e.agent_id != focus.agent_id]
-        # Reserve 50 tokens for the separator between sections
-        remaining = self._budget - focus_tokens - 50
-        registry_section = self._serialize_compressed_registry(others, remaining)
-        result = focus_section + "\n\n" + registry_section
+
+        if include_registry:
+            others = [e for e in registry if e.agent_id != focus.agent_id]
+            # Reserve 50 tokens for the separator between sections
+            remaining = self._budget - focus_tokens - 50
+            registry_section = self._serialize_compressed_registry(others, remaining)
+            result = focus_section + "\n\n" + registry_section
+            n_others = len(others)
+        else:
+            result = focus_section
+            n_others = 0
+
         token_count = self.count_tokens(result)
         assert token_count <= self._budget, (
             f"build_focus_context produced {token_count} tokens > budget {self._budget}"
         )
         self._logger.log({
             "event": "CONTEXT_BUILT",
-            "mode": "FOCUS",
+            "mode": "FOCUS" if include_registry else "FOCUS_NO_REG",
             "agent_id": focus.agent_id,
             "token_count": token_count,
-            "registry_entries": len(others),
+            "registry_entries": n_others,
             "steering_history_turns": len(focus.steering_history),
+        })
+        return result
+
+    def build_flat_ordered_context(
+        self,
+        all_focus_contexts: list[FocusContext],
+        current_request: SteeringRequest,
+    ) -> str:
+        """Ablation: flat context with requesting agent placed first.
+
+        Identical to ``build_flat_context`` except the requesting agent's
+        context is placed at position 0 (positional bias ablation).
+        """
+        # Partition: requesting agent first, then all others in original order
+        first = [fc for fc in all_focus_contexts if fc.agent_id == current_request.agent_id]
+        rest = [fc for fc in all_focus_contexts if fc.agent_id != current_request.agent_id]
+        ordered = first + rest
+
+        header = f"=== FLAT ORDERED CONTEXT — steering request from {current_request.agent_id} ===\n"
+        sections = [header] + [_serialize_focus(fc) for fc in ordered]
+        result = "\n\n---\n\n".join(sections)
+        token_count = self.count_tokens(result)
+        assert token_count <= self._budget, (
+            f"build_flat_ordered_context produced {token_count} tokens > budget {self._budget}"
+        )
+        self._logger.log({
+            "event": "CONTEXT_BUILT",
+            "mode": "FLAT_ORDERED",
+            "agent_id": current_request.agent_id,
+            "token_count": token_count,
+            "registry_entries": len(all_focus_contexts),
+            "steering_history_turns": None,
         })
         return result
 
