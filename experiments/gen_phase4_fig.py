@@ -13,8 +13,8 @@ c_dacs_p4 = '#74add1'   # light blue  – DACS real agents
 c_base_p4 = '#f46d43'   # light orange – Baseline real agents
 
 # ── Data ──────────────────────────────────────────────────────────────────────
-dacs_p1    = [96.0, 96.7]
-base_p1    = [59.6, 38.7]
+dacs_p1    = [96.7, 96.7]
+base_p1    = [60.0, 38.7]
 se_dacs_p1 = [1.5,  1.4]
 se_base_p1 = [3.1,  4.2]
 
