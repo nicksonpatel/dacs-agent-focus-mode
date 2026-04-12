@@ -68,38 +68,26 @@ Context isolation is agent-triggered, asymmetric, and deterministic:
 the context window contains exactly $F(a_i) + R_{-i}$ during steering,
 eliminating cross-agent contamination without requiring context
 compression or retrieval.
-We evaluate DACS across five experimental phases totalling 260 trials:
-Phase~1 tests $N \in \{3,5,10\}$ agents (60 trials);
-Phase~2 tests agent heterogeneity and adversarial dependency structures
-(60 trials);
-Phase~3 tests decision density scaling up to $D=15$ steering requests per
-agent (40 trials);
-Phase~4 replaces all scripted stubs with autonomous LLM agents generating
-free-form questions (40 trials, Claude Haiku~4.5);
-Phase~5 evaluates Orchestrator-Initiated Focus (OIF) at $N \in \{3,5\}$
-(60 trials).
-We formalise \textbf{OIF}, extending the state machine with three
-top-down transitions (T5--T7) for proactive focus triggering via
-user-query routing, agent lifecycle signals, and iteration relay,
-completing DACS as a fully bidirectional mechanism.
-Across all 8 synthetic scenarios, DACS achieves $90.0$--$98.4\%$ steering
-accuracy versus $21.0$--$60.0\%$ for a flat-context baseline
-($p < 0.0001$ throughout), with wrong-agent contamination falling from
-$28$--$57\%$ to $0$--$14\%$ and context efficiency ratios of up to
-$3.53\times$.
-The accuracy advantage grows with both agent count ($N$) and decision
-density ($D$), and keyword matching is validated by LLM-as-judge across
-all three synthetic phases (mean $\kappa=0.909$).
-In Phase~4, all scripted stubs are replaced by autonomous LLM agents
-(Claude Haiku~4.5) generating free-form steering questions:
-DACS outperforms the flat-context baseline by $+17.2$\,pp at $N{=}3$
-($p{=}0.0023$) and $+20.4$\,pp at $N{=}5$ ($p{=}0.0008$),
-with the advantage growing with $N$ confirmed by two independent judges.
-In Phase~5 (OIF evaluation), OIF achieves $100\%$ M1$_{\mathrm{T5}}$
-user-query routing accuracy versus $28$--$40\%$ for DACS without OIF and
-$28$--$33\%$ for the flat baseline at $N{\in}\{3,5\}$
-($p < 0.0001$, Mann--Whitney), using $2.1$--$3.1\times$ fewer context
-tokens than flat context.
+We evaluate DACS across five experimental phases (260 trials total):
+Phases~1--3 test agent count scaling ($N{\in}\{3,5,10\}$), agent
+heterogeneity, and decision density on scripted scenarios (160 trials);
+Phase~4 validates with autonomous LLM agents generating free-form
+questions (40 trials, Claude Haiku~4.5);
+Phase~5 evaluates \textbf{Orchestrator-Initiated Focus (OIF)} at
+$N{\in}\{3,5\}$ (60 trials).
+We formalise OIF, extending the state machine with three top-down
+transitions (T5--T7) for user-query routing, lifecycle signals, and
+iteration relay, completing DACS as a fully bidirectional mechanism.
+Across Phases~1--3 (8 scenarios), DACS achieves $90.0$--$98.4\%$
+steering accuracy versus $21.0$--$60.0\%$ baseline ($p < 0.0001$),
+with contamination falling to $0$--$14\%$, validated by LLM-as-judge
+(mean $\kappa=0.909$).
+Phase~4 confirms the advantage with real agents:
+$+17.2$\,pp at $N{=}3$ ($p{=}0.0023$) and $+20.4$\,pp at $N{=}5$
+($p{=}0.0008$), with the advantage growing with $N$.
+In Phase~5, OIF achieves $100\%$ M1$_{\mathrm{T5}}$ routing accuracy
+versus $28$--$40\%$ without OIF and $28$--$33\%$ for the flat baseline
+($p < 0.0001$, Mann--Whitney), using $2.1$--$3.1\times$ fewer tokens.
 All code and data are released at
 \href{https://github.com/nicksonpatel/dacs-agent-focus-mode}{\texttt{github.com/nicksonpatel/dacs-agent-focus-mode}}.
 \end{abstract}
@@ -207,12 +195,12 @@ management approaches are:
   \item We identify sub-linear context scaling as the mechanism's key
   theoretical property, explain its source, and discuss conditions under
   which it holds (\S\ref{sec:discussion}).
-  \item We extend DACS with Orchestrator-Initiated Focus (OIF): three
-  new state machine transitions (T5--T7) for top-down focus triggering
-  via user-query routing, agent lifecycle signals (\texttt{[[DONE:]]},
-  \texttt{[[BLOCKED:]]}, \texttt{[[PROGRESS:]]}), and iteration relay,
-  completing the mechanism as a fully bidirectional context-scoping
-  system (\S\ref{sec:oif}).
+  \item We formalise Orchestrator-Initiated Focus (OIF), adding three
+  top-down state machine transitions (T5--T7) for user-query routing,
+  agent lifecycle signals (\texttt{[[DONE:]]}, \texttt{[[BLOCKED:]]},
+  \texttt{[[PROGRESS:]]}), and iteration relay, completing DACS as a
+  bidirectional mechanism; T5 is evaluated empirically in Phase~5
+  (\S\ref{sec:oif}, \S\ref{sec:phase5}).
   \item We evaluate OIF empirically in Phase~5 ($N{\in}\{3,5\}$, 60 trials):
   OIF achieves 100\% M1$_{\mathrm{T5}}$ query-routing accuracy versus
   28--40\% for DACS without OIF and 28--33\% for a flat baseline
@@ -793,6 +781,7 @@ of isolation.
 The large SE confirms this is incidental rather than systematic.
 Phase~2 scenarios were explicitly designed with disjoint vocabularies,
 eliminating this measurement confounder.
+Figure~\ref{fig:phase1} visualises all three metrics across $N \in \{3,5,10\}$.
 
 \begin{figure}[t]
   \centering
@@ -1333,8 +1322,8 @@ Scenarios:
   queries at $t\in\{7,13,19,25,31\}$\,s.
 \end{itemize}
 
-User queries are injected via the same \texttt{UserInjector}
-mechanism used in the concurrency experiment~(\S\ref{sec:concurrent}).
+User queries are injected via the \texttt{UserInjector}
+mechanism from the experimental harness (\S\ref{sec:harness}).
 The ground-truth label for each query specifies
 which agent's context should have been entered (T5 target).
 M1$_{\mathrm{T5}}$ measures keyword hit rate: a response hits if it
@@ -1354,10 +1343,11 @@ flat-context size for \texttt{baseline}.
 Judge hit: fraction of responses rated $\ge 7$/10 by GPT-4o-mini.}
 \label{tab:phase5}
 \centering
-\small
+\footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{llrrrrrr}
 \toprule
-Scenario & Condition & M1$_{\mathrm{T5}}$ & Judge hit & Judge score & Ctx (tok) & $\Delta$ vs baseline & Ctx ratio \\
+Scenario & Condition & M1$_{\mathrm{T5}}$ & Judge hit & Judge score & Ctx (tok) & $\Delta$ vs.~base & Ctx ratio \\
 \midrule
 \multirow{3}{*}{oif1\_n3 ($N=3$)}
   & \texttt{dacs\_oif}     & $\mathbf{1.000}$ & $96.7\%$ & $8.63$ & $675$   & $+66.7$\,pp & $2.10\times$ \\
@@ -1418,7 +1408,8 @@ focus-grounded technical specificity (paper names, algorithm choices,
 implementation details) absent from registry-only answers
 (Table~\ref{tab:phase5}).
 
-\subsection{Future Work}
+\section{Future Work}
+\label{sec:future_work}
 
 \begin{itemize}
   \item \textbf{Full LLM-as-judge pass for Phase~3.} The current judge
